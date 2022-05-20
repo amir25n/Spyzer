@@ -579,7 +579,7 @@ const globalStyleSheets = css`
     word-wrap: break-word;
     overscroll-behavior-y: none;
     text-size-adjust: none;
-    background-color:#1111;
+    background-color: #1111;
     margin: 0;
     padding: 0;
   }

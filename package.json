@@ -17,7 +17,7 @@
     "build:ts": "tsc --build --pretty",
     "build:es": "rollup -c",
     "format": "npm-run-all --sequential format:prettier format:eslint",
-    "format:eslint": "eslint **/*.ts --fix",
+    "format:eslint": "eslint '**/*.ts' --fix",
     "format:prettier": "prettier \"**/*.{html,json,md,ts}\" --ignore-path ./.eslintignore --write",
     "clean": "yarn build:ts --clean && rm -rf dist && find src -name '*.js' -type f -delete && find src -name '*.d.ts' -type f -delete && find src -name '*.map' -type f -delete",
     "serve:dev": "web-dev-server --config dev-server.mjs",
