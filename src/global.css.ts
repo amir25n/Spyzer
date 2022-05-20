@@ -62,12 +62,12 @@ const globalStyleSheets = css`
   }
 
   :root {
-    --ion-color-primary: #2e9e76;
-    --ion-color-primary-rgb: 46, 158, 118;
+    --ion-color-primary: #6301da;
+    --ion-color-primary-rgb: 99, 1, 218;
     --ion-color-primary-contrast: #ffffff;
     --ion-color-primary-contrast-rgb: 255, 255, 255;
-    --ion-color-primary-shade: #227e5e;
-    --ion-color-primary-tint: #53e7b3;
+    --ion-color-primary-shade: #5701c0;
+    --ion-color-primary-tint: #731ade;
 
     --ion-background-color: #eee;
     --ion-background-color-rgb: 238, 238, 238;
@@ -563,7 +563,6 @@ const globalStyleSheets = css`
   }
 
   body {
-    background: linear-gradient(#00ff8422, #00ff8422), linear-gradient(#eeeeee, #eeeeee);
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     position: fixed;
@@ -580,10 +579,19 @@ const globalStyleSheets = css`
     word-wrap: break-word;
     overscroll-behavior-y: none;
     text-size-adjust: none;
+    background-color:#1111;
     margin: 0;
     padding: 0;
   }
 
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--ion-color-primary);
+    z-index: -1;
+    opacity: 0.25;
+  }
   body::before {
     content: '';
     position: absolute;
@@ -591,7 +599,7 @@ const globalStyleSheets = css`
     background-image: url('/images/pattern.jpg');
     background-repeat: repeat;
     background-size: 364px;
-    z-index: -1;
+    z-index: -2;
     opacity: 0.15;
   }
 
