@@ -5,7 +5,7 @@ import {css, html, nothing} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 import {state} from 'lit/decorators/state.js';
 
-import '@mmzmk/iconsax';
+import '@erbium/iconsax';
 
 import {AppElement} from './app-debt/app-element';
 import {mainNavigation} from './config';
@@ -171,7 +171,7 @@ export class AppIndex extends AppElement {
       const selected = this._activePage === item.id;
       return html`
         <ion-button href="${router.makeUrl({sectionList: [item.id]})}" ?hidden="${selected}">
-          <mmzmk-iconsax slot="icon-only" name="${item.icon}" category="broken"></mmzmk-iconsax>
+          <er-iconsax slot="icon-only" name="${item.icon}" category="broken"></er-iconsax>
         </ion-button>
       `;
     });

@@ -1475,6 +1475,14 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@erbium/iconsax@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@erbium/iconsax/-/iconsax-0.1.0.tgz#f3df3ac70fde701364ecaa2b23d22716c572deeb"
+  integrity sha512-LnlIqt6bmTWInuUi6NIhvfEdaWWCCEKBf+pwIHvTk5vih/XQUbJKz/9GvS+x9TNo90zZvr4njAzPrlvbcCkVVQ==
+  dependencies:
+    lit "^2.2.3"
+    tslib "^2.3.1"
+
 "@eslint/eslintrc@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.2.1.tgz#8b5e1c49f4077235516bc9ec7d41378c0f69b8c6"
@@ -2238,14 +2246,6 @@
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.3.1.tgz#3021ad0fa30a75a41212c5e7f1f169c5762ef8bb"
   integrity sha512-nOJARIr3pReqK3hfFCSW2Zg/kFcFsSAlIE7z4a0C9D2dPrgD/YSn3ZP2ET/rxKB65SXyG7jJbkynBRm+tGlacw==
-
-"@mmzmk/iconsax@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@mmzmk/iconsax/-/iconsax-0.8.0.tgz#58860f8ed15bc71f63bbc5e4f7c7e423ff48ca8d"
-  integrity sha512-iez2ZsgcOrrQi4FngM8tXCoT2oJDlb0KqDJsS4HoLPLqwSw+iLplSgWnkxlcrypr5a0GgIAdtRGQMQlxMeC9aA==
-  dependencies:
-    lit "^2.2.3"
-    tslib "^2.3.1"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -6087,9 +6087,9 @@ lit@^2.2.1:
     lit-html "^2.2.0"
 
 lit@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/lit/-/lit-2.2.3.tgz#77203d8f247de7c0d4955817f89e40c927349b9c"
-  integrity sha512-5/v+r9dH3Pw/o0rhp/qYk3ERvOUclNF31bWb0FiW6MPgwdQIr+/KCt/p3zcd8aPl8lIGnxdGrVcZA+gWS6oFOQ==
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/lit/-/lit-2.2.5.tgz#60e8dd5b751fe31f849c64f74f1784a88235d664"
+  integrity sha512-Ln463c0xJZfzVxBcHddNvFQQ8Z22NK7KgNmrzwFF1iESHUud412RRExzepj18wpTbusgwoTnOYuoTpo9uyNBaQ==
   dependencies:
     "@lit/reactive-element" "^1.3.0"
     lit-element "^3.2.0"

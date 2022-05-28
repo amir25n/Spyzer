@@ -12,7 +12,7 @@ import type {ListenerInterface} from '@alwatr/signal';
 import type {RangeChangeEventDetail} from '@ionic/core';
 import type {TemplateResult} from 'lit';
 
-import '@mmzmk/iconsax';
+import '@erbium/iconsax';
 
 type settingsNames = 'spies' | 'players' | 'time';
 type settings = Record<settingsNames, number>;
@@ -66,7 +66,7 @@ export class PageHome extends AppElement {
       }
       .main .settings .settings__ranges .settings__ranges-icon {
         margin: 0 8px;
-        --mmzmk-iconsax-md-fs: 28px;
+        --er-iconsax-md-fs: 28px;
       }
       .main .settings .settings__ranges .settings__ranges-text {
         margin: 0;
@@ -134,7 +134,7 @@ export class PageHome extends AppElement {
         <div class="settings">
           <div class="settings__ranges">
             <div class="settings__ranges-info">
-              <mmzmk-iconsax name="user-remove" category="broken" class="settings__ranges-icon"></mmzmk-iconsax>
+              <er-iconsax name="user-remove" category="broken" class="settings__ranges-icon"></er-iconsax>
               <p class="settings__ranges-text">${localize('number_of_spies')}: ${this._settings.spies}</p>
             </div>
             <div class="settings__ranges-range">
@@ -149,7 +149,7 @@ export class PageHome extends AppElement {
           </div>
           <div class="settings__ranges">
             <div class="settings__ranges-info">
-              <mmzmk-iconsax name="user" category="broken" class="settings__ranges-icon"></mmzmk-iconsax>
+              <er-iconsax name="user" category="broken" class="settings__ranges-icon"></er-iconsax>
               <p class="settings__ranges-text">${localize('number_of_players')}: ${this._settings.players}</p>
             </div>
             <div class="settings__ranges-range">
@@ -164,7 +164,7 @@ export class PageHome extends AppElement {
           </div>
           <div class="settings__ranges">
             <div class="settings__ranges-info">
-              <mmzmk-iconsax name="timer-1" category="broken" class="settings__ranges-icon"></mmzmk-iconsax>
+              <er-iconsax name="timer-1" category="broken" class="settings__ranges-icon"></er-iconsax>
               <p class="settings__ranges-text">${localize('time')}: ${this._settings.time}</p>
             </div>
             <div class="settings__ranges-range">
