@@ -42,6 +42,13 @@
   dependencies:
     tslib "^2.3.1"
 
+"@alwatr/math@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/math/-/math-0.11.0.tgz#dbba75dcc5232e5450e2bb9f6108b3c2eddd364d"
+  integrity sha512-mky3gbMGY9Uhnb1MZBK8VX0q/WT5J1wI1x2tNgDg8YPxcn8BU2SAOsd8oHb1HIwZwzTIVkJztyPIatV730yLdQ==
+  dependencies:
+    tslib "^2.3.1"
+
 "@alwatr/router@^0.9.0":
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/@alwatr/router/-/router-0.9.0.tgz#79e2b6ab47103e97ede8bd47445b7da0f0bd5cdd"
@@ -2508,6 +2515,11 @@
     "@types/estree" "0.0.39"
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
+
+"@shoelace-style/localize@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@shoelace-style/localize/-/localize-2.2.0.tgz#c0a08fd4a0c709da8e618a768aa86c9332b0643b"
+  integrity sha512-xM8u4w3BVhbXhgYWk4Q7p/K4qZ8iGWpgx7T9aOLXkwR6t1LKu0oY1K+vQ1T6bclKHzGmt8o+HxYEtotHK+euQQ==
 
 "@stencil/core@^2.14.2":
   version "2.15.2"
@@ -7350,6 +7362,11 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+
+pwa-helper-components@^0.2.10:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/pwa-helper-components/-/pwa-helper-components-0.2.10.tgz#c3e2c4f9dec7d204ddd61e1fc5ac99cc0ac97f89"
+  integrity sha512-0qxa/mFM4ssqFHNB1ka+MPefBh/lAVp+fAkWTxfqPsLXaKMt1g0PHQ8OVAr4qOWPQqYW4wuUpf6ljD/YQGmlzQ==
 
 q@^1.5.1:
   version "1.5.1"
