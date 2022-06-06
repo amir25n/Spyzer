@@ -1,7 +1,7 @@
 export default {
   swDest: 'build/sw.js',
   globPatterns: [
-    '**/*.{html,woff2,png,svg,jpg,js,json}'
+    '**/*.{html,woff2,png,svg,jpg,js}'
   ],
   globDirectory: 'build/',
   skipWaiting: true,
@@ -11,20 +11,6 @@ export default {
       handler: 'CacheFirst',
       options: {
         cacheName: 'Images',
-      },
-    },
-    {
-      urlPattern: new RegExp('^/words/(.*).json$'),
-      handler: 'StaleWhileRevalidate',
-      options: {
-        cacheName: 'Words Game',
-      },
-    },
-    {
-      urlPattern: new RegExp('^/l10n/(.*).json$'),
-      handler: 'NetworkFirst',
-      options: {
-        cacheName: 'localization',
       },
     },
   ],
