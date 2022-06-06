@@ -3,7 +3,6 @@
 import * as fs from 'fs';
 
 const config = {
-  open: true,
   hostname: '0.0.0.0',
   port: 8000,
   appIndex: './',

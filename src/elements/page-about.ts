@@ -1,4 +1,4 @@
-import {localize} from '@alwatr/i18n';
+import {LocalizeController} from '@shoelace-style/localize/dist/index.js';
 import {css, html, CSSResultGroup} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 
@@ -51,6 +51,7 @@ export class PageAbout extends AppElement {
     `,
   ];
 
+  protected _localize = new LocalizeController(this);
   protected _listenerList: Array<unknown> = [];
 
   override connectedCallback(): void {
@@ -67,8 +68,8 @@ export class PageAbout extends AppElement {
     return html`
       <div class="main">
         <div class="about">
-          <h1>${localize('spy_game_web_app')}</h1>
-          <p>${localize('developer')}: mm25zamanian@gmail.com</p>
+          <h1>${this._localize.term('spy_game_web_app')}</h1>
+          <p>${this._localize.term('developer')}: mm25zamanian@gmail.com</p>
         </div>
       </div>
     `;

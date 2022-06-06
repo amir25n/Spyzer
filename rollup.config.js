@@ -78,7 +78,7 @@ export default {
     summary({showMinifiedSize: false}), // Print bundle summary
 
     copy({
-      patterns: ['images/**/*', 'l10n/**/*', 'words/**/*'],
+      patterns: ['images/**/*'],
     }),
 
     generateSW(workboxConfig, function render({swDest, count, size}) {

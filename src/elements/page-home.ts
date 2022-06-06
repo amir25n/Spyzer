@@ -1,7 +1,6 @@
-import {getJson} from '@alwatr/fetch';
-import {l10nResourceChangeSignal, localize, localChangeSignal} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
+import {LocalizeController} from '@shoelace-style/localize/dist/index.js';
 import {css, html} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 
@@ -108,18 +107,11 @@ export class PageHome extends AppElement {
   protected _listenerList: Array<unknown> = [];
   protected _settingsSignal = new SignalInterface('game-settings');
   protected _wordsSignal = new SignalInterface('game-words');
+  protected _localize = new LocalizeController(this);
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this._listenerList.push(
-        localChangeSignal.addListener(() => {
-          this._getWords();
-        }),
-    );
-    this._listenerList.push(l10nResourceChangeSignal.addListener(() => this.requestUpdate()));
-    if (localChangeSignal.dispatched) {
-      this._getWords();
-    }
+    this._wordsSignal.dispatch(<string[]> this._localize.term('words'));
     // this._listenerList.push(router.signal.addListener(() => this.requestUpdate()));
   }
 
@@ -135,7 +127,7 @@ export class PageHome extends AppElement {
           <div class="settings__ranges">
             <div class="settings__ranges-info">
               <er-iconsax name="user-remove" category="broken" class="settings__ranges-icon"></er-iconsax>
-              <p class="settings__ranges-text">${localize('number_of_spies')}: ${this._settings.spies}</p>
+              <p class="settings__ranges-text">${this._localize.term('number_of_spies')}: ${this._settings.spies}</p>
             </div>
             <div class="settings__ranges-range">
               <ion-range
@@ -150,7 +142,9 @@ export class PageHome extends AppElement {
           <div class="settings__ranges">
             <div class="settings__ranges-info">
               <er-iconsax name="user" category="broken" class="settings__ranges-icon"></er-iconsax>
-              <p class="settings__ranges-text">${localize('number_of_players')}: ${this._settings.players}</p>
+              <p class="settings__ranges-text">
+                ${this._localize.term('number_of_players')}: ${this._settings.players}
+              </p>
             </div>
             <div class="settings__ranges-range">
               <ion-range
@@ -165,7 +159,7 @@ export class PageHome extends AppElement {
           <div class="settings__ranges">
             <div class="settings__ranges-info">
               <er-iconsax name="timer-1" category="broken" class="settings__ranges-icon"></er-iconsax>
-              <p class="settings__ranges-text">${localize('time')}: ${this._settings.time}</p>
+              <p class="settings__ranges-text">${this._localize.term('time')}: ${this._settings.time}</p>
             </div>
             <div class="settings__ranges-range">
               <ion-range
@@ -184,7 +178,7 @@ export class PageHome extends AppElement {
               size="large"
               @click="${this._startGame}"
               ?disabled="${this._settings.spies + 2 > this._settings.players}"
-              >${localize('start')}</ion-button
+              >${this._localize.term('start')}</ion-button
             >
           </div>
         </div>
@@ -203,12 +197,5 @@ export class PageHome extends AppElement {
       return;
     }
     router.signal.dispatch({sectionList: ['game'], queryParamList: {}, hash: ''}, {debounce: true});
-  }
-
-  protected async _getWords(): Promise<string[]> {
-    const local = await localChangeSignal.getSignalValue();
-    const words = <string[]>(<unknown> await getJson(`/words/${local.code}.json`));
-    this._wordsSignal.dispatch(words);
-    return words;
   }
 }
