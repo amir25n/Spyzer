@@ -1,15 +1,19 @@
-import {initialI18n, localChangeSignal, l10nResourceChangeSignal, localize} from '@alwatr/i18n';
 import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
+import {registerTranslation, LocalizeController} from '@shoelace-style/localize/dist/index.js';
 import {css, html, nothing} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 import {state} from 'lit/decorators/state.js';
 
 import '@erbium/iconsax';
+import 'pwa-helper-components/pwa-install-button.js';
+import 'pwa-helper-components/pwa-update-available.js';
 
 import {AppElement} from './app-debt/app-element';
 import {mainNavigation} from './config';
 import globalStyleSheets, {init} from './global.css';
+import en from './translation/en';
+import fa from './translation/fa';
 
 import './elements/page-home';
 import './elements/page-game';
@@ -26,9 +30,7 @@ declare global {
 }
 
 init();
-initialI18n({
-  defaultLocal: {code: 'en-US', language: 'en', direction: 'ltr'},
-});
+registerTranslation(en, fa);
 
 /**
  * APP PWA Root Element
@@ -108,9 +110,8 @@ export class AppIndex extends AppElement {
 
   @state()
   protected _hideNavigation = true;
-
   protected _hideNavigationSignal = new SignalInterface('hide-navigation');
-
+  protected _localize = new LocalizeController(this);
   protected _activePage = 'home';
 
   protected _routes: RoutesConfig = {
@@ -146,10 +147,13 @@ export class AppIndex extends AppElement {
         this._hideNavigationSignal.addListener((_hideNavigation) => {
           this._hideNavigation = _hideNavigation;
         }),
-        localChangeSignal.addListener(() => this.requestUpdate()),
-        l10nResourceChangeSignal.addListener(() => this.requestUpdate()),
     );
     this._hideNavigationSignal.dispatch(false);
+
+    const _lang = localStorage.getItem('lang');
+    const _dir = localStorage.getItem('dir');
+
+    if (_lang && _dir) this.langSwitch(_lang, _dir);
   }
 
   override disconnectedCallback(): void {
@@ -179,21 +183,47 @@ export class AppIndex extends AppElement {
     return html`
       <ion-header>
         <ion-toolbar color="primary">
+          <ion-title>${this._localize.term('spy_game')}</ion-title>
           <ion-buttons slot="secondary">${listTemplate}</ion-buttons>
           <ion-buttons slot="primary">
-            <ion-button @click="${this.langSwitch}"> ${localChangeSignal.value?.language} </ion-button>
+            <pwa-install-button>
+              <ion-button>
+                <er-iconsax slot="icon-only" name="import" category="broken"></er-iconsax>
+              </ion-button>
+            </pwa-install-button>
+            <pwa-update-available>
+              <ion-button>
+                <er-iconsax slot="icon-only" name="export" category="broken"></er-iconsax>
+              </ion-button>
+            </pwa-update-available>
           </ion-buttons>
-          <ion-title>${localize('spy_game')}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button @click="${this.langSwitch}"> ${this._localize.lang()} </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
     `;
   }
 
-  protected langSwitch(): void {
-    if (localChangeSignal.value?.code === 'fa-IR') {
-      localChangeSignal.dispatch({code: 'en-US', language: 'en', direction: 'ltr'});
-    } else if (localChangeSignal.value?.code === 'en-US') {
-      localChangeSignal.dispatch({code: 'fa-IR', language: 'fa', direction: 'rtl'});
+  protected langSwitch(_lang?: string, _dir?: string): void {
+    const html = document.querySelector('html');
+    const lang = html?.getAttribute('lang');
+
+    console.log(this._localize.term('$name'));
+
+    if (_lang !== undefined && _dir !== undefined) {
+      html?.setAttribute('lang', _lang);
+      html?.setAttribute('dir', _dir);
+    } else if (lang === 'fa') {
+      localStorage.setItem('lang', 'en');
+      localStorage.setItem('dir', 'ltr');
+      this.remove();
+      document.body.appendChild(document.createElement('app-index'));
+    } else {
+      localStorage.setItem('lang', 'fa');
+      localStorage.setItem('dir', 'rtl');
+      this.remove();
+      document.body.appendChild(document.createElement('app-index'));
     }
   }
 }

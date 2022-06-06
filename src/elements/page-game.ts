@@ -1,9 +1,9 @@
-import {l10nResourceChangeSignal, localize} from '@alwatr/i18n';
+import {random} from '@alwatr/math';
 import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
-import {css, html} from 'lit';
+import {LocalizeController} from '@shoelace-style/localize/dist/index.js';
+import {css, html, nothing} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
-import {when} from 'lit/directives/when.js';
 
 import {AppElement} from '../app-debt/app-element';
 import globalStyleSheets from '../global.css';
@@ -69,6 +69,7 @@ export class PageGame extends AppElement {
   protected _listenerList: Array<unknown> = [];
   protected _settingsSignal = new SignalInterface('game-settings');
   protected _wordsSignal = new SignalInterface('game-words');
+  protected _localize = new LocalizeController(this);
   protected _words: string[] = [];
   protected _wordActive = 0;
   protected _hideWord = true;
@@ -79,7 +80,6 @@ export class PageGame extends AppElement {
     super.connectedCallback();
     if (this._settingsSignal.value === undefined || this._wordsSignal.value === undefined) {
       router.signal.dispatch({sectionList: [''], queryParamList: {}, hash: ''}, {debounce: true});
-      return;
     } else {
       const game = this._settingsSignal.value;
       const nodeWords = this._wordsSignal.value;
@@ -92,20 +92,9 @@ export class PageGame extends AppElement {
       for (let i = 0; i < game.spies; i++) {
         words.push('spy');
       }
-      this._words = words
-          .map((value) => ({value, sort: Math.random()}))
-          .sort((a, b) => a.sort - b.sort)
-          .map(({value}) => value);
+
+      this._words = random.shuffle(words).map((word) => (word === 'spy' ? this._localize.term('spy') : word));
     }
-    if (l10nResourceChangeSignal.dispatched) {
-      this._l10n();
-    }
-    this._listenerList.push(
-        l10nResourceChangeSignal.addListener(() => {
-          this._l10n();
-          this.requestUpdate();
-        }),
-    );
     // this._listenerList.push(router.signal.addListener(() => this.requestUpdate()));
   }
 
@@ -118,39 +107,56 @@ export class PageGame extends AppElement {
   override render(): TemplateResult {
     return html`
       <div class="main">
-        <div class="game">
-          ${when(
-      this._showTime,
-      () => html`
-              <h1 class="ion-text-center">
-                <spy-timer duration="${this._timeSeconds}"></spy-timer>
-              </h1>
-              <div class="game-next">
-                <ion-button color="danger" @click="${this._back}">${localize('back')}</ion-button>
-              </div>
-            `,
-      () =>
-        html`${when(
-            this._hideWord,
-            () => html`
-                  <h1 class="ion-text-center">${localize('next_person')}</h1>
-                  <div class="game-next">
-                    <ion-button size="large" color="tertiary" @click="${this._show}">
-                      ${localize('show_word')}
-                    </ion-button>
-                  </div>
-                `,
-            () => html`
-                  <h1 class="ion-text-center">${this._words[this._wordActive]}</h1>
-                  <div class="game-next">
-                    <ion-button size="large" @click="${this._hide}">${localize('hide')}</ion-button>
-                  </div>
-                `,
-        )}`,
-  )}
-        </div>
+        <div class="game">${this._render()}</div>
       </div>
     `;
+  }
+
+  protected _renderShowWord(): TemplateResult {
+    return html`
+      <h1 class="ion-text-center">${this._words[this._wordActive]}</h1>
+      <div class="game-next">
+        <ion-button size="large" @click="${this._hide}">${this._localize.term('hide')}</ion-button>
+      </div>
+    `;
+  }
+  protected _renderHideCover(): TemplateResult {
+    return html`
+      <h1 class="ion-text-center">${this._localize.term('next_person')}</h1>
+      <div class="game-next">
+        <ion-button size="large" color="tertiary" @click="${this._show}">
+          ${this._localize.term('show_word')}
+        </ion-button>
+      </div>
+    `;
+  }
+  protected _renderStartCover(): TemplateResult {
+    return html`
+      <h1 class="ion-text-center">${this._localize.term('start')}</h1>
+      <div class="game-next">
+        <ion-button size="large" color="success" @click="${this._show}">
+          ${this._localize.term('show_word')}
+        </ion-button>
+      </div>
+    `;
+  }
+  protected _renderTimer(): TemplateResult {
+    return html`
+      <h1 class="ion-text-center">
+        <spy-timer duration="${this._timeSeconds}"></spy-timer>
+      </h1>
+      <div class="game-next">
+        <ion-button color="danger" @click="${this._back}">${this._localize.term('back')}</ion-button>
+      </div>
+    `;
+  }
+  protected _render(): TemplateResult | typeof nothing {
+    if (this._showTime) return this._renderTimer();
+    if (!this._showTime && this._hideWord && this._wordActive === 0) return this._renderStartCover();
+    if (!this._showTime && this._hideWord) return this._renderHideCover();
+    if (!this._showTime && !this._hideWord) return this._renderShowWord();
+
+    return nothing;
   }
 
   protected _back(): void {
@@ -172,15 +178,6 @@ export class PageGame extends AppElement {
       this._showTime = true;
     }
     this.requestUpdate();
-  }
-
-  protected _l10n(): void {
-    this._words = this._words.map((word) => {
-      if (word === 'spy') {
-        return localize('spy');
-      }
-      return word;
-    });
   }
 }
 
