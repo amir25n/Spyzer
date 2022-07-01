@@ -196,6 +196,7 @@ export class PageHome extends AppElement {
     if (!this._wordsSignal.dispatched) {
       return;
     }
-    router.signal.dispatch({sectionList: ['game'], queryParamList: {}, hash: ''}, {debounce: true});
+
+    router.signal.request({pathname: router.makeUrl({sectionList: ['game']})});
   }
 }

@@ -79,7 +79,7 @@ export class PageGame extends AppElement {
   override connectedCallback(): void {
     super.connectedCallback();
     if (this._settingsSignal.value === undefined || this._wordsSignal.value === undefined) {
-      router.signal.dispatch({sectionList: [''], queryParamList: {}, hash: ''}, {debounce: true});
+      this._goToHomePage();
     } else {
       const game = this._settingsSignal.value;
       const nodeWords = this._wordsSignal.value;
@@ -146,7 +146,7 @@ export class PageGame extends AppElement {
         <spy-timer duration="${this._timeSeconds}"></spy-timer>
       </h1>
       <div class="game-next">
-        <ion-button color="danger" @click="${this._back}">${this._localize.term('back')}</ion-button>
+        <ion-button color="danger" @click="${this._goToHomePage}">${this._localize.term('back')}</ion-button>
       </div>
     `;
   }
@@ -159,7 +159,7 @@ export class PageGame extends AppElement {
     return nothing;
   }
 
-  protected _back(): void {
+  protected _goToHomePage(): void {
     router.signal.request({pathname: '/'});
   }
 
