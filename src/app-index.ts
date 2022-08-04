@@ -1,19 +1,19 @@
 import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
-import {registerTranslation, LocalizeController} from '@shoelace-style/localize/dist/index.js';
+import {registerTranslation} from '@shoelace-style/localize/dist/index.js';
 import {css, html, nothing} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
-import {state} from 'lit/decorators/state.js';
 
 import '@erbium/iconsax';
 import 'pwa-helper-components/pwa-install-button.js';
 import 'pwa-helper-components/pwa-update-available.js';
 
 import {AppElement} from './app-debt/app-element';
-import {mainNavigation} from './config';
-import globalStyleSheets, {init} from './global.css';
+import {locales, mainNavigation} from './config';
 import en from './translation/en';
 import fa from './translation/fa';
+import LocaleController from './utilities/locale-controller';
+import {registerSW} from './utilities/register-sw';
 
 import './pages/page-home';
 import './pages/page-game';
@@ -21,16 +21,14 @@ import './pages/page-about';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {ListenerInterface} from '@alwatr/signal';
-import type {TemplateResult} from 'lit';
+import type {SelectCustomEvent} from '@ionic/core';
+import type {TemplateResult, CSSResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
     'app-index': AppIndex;
   }
 }
-
-init();
-registerTranslation(en, fa);
 
 /**
  * APP PWA Root Element
@@ -42,7 +40,7 @@ registerTranslation(en, fa);
 @customElement('app-index')
 export class AppIndex extends AppElement {
   static override styles = [
-    globalStyleSheets,
+    ...(<CSSResult[]>AppElement.styles),
     css`
       :host {
         inset: 0;
@@ -73,24 +71,6 @@ export class AppIndex extends AppElement {
         font-size: 12px;
         font-weight: 400;
       }
-      ion-tab-button ion-icon {
-        font-size: 22px;
-      }
-      page-home,
-      page-about {
-        inset: 0;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        display: flex;
-        position: absolute;
-        flex-direction: column;
-        justify-content: space-between;
-        contain: layout size style;
-        overflow: hidden;
-        z-index: 0;
-      }
       /* This will be displayed only on lazy loading. */
       [unresolved]::after {
         content: '...';
@@ -108,11 +88,11 @@ export class AppIndex extends AppElement {
     router.initial();
   }
 
-  @state()
   protected _hideNavigation = true;
   protected _hideNavigationSignal = new SignalInterface('hide-navigation');
-  protected _localize = new LocalizeController(this);
+  protected _localeController = new LocaleController();
   protected _activePage = 'home';
+  protected _listenerList: Array<unknown> = [];
 
   protected _routes: RoutesConfig = {
     // TODO: refactor route, we need to get active page!
@@ -120,21 +100,23 @@ export class AppIndex extends AppElement {
     map: (route) => (this._activePage = route.sectionList[0]?.toString().trim() || 'home'),
     list: {
       home: {
-        render: () => html`<page-home></page-home>`,
+        render: () => html`<page-home class="ion-page"></page-home>`,
       },
       game: {
-        render: () => html`<page-game></page-game>`,
+        render: () => html`<page-game class="ion-page"></page-game>`,
       },
       about: {
-        render: () => html`<page-about></page-about>`,
+        render: () => html`<page-about class="ion-page"></page-about>`,
       },
     },
   };
 
-  protected _listenerList: Array<unknown> = [];
-
   override connectedCallback(): void {
     super.connectedCallback();
+
+    registerTranslation(en, fa);
+    registerSW();
+
     this._listenerList.push(
         router.signal.addListener(
             (route) => {
@@ -145,15 +127,13 @@ export class AppIndex extends AppElement {
             {receivePrevious: true},
         ),
         this._hideNavigationSignal.addListener((_hideNavigation) => {
+          const oldValue = this._hideNavigation;
           this._hideNavigation = _hideNavigation;
+          this.requestUpdate('_hideNavigation', oldValue);
         }),
     );
+
     this._hideNavigationSignal.dispatch(false);
-
-    const _lang = localStorage.getItem('lang');
-    const _dir = localStorage.getItem('dir');
-
-    if (_lang && _dir) this.langSwitch(_lang, _dir);
   }
 
   override disconnectedCallback(): void {
@@ -163,84 +143,84 @@ export class AppIndex extends AppElement {
 
   override render(): TemplateResult {
     return html`
-      ${this._renderNavigation()}
+      ${this._renderHeader()}
       <main class="page-container">${router.outlet(this._routes)}</main>
     `;
   }
 
-  protected _renderNavigation(): TemplateResult | typeof nothing {
+  protected _renderHeader(): TemplateResult | typeof nothing {
     if (this._hideNavigation) return nothing;
 
-    const listTemplate = mainNavigation.map((item) => {
-      const selected = this._activePage === item.id;
-      return html`
-        <ion-button href="${router.makeUrl({sectionList: [item.id]})}" ?hidden="${selected}">
-          <er-iconsax slot="icon-only" name="${item.icon}" category="broken"></er-iconsax>
-        </ion-button>
-      `;
-    });
+    const listTemplate =
+      router.currentRoute.sectionList[0] === 'game' ?
+        html`
+            <ion-button href="${router.makeUrl({sectionList: []})}">
+              <er-iconsax slot="icon-only" name="arrow-left-1" category="broken"></er-iconsax>
+            </ion-button>
+          ` :
+        mainNavigation.map((item) => {
+          const selected = this._activePage === item.id;
+          return html`
+              <ion-button href="${router.makeUrl({sectionList: [item.id]})}" ?hidden="${selected}">
+                <er-iconsax slot="icon-only" name="${item.icon}" category="broken"></er-iconsax>
+              </ion-button>
+            `;
+        });
 
     return html`
       <ion-header>
         <ion-toolbar color="primary">
-          <ion-title>${this._localize.term('spy_game')}</ion-title>
-          <ion-buttons slot="secondary">${listTemplate}</ion-buttons>
-          <ion-buttons slot="primary">
-            <pwa-install-button>
-              <ion-button>
-                <er-iconsax slot="icon-only" name="import" category="broken"></er-iconsax>
-              </ion-button>
-            </pwa-install-button>
-            <pwa-update-available>
-              <ion-button>
-                <er-iconsax slot="icon-only" name="export" category="broken"></er-iconsax>
-              </ion-button>
-            </pwa-update-available>
-          </ion-buttons>
-          <ion-buttons slot="end">
-            <ion-button @click="${this.langSwitch}"> ${this._localize.lang()} </ion-button>
-          </ion-buttons>
+          <ion-title slot="start">${this._localize.term('spy_game')}</ion-title>
+          <ion-buttons slot="primary">${listTemplate}</ion-buttons>
+          ${this._renderI18NSelect()} ${this._renderPWAButtons()}
         </ion-toolbar>
       </ion-header>
     `;
   }
+  protected _renderI18NSelect(): TemplateResult {
+    const localesTemplate = locales.map(
+        (locale) => html` <ion-select-option value=${locale.code}>${locale.$code}</ion-select-option> `,
+    );
 
-  protected langSwitch(_lang?: string, _dir?: string): void {
-    const html = document.querySelector('html');
-    const lang = html?.getAttribute('lang');
+    return html`
+      <ion-select
+        slot="secondary"
+        value=${this._localize.lang()}
+        placeholder="Select Language"
+        interface="alert"
+        ok-text=${this._localize.term('ok')}
+        cancel-text=${this._localize.term('cancel')}
+        @ionChange=${this._I18NChanged}
+      >
+        ${localesTemplate}
+      </ion-select>
+    `;
+  }
+  protected _renderPWAButtons(): TemplateResult {
+    return html`
+      <ion-buttons slot="end">
+        <pwa-install-button>
+          <ion-button>
+            <er-iconsax slot="icon-only" name="import" category="broken"></er-iconsax>
+          </ion-button>
+        </pwa-install-button>
+        <pwa-update-available>
+          <ion-button>
+            <er-iconsax slot="icon-only" name="export" category="broken"></er-iconsax>
+          </ion-button>
+        </pwa-update-available>
+      </ion-buttons>
+    `;
+  }
 
-    console.log(this._localize.term('$name'));
+  protected _I18NChanged(event: SelectCustomEvent): void {
+    this._localeController.update();
+    const locale = locales.find((locale) => locale.code === event.detail.value);
+    if (locale) {
+      this._logger.logProperty('locale', locale);
+      this._localeController.locale = locale;
 
-    if (_lang !== undefined && _dir !== undefined) {
-      html?.setAttribute('lang', _lang);
-      html?.setAttribute('dir', _dir);
-    } else if (lang === 'fa') {
-      localStorage.setItem('lang', 'en');
-      localStorage.setItem('dir', 'ltr');
-      this.remove();
-      document.body.appendChild(document.createElement('app-index'));
-    } else {
-      localStorage.setItem('lang', 'fa');
-      localStorage.setItem('dir', 'rtl');
-      this.remove();
-      document.body.appendChild(document.createElement('app-index'));
+      router.signal.request({pathname: '/'});
     }
   }
-}
-
-// import '@ionic/core/dist/types/components';
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(
-        function(registration) {
-        // Registration was successful
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        },
-        function(err) {
-        // registration failed :(
-          console.log('ServiceWorker registration failed: ', err);
-        },
-    );
-  });
 }
