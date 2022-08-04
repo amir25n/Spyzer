@@ -1,9 +1,16 @@
-import type {Translation} from '@shoelace-style/localize';
+import type {DefaultTranslation} from '@shoelace-style/localize';
 
-const translation: Translation = {
+const translation: DefaultTranslation = {
   $code: 'en',
   $name: 'English',
   $dir: 'ltr',
+
+  $spies_unit: 'spy',
+  $players_unit: 'people',
+  $time_unit: 'minute',
+
+  ok: 'Ok',
+  cancel: 'Cancel',
 
   spy_game_web_app: 'Spy Game Web App',
   developer: 'Developer',
@@ -16,7 +23,13 @@ const translation: Translation = {
   number_of_players: 'Number Of Players',
   time: 'Time',
   start: 'Start',
+  settings: 'Settings',
   spy_game: 'Spy Game',
+  people: 'people',
+  minutes: 'minutes',
+  the_citizen_is_more_likely_to_win: 'The Citizen Is More Likely To Win',
+  the_spy_is_more_likely_to_win: 'The Spy Is More Likely To Win',
+  all_settings_are_good: 'All Settings Are Good',
 
   words: () => words,
 };
