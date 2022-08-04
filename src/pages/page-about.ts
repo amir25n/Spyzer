@@ -1,12 +1,10 @@
-import {LocalizeController} from '@shoelace-style/localize/dist/index.js';
-import {css, html, CSSResultGroup} from 'lit';
+import {css, html} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 
 import {AppElement} from '../app-debt/app-element';
-import globalStyleSheets from '../global.css';
 
 import type {ListenerInterface} from '@alwatr/signal';
-import type {TemplateResult} from 'lit';
+import type {TemplateResult, CSSResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -23,8 +21,8 @@ declare global {
  */
 @customElement('page-about')
 export class PageAbout extends AppElement {
-  static override styles: CSSResultGroup = [
-    globalStyleSheets,
+  static override styles = [
+    ...(<CSSResult[]>AppElement.styles),
     css`
       :host {
         display: flex;
@@ -51,7 +49,6 @@ export class PageAbout extends AppElement {
     `,
   ];
 
-  protected _localize = new LocalizeController(this);
   protected _listenerList: Array<unknown> = [];
 
   override connectedCallback(): void {
