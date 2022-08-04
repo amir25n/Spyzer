@@ -1,14 +1,21 @@
 import {createLogger} from '@alwatr/logger';
+import {LocalizeController} from '@shoelace-style/localize/dist/index.js';
 import {LitElement} from 'lit';
 
+import ionicReset from '../stylesheets/ionic.reset';
+import ionicTheming from '../stylesheets/ionic.theming';
+import ionicUtilities from '../stylesheets/ionic.utilities';
+import reset from '../stylesheets/reset';
+
 import type {Logger} from '@alwatr/logger/type';
-import type {PropertyValues} from 'lit';
+import type {PropertyValues, CSSResult} from 'lit';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
 type Constructor<ClassType = {}> = new (...args: any[]) => ClassType;
 
 export declare class LoggableMixinInterface extends LitElement {
   protected _logger: Logger;
+  protected _localize: LocalizeController;
 }
 
 export function LoggableMixin<ClassType extends Constructor<LitElement>>(
@@ -16,6 +23,9 @@ export function LoggableMixin<ClassType extends Constructor<LitElement>>(
 ): Constructor<LoggableMixinInterface> & ClassType {
   class LoggableMixinClass extends superClass {
     protected _logger = createLogger(`<${this.tagName.toLowerCase()}>`);
+    protected _localize = new LocalizeController(this);
+
+    static styles: CSSResult[] = [ionicReset, reset, ionicTheming, ionicUtilities];
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(...args: any[]) {
