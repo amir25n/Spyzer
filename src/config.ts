@@ -1,3 +1,5 @@
+export type locale = {code: 'fa' | 'en'; dir: 'rtl' | 'ltr'; $code: string};
+
 export const mainNavigation = [
   {
     id: 'home',
@@ -8,3 +10,8 @@ export const mainNavigation = [
     icon: 'info-circle',
   },
 ] as const;
+
+export const locales: locale[] = [
+  {code: 'fa', dir: 'rtl', $code: 'فارسی'},
+  {code: 'en', dir: 'ltr', $code: 'English'},
+];
