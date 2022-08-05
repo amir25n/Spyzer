@@ -220,6 +220,8 @@ export class AppIndex extends AppElement {
       this._logger.logProperty('locale', locale);
       this._localeController.locale = locale;
 
+      this._localeController.update();
+
       router.signal.request({pathname: '/'});
     }
   }

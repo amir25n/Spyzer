@@ -1,6 +1,5 @@
 import {router} from '@alwatr/router';
 import {notEqual} from 'lit';
-import {when} from 'lit/directives/when.js';
 
 import {locales} from '../config';
 
@@ -33,8 +32,13 @@ class LocaleController {
     if (!HTMLElement) return;
 
     this.html = HTMLElement;
-    this.html.lang = when(notEqual(this.locale.code, this.html.lang), () => this.locale.code);
-    this.html.dir = when(notEqual(this.locale.dir, this.html.dir), () => this.locale.dir);
+
+    if (notEqual(this.locale.code, this.html.lang)) {
+      this.html.lang = this.locale.code;
+    }
+    if (notEqual(this.locale.dir, this.html.dir)) {
+      this.html.dir = this.locale.dir;
+    }
 
     router.signal.request({pathname: '/'});
   }
