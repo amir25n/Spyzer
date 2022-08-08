@@ -6,7 +6,6 @@ import {customElement} from 'lit/decorators/custom-element.js';
 
 import '@erbium/iconsax';
 import 'pwa-helper-components/pwa-install-button.js';
-import 'pwa-helper-components/pwa-update-available.js';
 
 import {AppElement} from './app-debt/app-element';
 import {locales, mainNavigation} from './config';
@@ -90,6 +89,7 @@ export class AppIndex extends AppElement {
 
   protected _hideNavigation = true;
   protected _hideNavigationSignal = new SignalInterface('hide-navigation');
+  protected _serviceWorkerUpdate = new SignalInterface('sw-update');
   protected _localeController = new LocaleController();
   protected _activePage = 'home';
   protected _listenerList: Array<unknown> = [];
@@ -204,11 +204,9 @@ export class AppIndex extends AppElement {
             <er-iconsax slot="icon-only" name="import" category="broken"></er-iconsax>
           </ion-button>
         </pwa-install-button>
-        <pwa-update-available>
-          <ion-button>
-            <er-iconsax slot="icon-only" name="export" category="broken"></er-iconsax>
-          </ion-button>
-        </pwa-update-available>
+        <ion-button>
+          <er-iconsax slot="icon-only" name="export" category="broken"></er-iconsax>
+        </ion-button>
       </ion-buttons>
     `;
   }
@@ -224,5 +222,8 @@ export class AppIndex extends AppElement {
 
       router.signal.request({pathname: '/'});
     }
+  }
+  protected _ServiceWorkerUpdate(): void {
+    this._serviceWorkerUpdate.dispatch();
   }
 }

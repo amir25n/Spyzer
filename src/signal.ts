@@ -7,5 +7,6 @@ declare global {
     readonly 'hide-navigation': boolean;
     readonly 'game-settings': settings | undefined;
     readonly 'game-words': string[];
+    readonly 'sw-update': void;
   }
 }

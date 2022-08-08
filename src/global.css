@@ -23,19 +23,12 @@ html {
 }
 
 :root {
-  /* --ion-color-primary: #6301da;
+  --ion-color-primary: #6301da;
   --ion-color-primary-rgb: 99, 1, 218;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #5701c0;
-  --ion-color-primary-tint: #731ade; */
-
-  --ion-color-primary: #ff0088;
-	--ion-color-primary-rgb: 255,0,136;
-	--ion-color-primary-contrast: #ffffff;
-	--ion-color-primary-contrast-rgb: 255,255,255;
-	--ion-color-primary-shade: #e00078;
-	--ion-color-primary-tint: #ff1a94;
+  --ion-color-primary-tint: #731ade;
 
   --ion-background-color: #eee;
   --ion-background-color-rgb: 238, 238, 238;
