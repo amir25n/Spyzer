@@ -1,4 +1,5 @@
 import {router} from '@alwatr/router';
+import {update as localizeUpdate} from '@shoelace-style/localize/dist/index';
 import {notEqual} from 'lit';
 
 import {locales} from '../config';
@@ -32,12 +33,19 @@ class LocaleController {
     if (!HTMLElement) return;
 
     this.html = HTMLElement;
+    let isChanged = false;
 
     if (notEqual(this.locale.code, this.html.lang)) {
       this.html.lang = this.locale.code;
+      isChanged = true;
     }
     if (notEqual(this.locale.dir, this.html.dir)) {
       this.html.dir = this.locale.dir;
+      isChanged = true;
+    }
+
+    if (isChanged) {
+      localizeUpdate();
     }
 
     router.signal.request({pathname: '/'});

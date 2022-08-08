@@ -171,8 +171,18 @@ export class AppIndex extends AppElement {
       <ion-header>
         <ion-toolbar color="primary">
           <ion-title slot="start">${this._localize.term('spy_game')}</ion-title>
+
           <ion-buttons slot="primary">${listTemplate}</ion-buttons>
-          ${this._renderI18NSelect()} ${this._renderPWAButtons()}
+
+          ${this._renderI18NSelect()}
+
+          <ion-buttons slot="end">
+            <pwa-install-button>
+              <ion-button>
+                <er-iconsax slot="icon-only" name="import" category="broken"></er-iconsax>
+              </ion-button>
+            </pwa-install-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
     `;
@@ -196,20 +206,6 @@ export class AppIndex extends AppElement {
       </ion-select>
     `;
   }
-  protected _renderPWAButtons(): TemplateResult {
-    return html`
-      <ion-buttons slot="end">
-        <pwa-install-button>
-          <ion-button>
-            <er-iconsax slot="icon-only" name="import" category="broken"></er-iconsax>
-          </ion-button>
-        </pwa-install-button>
-        <ion-button>
-          <er-iconsax slot="icon-only" name="export" category="broken"></er-iconsax>
-        </ion-button>
-      </ion-buttons>
-    `;
-  }
 
   protected _I18NChanged(event: SelectCustomEvent): void {
     this._localeController.update();
@@ -222,8 +218,5 @@ export class AppIndex extends AppElement {
 
       router.signal.request({pathname: '/'});
     }
-  }
-  protected _ServiceWorkerUpdate(): void {
-    this._serviceWorkerUpdate.dispatch();
   }
 }
