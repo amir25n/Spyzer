@@ -168,7 +168,12 @@ ion-picker * {
   font-family: var(--ion-font-family);
 }
 
-ion-picker.settings__select ion-picker-column .picker-prefix {
+[dir='rtl'] ion-picker.settings__select ion-picker-column .picker-prefix {
   position: absolute;
   right: 55%;
+}
+
+[dir='ltr'] ion-picker.settings__select ion-picker-column .picker-prefix {
+  position: absolute;
+  left: 55%;
 }
