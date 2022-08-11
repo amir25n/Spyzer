@@ -1,7 +1,9 @@
 import {css, html} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
+import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {AppElement} from '../app-debt/app-element';
+import {developerTeam} from '../config';
 
 import type {ListenerInterface} from '@alwatr/signal';
 import type {TemplateResult, CSSResult} from 'lit';
@@ -24,27 +26,14 @@ export class PageAbout extends AppElement {
   static override styles = [
     ...(<CSSResult[]>AppElement.styles),
     css`
-      :host {
-        display: flex;
-        flex-direction: column;
-      }
-      .main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        padding: 1rem;
-      }
-      .main .about {
-        display: flex;
-        flex-direction: column;
+      ion-avatar {
         background-color: #fff;
-        border-radius: 12px;
-        box-shadow: 0 12px 32px 0 #0003;
-        padding: 1rem;
-        min-width: 320px;
+        --ion-padding: 6px;
+      }
+      h1 {
+        font-size: 18px;
+        font-weight: 900;
+        margin: auto 12px auto 0;
       }
     `,
   ];
@@ -55,20 +44,50 @@ export class PageAbout extends AppElement {
     super.connectedCallback();
     // this._listenerList.push(router.signal.addListener(() => this.requestUpdate()));
   }
-
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this._listenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
   }
-
-  protected override render(): TemplateResult {
+  override render(): TemplateResult {
     return html`
-      <div class="main">
-        <div class="about">
-          <h1>${this._localize.term('spy_game_web_app')}</h1>
-          <p>${this._localize.term('developer')}: mm25zamanian@gmail.com</p>
+      <section>
+        <div class="box">
+          <ion-row>
+            <ion-col class="ion-padding-bottom" size="12">
+              <ion-avatar class="ion-padding">
+                <img src="/images/icon-144x144.png" />
+              </ion-avatar>
+              <ion-text color="dark">
+                <h1>${this._localize.term('spy_game_web_app')}</h1>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+
+          ${this._renderDeveloperTeamList()}
         </div>
-      </div>
+      </section>
+    `;
+  }
+
+  protected _renderDeveloperTeamList(): TemplateResult {
+    const developerTeamTemplate = developerTeam.map(
+        (developer) => html`
+        <ion-item href=${ifDefined(developer.link)} target="_blank">
+          <ion-avatar slot="start">
+            <img src=${developer.image} />
+          </ion-avatar>
+          <ion-label>
+            <h3>${this._localize.term(developer.name)}</h3>
+            <p>${this._localize.term(developer.description)}</p>
+          </ion-label>
+        </ion-item>
+      `,
+    );
+    return html`
+      <ion-list lines="full">
+        <ion-list-header>${this._localize.term('developer_team')}</ion-list-header>
+        ${developerTeamTemplate}
+      </ion-list>
     `;
   }
 }

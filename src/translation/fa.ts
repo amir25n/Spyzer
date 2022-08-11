@@ -13,7 +13,7 @@ const translation: DefaultTranslation = {
   cancel: 'لغو',
 
   spy_game_web_app: 'وب اپلیکیشن بازی جاسوس',
-  developer: 'توسعه دهنده',
+  developer_team: 'تیم توسعه دهنده',
   back: 'بازگشت',
   next_person: 'نفر بعدی',
   show_word: 'نمایش کلمه',
@@ -43,6 +43,8 @@ const translation: DefaultTranslation = {
   green: 'سبز',
   teal: 'سبز آبی',
   cyan: 'فیروزه ای',
+  mohammadmahdi_zamanian: 'محمدمهدی زمانیان',
+  web_developer_project_maintainer: 'توسعه دهنده وب | نگه‌دارنده پروژه',
 
   words: () => words,
 };

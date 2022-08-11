@@ -12,7 +12,8 @@ import {mainNavigation} from './config';
 import en from './translation/en';
 import fa from './translation/fa';
 import LocaleController from './utilities/locale-controller';
-import {registerSW} from './utilities/register-sw';
+import registerSW from './utilities/register-sw';
+import ThemeController from './utilities/theme-controller';
 
 import './pages/page-home';
 import './pages/page-game';
@@ -91,6 +92,7 @@ export class AppIndex extends AppElement {
   protected _hideNavigationSignal = new SignalInterface('hide-navigation');
   protected _serviceWorkerUpdate = new SignalInterface('sw-update');
   protected _localeController = new LocaleController();
+  protected _themeController = new ThemeController();
   protected _activePage = 'home';
   protected _listenerList: Array<unknown> = [];
 
@@ -138,17 +140,18 @@ export class AppIndex extends AppElement {
 
     this._hideNavigationSignal.dispatch(false);
   }
-
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this._listenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
   }
-
   override render(): TemplateResult {
     return html`
       ${this._renderHeader()}
       <main class="page-container">${router.outlet(this._routes)}</main>
     `;
+  }
+  override firstUpdated(): void {
+    document.body.classList.remove('unresolved');
   }
 
   protected _renderHeader(): TemplateResult | typeof nothing {

@@ -1,7 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 import {SignalInterface} from '@alwatr/signal';
 
-export async function registerSW(): Promise<void> {
+export default async function registerSW(): Promise<void> {
   const logger = createLogger('register-sw');
   const signal = new SignalInterface('sw-update');
 

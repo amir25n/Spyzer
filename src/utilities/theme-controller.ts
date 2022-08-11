@@ -1,6 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 
-import {themeColors} from '../config';
+import {themeColors, themeColorsCode} from '../config';
 
 import type {color} from '../config';
 
@@ -41,6 +41,22 @@ class ThemeController {
 
   update(): void {
     const body = document.body;
+    const head = document.head;
+    const metaTags = {
+      'theme-color':
+        <HTMLMetaElement | null>document.querySelector('meta[name="theme-color"]') ?? document.createElement('meta'),
+      'msapplication-TileColor':
+        <HTMLMetaElement | null>document.querySelector('meta[name="msapplication-TileColor"]') ??
+        document.createElement('meta'),
+    };
+
+    metaTags['theme-color'].name = 'theme-color';
+    metaTags['theme-color'].content = themeColorsCode[this.color];
+    metaTags['msapplication-TileColor'].name = 'msapplication-TileColor';
+    metaTags['msapplication-TileColor'].content = themeColorsCode[this.color];
+
+    head.appendChild(metaTags['theme-color']);
+    head.appendChild(metaTags['msapplication-TileColor']);
 
     body.classList.remove(...themeColors.map((themeColor) => themeColor.name), 'dark', 'light');
     body.classList.add(this.color, this.mode);

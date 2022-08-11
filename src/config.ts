@@ -78,3 +78,25 @@ export const themeColors: themeColor[] = [
     colorPrimaryContrast: '#000000',
   },
 ];
+
+export const themeColorsCode: Record<color, string> = {
+  blue: '#0d6efd',
+  indigo: '#6610f2',
+  purple: '#6f42c1',
+  pink: '#d63384',
+  red: '#dc3545',
+  orange: '#fd7e14',
+  yellow: '#ffc107',
+  green: '#198754',
+  teal: '#20c997',
+  cyan: '#0dcaf0',
+};
+
+export const developerTeam: {name: string; description: string; link?: string; image: string}[] = [
+  {
+    name: 'mohammadmahdi_zamanian',
+    description: 'web_developer_project_maintainer',
+    link: 'https://mm25zamanian.ir',
+    image: '/images/developer_team/mohammadmahdi_zamanian.jpg',
+  },
+];

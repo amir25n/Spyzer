@@ -56,7 +56,7 @@ export class PageSettings extends AppElement {
           <ion-row class="ion-padding-bottom">
             <ion-col size="2" class="start">
               <ion-text color="dark">
-                <er-iconsax name="layer" category="outline"></er-iconsax>
+                <er-iconsax name="language-square" category="outline"></er-iconsax>
               </ion-text>
             </ion-col>
             <ion-col size="6" class="start">
@@ -104,8 +104,7 @@ export class PageSettings extends AppElement {
     const localesTemplate = locales.map(
         (locale) => html`
         <ion-segment-button @click=${(): void => this._languageChange(locale.code)} value=${locale.code}>
-          <!-- <ion-label>${locale.$code}</ion-label> -->
-          ${locale.$code}
+          <ion-label>${locale.$code}</ion-label>
         </ion-segment-button>
       `,
     );
@@ -147,26 +146,20 @@ export class PageSettings extends AppElement {
       this._logger.logProperty('locale', locale);
       this._localeController.locale = locale;
 
-      setTimeout(() => {
-        this._localeController.update();
-        this.requestUpdate();
-      }, 500);
+      this._localeController.update();
+      this.requestUpdate();
     }
   }
   protected _themeColorChange(color: color): void {
     this._themeController.color = color;
 
-    setTimeout(() => {
-      this._themeController.update();
-    }, 500);
-
+    this._themeController.update();
     this.requestUpdate();
   }
   protected _themeModeChange(mode: 'dark' | 'light'): void {
     this._themeController.mode = mode;
 
-    setTimeout(() => {
-      this._themeController.update();
-    }, 500);
+    this._themeController.update();
+    this.requestUpdate();
   }
 }
