@@ -8,7 +8,7 @@ import '@erbium/iconsax';
 import 'pwa-helper-components/pwa-install-button.js';
 
 import {AppElement} from './app-debt/app-element';
-import {locales, mainNavigation} from './config';
+import {mainNavigation} from './config';
 import en from './translation/en';
 import fa from './translation/fa';
 import LocaleController from './utilities/locale-controller';
@@ -16,11 +16,11 @@ import {registerSW} from './utilities/register-sw';
 
 import './pages/page-home';
 import './pages/page-game';
+import './pages/page-settings';
 import './pages/page-about';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {ListenerInterface} from '@alwatr/signal';
-import type {SelectCustomEvent} from '@ionic/core';
 import type {TemplateResult, CSSResult} from 'lit';
 
 declare global {
@@ -105,6 +105,9 @@ export class AppIndex extends AppElement {
       game: {
         render: () => html`<page-game class="ion-page"></page-game>`,
       },
+      settings: {
+        render: () => html`<page-settings class="ion-page"></page-settings>`,
+      },
       about: {
         render: () => html`<page-about class="ion-page"></page-about>`,
       },
@@ -151,18 +154,20 @@ export class AppIndex extends AppElement {
   protected _renderHeader(): TemplateResult | typeof nothing {
     if (this._hideNavigation) return nothing;
 
+    const BackIconDirection: 'left' | 'right-1' = this._localize.dir() === 'ltr' ? 'right-1' : 'left';
+
     const listTemplate =
       router.currentRoute.sectionList[0] === 'game' ?
         html`
             <ion-button href="${router.makeUrl({sectionList: []})}">
-              <er-iconsax slot="icon-only" name="arrow-left-1" category="broken"></er-iconsax>
+              <er-iconsax slot="icon-only" name="arrow-${BackIconDirection}" category="outline"></er-iconsax>
             </ion-button>
           ` :
         mainNavigation.map((item) => {
           const selected = this._activePage === item.id;
           return html`
               <ion-button href="${router.makeUrl({sectionList: [item.id]})}" ?hidden="${selected}">
-                <er-iconsax slot="icon-only" name="${item.icon}" category="broken"></er-iconsax>
+                <er-iconsax slot="icon-only" name="${item.icon}" category="outline"></er-iconsax>
               </ion-button>
             `;
         });
@@ -174,8 +179,6 @@ export class AppIndex extends AppElement {
 
           <ion-buttons slot="primary">${listTemplate}</ion-buttons>
 
-          ${this._renderI18NSelect()}
-
           <ion-buttons slot="end">
             <pwa-install-button>
               <ion-button>
@@ -186,37 +189,5 @@ export class AppIndex extends AppElement {
         </ion-toolbar>
       </ion-header>
     `;
-  }
-  protected _renderI18NSelect(): TemplateResult {
-    const localesTemplate = locales.map(
-        (locale) => html` <ion-select-option value=${locale.code}>${locale.$code}</ion-select-option> `,
-    );
-
-    return html`
-      <ion-select
-        slot="secondary"
-        value=${this._localize.lang()}
-        placeholder="Select Language"
-        interface="alert"
-        ok-text=${this._localize.term('ok')}
-        cancel-text=${this._localize.term('cancel')}
-        @ionChange=${this._I18NChanged}
-      >
-        ${localesTemplate}
-      </ion-select>
-    `;
-  }
-
-  protected _I18NChanged(event: SelectCustomEvent): void {
-    this._localeController.update();
-    const locale = locales.find((locale) => locale.code === event.detail.value);
-    if (locale) {
-      this._logger.logProperty('locale', locale);
-      this._localeController.locale = locale;
-
-      this._localeController.update();
-
-      router.signal.request({pathname: '/'});
-    }
   }
 }

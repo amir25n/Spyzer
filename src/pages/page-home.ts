@@ -1,7 +1,7 @@
 import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
 import {pickerController} from '@ionic/core';
-import {css, html} from 'lit';
+import {html} from 'lit';
 import {customElement} from 'lit/decorators/custom-element.js';
 import {range} from 'lit/directives/range.js';
 
@@ -27,56 +27,7 @@ declare global {
  */
 @customElement('page-home')
 export class PageHome extends AppElement {
-  static override styles = [
-    ...(<CSSResult[]>AppElement.styles),
-    css`
-      section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        padding: 1rem;
-      }
-      section .box {
-        display: flex;
-        flex-direction: column;
-        background-color: #fff;
-        border-radius: 12px;
-        box-shadow: 0 12px 32px 0 #0003;
-        padding: 1rem;
-      }
-      section .box ion-col {
-        display: flex;
-        align-items: center;
-      }
-      section .box ion-col.center {
-        justify-content: center;
-      }
-      section .box ion-col.start {
-        justify-content: flex-start;
-      }
-      section .box ion-button {
-        width: 100%;
-      }
-      .select__opt-icon {
-        font-size: 18px;
-      }
-      ion-button ion-label {
-        margin: auto;
-      }
-      ion-button er-iconsax {
-        margin-inline-start: auto;
-      }
-
-      @media screen and (max-width: 768px) {
-        section .box {
-          width: 95%;
-        }
-      }
-    `,
-  ];
+  static override styles = [...(<CSSResult[]>AppElement.styles)];
 
   protected _settings: settings = {players: 3, spies: 1, time: 5};
   protected _listenerList: Array<unknown> = [];
@@ -100,9 +51,13 @@ export class PageHome extends AppElement {
         <div class="box">
           <ion-row>
             <ion-col size="2" class="center">
-              <er-iconsax name="people" category="broken"></er-iconsax>
+              <ion-text color="dark">
+                <er-iconsax name="people" category="broken"></er-iconsax>
+              </ion-text>
             </ion-col>
-            <ion-col size="4" class="start"> ${this._localize.term('number_of_players')}: </ion-col>
+            <ion-col size="4" class="start">
+              <ion-text color="dark"> ${this._localize.term('number_of_players')}:</ion-text>
+            </ion-col>
             <ion-col size="6" class="center">
               <ion-button
                 color="dark"
@@ -119,9 +74,13 @@ export class PageHome extends AppElement {
           </ion-row>
           <ion-row>
             <ion-col size="2" class="center">
-              <er-iconsax name="user-remove" category="broken"></er-iconsax>
+              <ion-text color="dark">
+                <er-iconsax name="user-remove" category="broken"></er-iconsax>
+              </ion-text>
             </ion-col>
-            <ion-col size="4" class="start"> ${this._localize.term('number_of_spies')}: </ion-col>
+            <ion-col size="4" class="start">
+              <ion-text color="dark"> ${this._localize.term('number_of_spies')}: </ion-text>
+            </ion-col>
             <ion-col size="6" class="center">
               <ion-button
                 color="dark"
@@ -138,9 +97,13 @@ export class PageHome extends AppElement {
           </ion-row>
           <ion-row>
             <ion-col size="2" class="center">
-              <er-iconsax name="timer-1" category="broken"></er-iconsax>
+              <ion-text color="dark">
+                <er-iconsax name="timer-1" category="broken"></er-iconsax>
+              </ion-text>
             </ion-col>
-            <ion-col size="4" class="start"> ${this._localize.term('time')}: </ion-col>
+            <ion-col size="4" class="start">
+              <ion-text color="dark"> ${this._localize.term('time')}: </ion-text>
+            </ion-col>
             <ion-col size="6" class="center">
               <ion-button
                 color="dark"
