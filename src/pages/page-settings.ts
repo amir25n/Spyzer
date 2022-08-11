@@ -56,7 +56,7 @@ export class PageSettings extends AppElement {
           <ion-row class="ion-padding-bottom">
             <ion-col size="2" class="start">
               <ion-text color="dark">
-                <er-iconsax name="layer" category="outline"></er-iconsax>
+                <er-iconsax name="language-square" category="outline"></er-iconsax>
               </ion-text>
             </ion-col>
             <ion-col size="6" class="start">
@@ -104,8 +104,7 @@ export class PageSettings extends AppElement {
     const localesTemplate = locales.map(
         (locale) => html`
         <ion-segment-button @click=${(): void => this._languageChange(locale.code)} value=${locale.code}>
-          <!-- <ion-label>${locale.$code}</ion-label> -->
-          ${locale.$code}
+          <ion-label>${locale.$code}</ion-label>
         </ion-segment-button>
       `,
     );
