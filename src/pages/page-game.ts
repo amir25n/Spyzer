@@ -28,38 +28,14 @@ export class PageGame extends AppElement {
   static override styles = [
     ...(<CSSResult[]>AppElement.styles),
     css`
-      .main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        padding: 1rem;
-      }
-      .main .game {
-        display: flex;
-        flex-direction: column;
-        background-color: #fff;
-        border-radius: 12px;
-        box-shadow: 0 12px 32px 0 #0003;
-        padding: 1rem;
-        min-width: 320px;
-      }
-      .main .game .game-next {
+      section .box .game-next {
         display: flex;
         justify-content: center;
         width: 100%;
         padding-top: 24px;
       }
-      .main .game .game-next ion-button {
+      section .box .game-next ion-button {
         width: 100%;
-      }
-
-      @media (max-width: 576px) {
-        .main .game {
-          width: 95%;
-        }
       }
     `,
   ];
@@ -103,15 +79,17 @@ export class PageGame extends AppElement {
 
   override render(): TemplateResult {
     return html`
-      <div class="main">
-        <div class="game">${this._render()}</div>
-      </div>
+      <section>
+        <div class="box">${this._render()}</div>
+      </section>
     `;
   }
 
   protected _renderWord(): TemplateResult {
     return html`
-      <h1 class="ion-text-center">${this._words[this._wordActive]}</h1>
+      <ion-text color="dark">
+        <h1 class="ion-text-center">${this._words[this._wordActive]}</h1>
+      </ion-text>
       <div class="game-next">
         <ion-grid>
           <ion-row>
@@ -125,7 +103,9 @@ export class PageGame extends AppElement {
   }
   protected _renderHideCover(): TemplateResult {
     return html`
-      <h1 class="ion-text-center">${this._localize.term('next_person')}</h1>
+      <ion-text color="dark">
+        <h1 class="ion-text-center">${this._localize.term('next_person')}</h1>
+      </ion-text>
       <div class="game-next">
         <ion-grid>
           <ion-row>
@@ -148,7 +128,9 @@ export class PageGame extends AppElement {
   }
   protected _renderStartCover(): TemplateResult {
     return html`
-      <h1 class="ion-text-center">${this._localize.term('start')}</h1>
+      <ion-text color="dark">
+        <h1 class="ion-text-center">${this._localize.term('start')}</h1>
+      </ion-text>
       <div class="game-next">
         <ion-grid>
           <ion-row>
@@ -171,9 +153,11 @@ export class PageGame extends AppElement {
   }
   protected _renderTimer(): TemplateResult {
     return html`
-      <h1 class="ion-text-center">
-        <spy-timer duration="${this._timeSeconds}"></spy-timer>
-      </h1>
+      <ion-text color="dark">
+        <h1 class="ion-text-center">
+          <spy-timer duration="${this._timeSeconds}"></spy-timer>
+        </h1>
+      </ion-text>
       <div class="game-next">
         <ion-grid>
           <ion-row>

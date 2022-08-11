@@ -1,4 +1,4 @@
-import {router} from '@alwatr/router';
+import {createLogger} from '@alwatr/logger';
 import {update as localizeUpdate} from '@shoelace-style/localize/dist/index';
 import {notEqual} from 'lit';
 
@@ -8,6 +8,7 @@ import type {locale} from '../config';
 
 class LocaleController {
   html?: HTMLElement;
+  protected _logger = createLogger('controller/locale');
 
   constructor() {
     this.update();
@@ -46,9 +47,8 @@ class LocaleController {
 
     if (isChanged) {
       localizeUpdate();
+      this._logger.logMethodArgs('update', {language: this.locale.code, direction: this.locale.dir});
     }
-
-    router.signal.request({pathname: '/'});
   }
 }
 
