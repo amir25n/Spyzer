@@ -7,7 +7,6 @@ import {getBabelOutputPlugin} from '@rollup/plugin-babel';
 import {terser} from 'rollup-plugin-terser';
 import {copy} from '@web/rollup-plugin-copy';
 import {generateSW} from 'rollup-plugin-workbox';
-import workboxConfig from './workbox-config.js';
 
 function onwarn(warning) {
   if (warning.code !== 'THIS_IS_UNDEFINED') {
@@ -74,15 +73,9 @@ export default {
         ],
       },
     }),
-
     summary({showMinifiedSize: false}), // Print bundle summary
-
     copy({
       patterns: ['images/**/*'],
-    }),
-
-    generateSW(workboxConfig, function render({swDest, count, size}) {
-      console.log('📦', swDest, '#️⃣', count, '🐘', size);
     }),
   ],
 

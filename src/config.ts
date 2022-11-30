@@ -1,80 +1,31 @@
-export type locale = {code: 'fa' | 'en'; dir: 'rtl' | 'ltr'; $code: string};
-export type color = 'blue' | 'indigo' | 'purple' | 'pink' | 'red' | 'orange' | 'yellow' | 'green' | 'teal' | 'cyan';
-export type themeColor = {
-  name: color;
-  colorPrimary: `#${string}`;
-  colorPrimaryContrast: `#${string}`;
+import type {Contribute} from './types/contribute';
+
+const words: string[] = ['بیمارستان', 'تیمارستان'];
+const contributes: Contribute[] = [
+  {
+    image: '/images/icon-512-maskable.png',
+    donate: 'https://www.coffeete.ir/mm25zamanian',
+    name: {
+      'fa-IR': 'سید محمدمهدی زمانیان',
+      'en-US': 'S. MohammadMahdi Zamanian',
+    },
+    job: {
+      'fa-IR': 'مدیر محصول / توسعه دهنده',
+      'en-US': 'Product Manager / Developer',
+    },
+    description: {
+      'fa-IR': `
+      وقتی ثروت‌ های بزرگ به دست برخی مردم می‌افتد
+      در پرتو آن نیرومند می‌شوند و در سایهٔ نیرومندی و ثروت خیال می‌ کنند که می‌توانند در خارج از وطن خود زندگی نمایند
+      و خوشبخت و سرافراز باشند ولی به زودی می‌ فهمند که اشتباه کرده‌ اند
+      و عظمت هر ملتی بر روی خرابه‌ های وطن خودش می‌باشد و بس!
+      `,
+      'en-US': '',
+    },
+  },
+];
+
+export default {
+  words,
+  contributes,
 };
-
-export const mainNavigation = [
-  {
-    id: 'home',
-    icon: 'home-2',
-  },
-  {
-    id: 'settings',
-    icon: 'setting-2',
-  },
-  {
-    id: 'about',
-    icon: 'info-circle',
-  },
-] as const;
-
-export const locales: locale[] = [
-  {code: 'fa', dir: 'rtl', $code: 'فارسی'},
-  {code: 'en', dir: 'ltr', $code: 'English'},
-];
-
-export const themeColors: themeColor[] = [
-  {
-    name: 'blue',
-    colorPrimary: '#0d6efd',
-    colorPrimaryContrast: '#ffffff',
-  },
-  {
-    name: 'indigo',
-    colorPrimary: '#6610f2',
-    colorPrimaryContrast: '#ffffff',
-  },
-  {
-    name: 'purple',
-    colorPrimary: '#6f42c1',
-    colorPrimaryContrast: '#ffffff',
-  },
-  {
-    name: 'pink',
-    colorPrimary: '#d63384',
-    colorPrimaryContrast: '#ffffff',
-  },
-  {
-    name: 'red',
-    colorPrimary: '#dc3545',
-    colorPrimaryContrast: '#ffffff',
-  },
-  {
-    name: 'orange',
-    colorPrimary: '#fd7e14',
-    colorPrimaryContrast: '#000000',
-  },
-  {
-    name: 'yellow',
-    colorPrimary: '#ffc107',
-    colorPrimaryContrast: '#000000',
-  },
-  {
-    name: 'green',
-    colorPrimary: '#198754',
-    colorPrimaryContrast: '#ffffff',
-  },
-  {
-    name: 'teal',
-    colorPrimary: '#20c997',
-    colorPrimaryContrast: '#000000',
-  },
-  {
-    name: 'cyan',
-    colorPrimary: '#0dcaf0',
-    colorPrimaryContrast: '#000000',
-  },
-];

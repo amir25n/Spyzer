@@ -1,18 +1,17 @@
 import {LitElement, html} from 'lit';
-import {customElement} from 'lit/decorators/custom-element.js';
-import {property} from 'lit/decorators/property.js';
-import {state} from 'lit/decorators/state.js';
+import {property, state, customElement} from 'lit/decorators.js';
+import {when} from 'lit/directives/when.js';
 
 import type {TemplateResult} from 'lit';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'spy-timer': SpyTimer;
+    't-imer': Timer;
   }
 }
 
-@customElement('spy-timer')
-export class SpyTimer extends LitElement {
+@customElement('t-imer')
+export class Timer extends LitElement {
   @property({type: Number}) duration = 60;
   @state() private end: number | null = null;
   @state() private remaining = 0;
@@ -22,7 +21,13 @@ export class SpyTimer extends LitElement {
     const min = Math.floor(remaining / 60000);
     const sec = pad(min, Math.floor((remaining / 1000) % 60));
     const hun = pad(true, Math.floor((remaining % 1000) / 10));
-    return html` ${min ? `${min}:${sec}` : `${sec}.${hun}`} `;
+    return html`
+      ${when(
+      min,
+      () => html`${min.toLocaleString('fa-IR')}:${sec.toLocaleString('fa-IR')}`,
+      () => html`${sec.toLocaleString('fa-IR')}.${hun.toLocaleString('fa-IR')}`,
+  )}
+    `;
   }
   /* playground-fold */
 
@@ -56,5 +61,5 @@ export class SpyTimer extends LitElement {
 }
 
 function pad(pad: unknown, val: number): string | number {
-  return pad ? String(val).padStart(2, '0') : val;
+  return pad ? String(val.toLocaleString('fa-IR')).padStart(2, '0') : val.toLocaleString('fa-IR');
 }
