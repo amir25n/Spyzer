@@ -1,9 +1,10 @@
 import {AlwatrElement as AppElement} from '@alwatr/element';
+import {fetch} from '@alwatr/fetch';
+import {toastController} from '@ionic/core';
 import {html, css, nothing} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
-import config from '../config';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
@@ -11,14 +12,8 @@ import normalize from '../styles/normalize';
 import type {Contribute} from '../types/contribute';
 import type {TemplateResult} from 'lit';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'page-about': PageAbout;
-  }
-}
-
-@customElement('page-about')
-export class PageAbout extends AppElement {
+@customElement('page-contributes')
+export class PageContributes extends AppElement {
   static override styles = [
     normalize,
     ionicNormalize,
@@ -59,14 +54,46 @@ export class PageAbout extends AppElement {
     `,
   ];
 
+  @state() private __contributes: Contribute[] = [];
+
+  @state() private __loading = true;
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+
+    fetch({
+      url: '/data/contributes.json',
+      retry: 5,
+      retryDelay: 1_000,
+      revalidateCallback: async (response) => {
+        await this.__responseToContribute(response);
+        this.__loading = false;
+      },
+      cacheStorageName: 'spy_game_storage',
+      cacheStrategy: 'stale_while_revalidate',
+    }).then((response) => {
+      return this.__responseToContribute(response);
+    });
+  }
+
   override render(): TemplateResult {
     return html`
       <ion-header>
         <ion-toolbar>
-          <ion-title>درباره من</ion-title>
+          ${when(this.__loading, () => {
+            return html`
+              <ion-buttons slot="end">
+                <ion-button>
+                  <ion-spinner></ion-spinner>
+                </ion-button>
+              </ion-buttons>
+            `;
+          })}
+
+          <ion-title>توسعه دهندگان</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content fullscreen> ${this.__renderContributes(config.contributes)} </ion-content>
+      <ion-content fullscreen> ${this.__renderContributes(this.__contributes)} </ion-content>
     `;
   }
 
@@ -80,17 +107,20 @@ export class PageAbout extends AppElement {
         delay: 2500,
       },
     };
-    const contributesTemplate = contributes.map(
-        (contribute) => html` <ion-slide> ${this.__renderContribute(contribute)} </ion-slide> `,
-    );
+    const contributesTemplate = contributes.map((contribute) => {
+      return html` <ion-slide> ${this.__renderContribute(contribute)} </ion-slide> `;
+    });
 
     return html` <ion-slides .options=${slidesOptions} style="width:100vw;"> ${contributesTemplate} </ion-slides> `;
   }
+
   private __renderContribute(contribute: Contribute): TemplateResult {
     const descriptionTemplate = contribute.description['fa-IR']
-        .trim()
-        .split('\n')
-        .map((paragraph) => html`<p>${paragraph}</p>`);
+      .trim()
+      .split('\n')
+      .map((paragraph) => {
+        return html`<p>${paragraph}</p>`;
+      });
 
     return html`
       <ion-card class="contribute">
@@ -102,9 +132,8 @@ export class PageAbout extends AppElement {
 
         <ion-card-content> ${descriptionTemplate} </ion-card-content>
 
-        ${when(
-      contribute.donate,
-      () => html`
+        ${when(contribute.donate, () => {
+          return html`
             <ion-button
               .href=${contribute.donate}
               target="_blank"
@@ -115,9 +144,34 @@ export class PageAbout extends AppElement {
               <alwatr-icon name="cafe-outline" slot="start"></alwatr-icon>
               <ion-label>دوست داری برام یه قهوه بخری !؟</ion-label>
             </ion-button>
-          `,
-  )}
+          `;
+        })}
       </ion-card>
     `;
+  }
+
+  private async __responseToContribute(response: Response): Promise<void> {
+    try {
+      const contribute = (await response.json()) as Contribute[];
+
+      this._logger.logProperty('__contributes', contribute);
+      this.__contributes = contribute;
+    } catch {
+      toastController
+        .create({
+          duration: 3_000,
+          position: 'bottom',
+          message: 'دریافت توسعه دهندگان با خطا رو به رو شد',
+        })
+        .then((toast) => {
+          return toast.present();
+        });
+    }
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'page-contributes': PageContributes;
   }
 }

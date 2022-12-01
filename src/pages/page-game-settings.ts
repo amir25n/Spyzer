@@ -11,12 +11,6 @@ import GameSettingsStorage from '../utilities/game-settings-storage';
 
 import type {TemplateResult} from 'lit';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'page-game-settings': PageGameSettings;
-  }
-}
-
 interface RangeRendererParameters {
   title: string;
   name: 'players' | 'spies' | 'time';
@@ -53,14 +47,21 @@ export class PageGameSettings extends AppElement {
   ];
 
   private __storage = new GameSettingsStorage();
+
   private __settingsRadioList: RangeRendererParameters[] = [
     {
       title: 'تعداد بازیکنان',
       name: 'players',
       icon: 'people-outline',
-      min: (): number => 3,
-      max: (): number => 25,
-      value: (): number => this.__storage.players,
+      min: (): number => {
+        return 3;
+      },
+      max: (): number => {
+        return 25;
+      },
+      value: (): number => {
+        return this.__storage.players;
+      },
       callback: this.__settingsChangeCallbackGenerator('players'),
       step: 1,
     },
@@ -68,9 +69,15 @@ export class PageGameSettings extends AppElement {
       title: 'تعداد جاسوس ها',
       name: 'spies',
       icon: 'skull-outline',
-      min: (): number => 1,
-      max: (): number => this.__storage.players,
-      value: (): number => this.__storage.spies,
+      min: (): number => {
+        return 1;
+      },
+      max: (): number => {
+        return this.__storage.players;
+      },
+      value: (): number => {
+        return this.__storage.spies;
+      },
       callback: this.__settingsChangeCallbackGenerator('spies'),
       step: 1,
     },
@@ -78,9 +85,15 @@ export class PageGameSettings extends AppElement {
       title: 'مدت زمان',
       name: 'time',
       icon: 'time-outline',
-      min: (): number => 5,
-      max: (): number => 45,
-      value: (): number => this.__storage.time,
+      min: (): number => {
+        return 5;
+      },
+      max: (): number => {
+        return 45;
+      },
+      value: (): number => {
+        return this.__storage.time;
+      },
       callback: this.__settingsChangeCallbackGenerator('time'),
       step: 5,
     },
@@ -98,9 +111,9 @@ export class PageGameSettings extends AppElement {
   }
 
   private __renderSettingsCard(): TemplateResult {
-    const settingsTemplate = this.__settingsRadioList.map((rangeOptions) =>
-      this.__renderSettingItemTemplate(rangeOptions),
-    );
+    const settingsTemplate = this.__settingsRadioList.map((rangeOptions) => {
+      return this.__renderSettingItemTemplate(rangeOptions);
+    });
 
     return html`
       <ion-card class="settings">
@@ -109,6 +122,7 @@ export class PageGameSettings extends AppElement {
       </ion-card>
     `;
   }
+
   private __renderSettingItemTemplate(range: RangeRendererParameters): TemplateResult {
     return html`
       <ion-item class="settings__label" lines="none">
@@ -132,9 +146,10 @@ export class PageGameSettings extends AppElement {
       </ion-item>
     `;
   }
+
   private __renderSettingsButton(): TemplateResult {
-    const color = Math.ceil(this.__storage.players / 3) > this.__storage.spies ? 'primary' : 'danger';
-    const disabled = this.__storage.players / 2 >= this.__storage.spies ? false : true;
+    const color = Math.ceil(this.__storage.players / 3) >= this.__storage.spies ? 'primary' : 'danger';
+    const disabled = !(this.__storage.players / 2 >= this.__storage.spies);
 
     return html`
       <ion-button expand="block" .color=${color} ?disabled=${disabled} @click=${this.__startGame}>
@@ -152,16 +167,24 @@ export class PageGameSettings extends AppElement {
       }),
     });
   }
+
   private __settingsChange(name: 'players' | 'spies' | 'time', value: number): void {
     this.__storage[name] = value;
     this.requestUpdate();
   }
+
   private __settingsChangeCallbackGenerator(name: 'players' | 'spies' | 'time'): (event: RangeCustomEvent) => void {
     return (event: RangeCustomEvent) => {
-      const value = event.detail.value;
+      const {value} = event.detail;
       if (typeof value === 'number') {
         this.__settingsChange(name, value);
       }
     };
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'page-game-settings': PageGameSettings;
   }
 }

@@ -1,4 +1,5 @@
 import {AlwatrElement as AppElement} from '@alwatr/element';
+import {router} from '@alwatr/router';
 import {html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
@@ -7,12 +8,6 @@ import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
 
 import type {TemplateResult} from 'lit';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'page-home': PageHome;
-  }
-}
 
 @customElement('page-home')
 export class PageHome extends AppElement {
@@ -57,12 +52,23 @@ export class PageHome extends AppElement {
             </p>
             <p class="readme__made-with">ساخته شده با ❤️</p>
 
-            <ion-button color="secondary" class="readme__start-button" expand="block">
+            <ion-button
+              href=${router.makeUrl({sectionList: ['game']})}
+              color="secondary"
+              class="readme__start-button"
+              expand="block"
+            >
               <ion-label>شروع بازی</ion-label>
             </ion-button>
           </ion-card-content>
         </ion-card>
       </ion-content>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'page-home': PageHome;
   }
 }

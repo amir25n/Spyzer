@@ -1,12 +1,13 @@
 import {AlwatrElement as AppElement} from '@alwatr/element';
+import {fetch} from '@alwatr/fetch';
 import {random} from '@alwatr/math';
 import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
+import {toastController} from '@ionic/core';
 import {html, css, nothing} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
-import config from '../config';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
@@ -15,12 +16,6 @@ import GameSettingsStorage from '../utilities/game-settings-storage';
 import '../components/t-imer';
 
 import type {TemplateResult} from 'lit';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'page-game': PageGame;
-  }
-}
 
 @customElement('page-game')
 export class PageGame extends AppElement {
@@ -45,26 +40,47 @@ export class PageGame extends AppElement {
   ];
 
   @state() private __stages: (TemplateResult | null)[] = [];
+
   @state() private __stage = 0;
+
+  @state() private __loading = true;
 
   static __showAppBarSignal = new SignalInterface('show-app-bar');
 
   private __storage = new GameSettingsStorage();
-  private __words: string[] = config.words;
+
+  private __words: string[] = [];
+
   private __spyWord = 'شما جاسوس هستید';
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    this.__generateNewWord();
-    this.__generateStages();
-    PageGame.__showAppBarSignal.dispatch(false);
+    fetch({
+      url: '/data/words.json',
+      retry: 5,
+      retryDelay: 1_000,
+      revalidateCallback: async (response) => {
+        await this.__responseToWord(response);
+        this.__loading = false;
+      },
+      cacheStorageName: 'spy_game_storage',
+      cacheStrategy: 'stale_while_revalidate',
+    }).then(async (response) => {
+      await this.__responseToWord(response);
+
+      this.__generateNewWord();
+      this.__generateStages();
+      PageGame.__showAppBarSignal.dispatch(false);
+    });
   }
+
   override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     PageGame.__showAppBarSignal.dispatch(true);
   }
+
   override render(): TemplateResult {
     return html`
       <ion-header>
@@ -74,6 +90,15 @@ export class PageGame extends AppElement {
               <alwatr-icon dir="rtl" slot="icon-only" name="arrow-back-outline" flip-rtl></alwatr-icon>
             </ion-button>
           </ion-buttons>
+          ${when(this.__loading, () => {
+            return html`
+              <ion-buttons slot="end">
+                <ion-button>
+                  <ion-spinner></ion-spinner>
+                </ion-button>
+              </ion-buttons>
+            `;
+          })}
 
           <ion-title>شکارچیان جاسوس</ion-title>
         </ion-toolbar>
@@ -93,6 +118,7 @@ export class PageGame extends AppElement {
       </ion-card>
     `;
   }
+
   private __renderTimeStage(duration: number): TemplateResult<1> {
     return html`
       <ion-text class="card__content">
@@ -104,6 +130,7 @@ export class PageGame extends AppElement {
       <ion-button expand="block" color="tertiary" @click=${this.__back}> بازگشت </ion-button>
     `;
   }
+
   private __renderPrivateStage(word: string | null): TemplateResult | null {
     if (word == null) return null;
 
@@ -111,22 +138,27 @@ export class PageGame extends AppElement {
 
     return html`
       ${when(
-      isSpy,
-      () => html`
-          <ion-text color="secondary" class="card__content word spy">
-            <h2>${this.__spyWord}</h2>
-          </ion-text>
-        `,
-      () => html`
-          <ion-text class="card__content word active-word">
-            <h1>${word}</h1>
-          </ion-text>
-        `,
-  )}
+        isSpy,
+        () => {
+          return html`
+            <ion-text color="secondary" class="card__content word spy">
+              <h2>${this.__spyWord}</h2>
+            </ion-text>
+          `;
+        },
+        () => {
+          return html`
+            <ion-text class="card__content word active-word">
+              <h1>${word}</h1>
+            </ion-text>
+          `;
+        },
+      )}
 
       <ion-button expand="block" color="success" @click=${this.__nextStage}> پنهان کردن </ion-button>
     `;
   }
+
   private __renderPublicStage(): TemplateResult<1> {
     return html`
       <ion-text class="card__content">
@@ -136,6 +168,7 @@ export class PageGame extends AppElement {
       <ion-button expand="block" color="danger" @click=${this.__nextStage}> نمایش دادن </ion-button>
     `;
   }
+
   private __renderStartStage(): TemplateResult<1> {
     return html`
       <ion-text class="card__content">
@@ -146,21 +179,52 @@ export class PageGame extends AppElement {
     `;
   }
 
+  private async __responseToWord(response: Response): Promise<void> {
+    try {
+      const words = (await response.json()) as string[];
+
+      this._logger.logProperty('__words', words);
+      this.__words = words;
+    } catch {
+      toastController
+        .create({
+          duration: 3_000,
+          position: 'bottom',
+          message: 'دریافت کلمات با خطا رو به رو شد',
+        })
+        .then((toast) => {
+          return toast.present();
+        });
+    }
+  }
+
   private __nextStage(event: PointerEvent): number {
     event.preventDefault();
-    return ++this.__stage;
+
+    this.__vibrate(2);
+
+    this.__stage += 1;
+
+    return this.__stage;
   }
+
   private __back(event: PointerEvent): void {
     event.preventDefault();
+
+    this.__vibrate(4);
+
     router.signal.request({
       pathname: router.makeUrl({sectionList: ['game']}),
     });
   }
+
   private __generateStages(): void {
-    const playerStage = Array.from(Array(this.__storage.players - this.__storage.spies).keys()).map(
-        () => this.__storage.word,
-    );
-    const spyStage = Array.from(Array(this.__storage.spies).keys()).map(() => this.__spyWord);
+    const playerStage = Array.from(Array(this.__storage.players - this.__storage.spies).keys()).map(() => {
+      return this.__storage.word;
+    });
+    const spyStage = Array.from(Array(this.__storage.spies).keys()).map(() => {
+      return this.__spyWord;
+    });
 
     const privateStages = random.shuffle([...playerStage, ...spyStage]);
     const stagesTemplate = privateStages.map((word, __index, __privateStages) => {
@@ -180,6 +244,7 @@ export class PageGame extends AppElement {
     this.__stages = stagesTemplate.flat();
     this.__stage = 0;
   }
+
   private __generateNewWord(): string {
     const newWord = this.__words[random.integer(0, this.__words.length)];
 
@@ -195,5 +260,15 @@ export class PageGame extends AppElement {
     this.__storage.word = newWord;
 
     return newWord;
+  }
+
+  private __vibrate(level = 1): void {
+    navigator.vibrate(level * 50);
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'page-game': PageGame;
   }
 }

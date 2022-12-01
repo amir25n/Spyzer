@@ -5,7 +5,7 @@ import type {Route} from './types/route';
 import './pages/page-home';
 import './pages/page-game';
 import './pages/page-game-settings';
-import './pages/page-about';
+import './pages/page-contributes';
 
 const routes: Record<string, Route> = {
   game: {
@@ -23,13 +23,17 @@ const routes: Record<string, Route> = {
     title: 'خانه',
     icon: 'home',
     show_in_bar: true,
-    render: () => html`<page-home class="ion-page"></page-home>`,
+    render: () => {
+      return html`<page-home class="ion-page"></page-home>`;
+    },
   },
-  about: {
-    title: 'درباره من',
-    icon: 'information-circle',
+  contributes: {
+    title: 'توسعه دهندگان',
+    icon: 'code-working',
     show_in_bar: true,
-    render: () => html`<page-about class="ion-page"></page-about>`,
+    render: () => {
+      return html`<page-contributes class="ion-page"></page-contributes>`;
+    },
   },
 };
 

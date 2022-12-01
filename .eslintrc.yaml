@@ -8,6 +8,7 @@ extends:
   - plugin:wc/recommended
   - plugin:import/recommended
   - plugin:import/typescript
+  - '@open-wc/eslint-config'
 
 env:
   browser: true
@@ -22,6 +23,7 @@ plugins:
   - '@typescript-eslint'
   - import
   - wc
+  - prettier
 
 settings:
   import/resolver:
@@ -34,8 +36,27 @@ settings:
       # TODO: Add other classes
 
 rules:
+  array-callback-return: off
+  brace-style: error
+  arrow-body-style:
+    - error
+    - always
+  implicit-arrow-linebreak:
+    - error
+    - beside
+  arrow-parens:
+    - error
+    - always
+  no-unused-vars:
+    - error
+    - vars: local
+      args: none
+  indent: off
+  object-curly-spacing:
+    - error
+    - never
   max-len:
-    - warn
+    - error
     - code: 120
   no-eval:
     - error
@@ -63,5 +84,8 @@ rules:
 
   # TODO: Enable in future
   import/no-unresolved: off
+  wc/guard-super-call: off
+  class-methods-use-this: off
+  import/extensions: off
   require-jsdoc: off
   valid-jsdoc: off

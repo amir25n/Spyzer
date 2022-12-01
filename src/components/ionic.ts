@@ -14,6 +14,7 @@ import {defineCustomElement as note} from '@ionic/core/components/ion-note.js';
 import {defineCustomElement as range} from '@ionic/core/components/ion-range.js';
 import {defineCustomElement as slide} from '@ionic/core/components/ion-slide.js';
 import {defineCustomElement as slides} from '@ionic/core/components/ion-slides.js';
+import {defineCustomElement as spinner} from '@ionic/core/components/ion-spinner.js';
 import {defineCustomElement as tabBar} from '@ionic/core/components/ion-tab-bar.js';
 import {defineCustomElement as tabButton} from '@ionic/core/components/ion-tab-button.js';
 import {defineCustomElement as text} from '@ionic/core/components/ion-text.js';
@@ -27,6 +28,7 @@ const ionComponents = [
   buttons,
   card,
   cardContent,
+  spinner,
   content,
   header,
   item,

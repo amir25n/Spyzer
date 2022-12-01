@@ -4,7 +4,6 @@ import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html, nothing} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
-import {cache} from 'lit/directives/cache.js';
 
 import routes from '../routes';
 import ionicNormalize from '../styles/ionic.normalize';
@@ -15,12 +14,6 @@ import './ionic';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {TemplateResult, PropertyValues} from 'lit';
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'app-index': AppIndex;
-  }
-}
 
 @customElement('app-index')
 export class AppIndex extends AppElement {
@@ -62,12 +55,17 @@ export class AppIndex extends AppElement {
   }
 
   @state() private __activePage = 'home';
+
   @state() private __showAppBar = false;
 
   static __showAppBarSignal = new SignalInterface('show-app-bar');
 
   protected _routes: RoutesConfig = {
-    map: (route) => (this.__activePage = route.sectionList[0]?.toString().trim() || 'home'),
+    map: (route) => {
+      this.__activePage = route.sectionList[0]?.toString().trim() || 'home';
+
+      return this.__activePage;
+    },
     list: routes,
   };
 
@@ -75,38 +73,38 @@ export class AppIndex extends AppElement {
     super.connectedCallback();
 
     router.signal.addListener(
-        (route) => {
-          this._logger.logMethodArgs('routeChanged', {route});
-          this.__activePage = route.sectionList[0]?.toString().trim() || 'home';
-          this.requestUpdate();
-        },
-        {
-          receivePrevious: true,
-        },
+      (route) => {
+        this._logger.logMethodArgs('routeChanged', {route});
+        this.__activePage = route.sectionList[0]?.toString().trim() || 'home';
+        this.requestUpdate();
+      },
+      {
+        receivePrevious: true,
+      },
     );
     AppIndex.__showAppBarSignal.addListener((show) => {
       this.__showAppBar = show;
     });
 
     Object.keys(routes).map((slug) => {
-      const icon = routes[slug].icon;
+      const {icon} = routes[slug];
 
       if (icon != null) {
         preloadIcon(icon);
-        preloadIcon(icon + '-outline');
+        preloadIcon(`${icon}-outline`);
       }
     });
 
     AppIndex.__showAppBarSignal.dispatch(true);
   }
+
   override render(): TemplateResult {
     return html`
-      <main class="page-container">
-        ${cache(router.outlet(this._routes))}
-      </main>
+      <main class="page-container">${router.outlet(this._routes)}</main>
       ${this._renderTabBarTemplate()}
     `;
   }
+
   override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
 
@@ -120,7 +118,7 @@ export class AppIndex extends AppElement {
       if (route.icon != null && route.show_in_bar !== true) return nothing;
 
       const selected = this.__activePage === slug;
-      const iconName = selected ? route.icon : route.icon + '-outline';
+      const iconName = selected ? route.icon : `${route.icon}-outline`;
 
       return html`
         <ion-tab-button
@@ -135,5 +133,11 @@ export class AppIndex extends AppElement {
     });
 
     return html`<ion-tab-bar ?hidden=${this.__showAppBar !== true}>${navItemsTemplate}</ion-tab-bar>`;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'app-index': AppIndex;
   }
 }
