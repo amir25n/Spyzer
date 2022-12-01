@@ -1,6 +1,6 @@
 import {css} from 'lit';
 
-const theming = css`
+const ionicTheming = css`
   .ion-color-primary {
     --ion-color-base: var(--ion-color-primary, #3880ff) !important;
     --ion-color-base-rgb: var(--ion-color-primary-rgb, 56, 128, 255) !important;
@@ -83,4 +83,4 @@ const theming = css`
   }
 `;
 
-export default theming;
+export default ionicTheming;
