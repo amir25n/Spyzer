@@ -1,6 +1,6 @@
 import {css} from 'lit';
 
-const reset = css`
+const normalize = css`
   audio,
   canvas,
   progress,
@@ -232,6 +232,10 @@ const reset = css`
   sub {
     bottom: -0.25em;
   }
+
+  alwatr-icon {
+    font-size: 24px;
+  }
 `;
 
-export default reset;
+export default normalize;

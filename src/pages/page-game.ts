@@ -1,199 +1,274 @@
+import {AlwatrElement as AppElement} from '@alwatr/element';
+import {fetch} from '@alwatr/fetch';
 import {random} from '@alwatr/math';
 import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
-import {css, html, nothing} from 'lit';
-import {customElement} from 'lit/decorators/custom-element.js';
+import {toastController} from '@ionic/core';
+import {html, css, nothing} from 'lit';
+import {customElement, state} from 'lit/decorators.js';
+import {when} from 'lit/directives/when.js';
 
-import {AppElement} from '../app-debt/app-element';
-import '../components/spy-timer';
+import ionicNormalize from '../styles/ionic.normalize';
+import ionicTheming from '../styles/ionic.theming';
+import normalize from '../styles/normalize';
+import GameSettingsStorage from '../utilities/game-settings-storage';
 
-import type {ListenerInterface} from '@alwatr/signal';
-import type {TemplateResult, CSSResult} from 'lit';
+import '../components/t-imer';
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'page-game': PageGame;
-  }
-}
+import type {TemplateResult} from 'lit';
 
-/**
- * APP PWA Home Page Element
- *
- * ```html
- * <page-game></page-game>
- * ```
- */
 @customElement('page-game')
 export class PageGame extends AppElement {
   static override styles = [
-    ...(<CSSResult[]>AppElement.styles),
+    normalize,
+    ionicNormalize,
+    ionicTheming,
     css`
-      section .box .game-next {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        padding-top: 24px;
+      ion-text.card__content {
+        text-align: center;
       }
-      section .box .game-next ion-button {
-        width: 100%;
+      ion-text.card__content * {
+        margin-bottom: 1.9em !important;
+      }
+      ion-text.card__content.active-word * {
+        margin-bottom: 1em !important;
+      }
+      t-imer {
+        font-size: 24px;
       }
     `,
   ];
 
-  protected _listenerList: Array<unknown> = [];
-  protected _settingsSignal = new SignalInterface('game-settings');
-  protected _wordsSignal = new SignalInterface('game-words');
-  protected _words: string[] = [];
-  protected _wordActive = 0;
-  protected _hideWord = true;
-  protected _showTime = false;
-  protected _timeSeconds = 0;
+  @state() private __stages: (TemplateResult | null)[] = [];
+
+  @state() private __stage = 0;
+
+  @state() private __loading = true;
+
+  static __showAppBarSignal = new SignalInterface('show-app-bar');
+
+  private __storage = new GameSettingsStorage();
+
+  private __words: string[] = [];
+
+  private __spyWord = 'شما جاسوس هستید';
 
   override connectedCallback(): void {
     super.connectedCallback();
-    if (this._settingsSignal.value === undefined || this._wordsSignal.value === undefined) {
-      this._goToHomePage();
-    } else {
-      const game = this._settingsSignal.value;
-      const nodeWords = this._wordsSignal.value;
-      const word = nodeWords[Math.floor(Math.random() * nodeWords.length)];
-      const words = [];
 
-      for (let i = 0; i < game.players - game.spies; i++) {
-        words.push(word);
-      }
-      for (let i = 0; i < game.spies; i++) {
-        words.push('spy');
-      }
+    fetch({
+      url: '/data/words.json',
+      retry: 5,
+      retryDelay: 1_000,
+      revalidateCallback: async (response) => {
+        await this.__responseToWord(response);
+        this.__loading = false;
+      },
+      cacheStorageName: 'spy_game_storage',
+      cacheStrategy: 'stale_while_revalidate',
+    }).then(async (response) => {
+      await this.__responseToWord(response);
 
-      this._words = random.shuffle(words).map((word) => (word === 'spy' ? this._localize.term('spy') : word));
-    }
-    // this._listenerList.push(router.signal.addListener(() => this.requestUpdate()));
+      this.__generateNewWord();
+      this.__generateStages();
+      PageGame.__showAppBarSignal.dispatch(false);
+    });
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this._settingsSignal.dispatch(undefined);
-    this._listenerList.forEach((listener) => (listener as ListenerInterface<keyof AlwatrSignals>).remove());
+
+    PageGame.__showAppBarSignal.dispatch(true);
   }
 
   override render(): TemplateResult {
     return html`
-      <section>
-        <div class="box">${this._render()}</div>
-      </section>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button @click=${this.__back}>
+              <alwatr-icon dir="rtl" slot="icon-only" name="arrow-back-outline" flip-rtl></alwatr-icon>
+            </ion-button>
+          </ion-buttons>
+          ${when(this.__loading, () => {
+            return html`
+              <ion-buttons slot="end">
+                <ion-button>
+                  <ion-spinner></ion-spinner>
+                </ion-button>
+              </ion-buttons>
+            `;
+          })}
+
+          <ion-title>شکارچیان جاسوس</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content fullscreen> ${this.__renderActiveStage()} </ion-content>
     `;
   }
 
-  protected _renderWord(): TemplateResult {
-    return html`
-      <ion-text color="dark">
-        <h1 class="ion-text-center">${this._words[this._wordActive]}</h1>
-      </ion-text>
-      <div class="game-next">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-button color="danger" @click="${this._hide}">${this._localize.term('hide')}</ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    `;
-  }
-  protected _renderHideCover(): TemplateResult {
-    return html`
-      <ion-text color="dark">
-        <h1 class="ion-text-center">${this._localize.term('next_person')}</h1>
-      </ion-text>
-      <div class="game-next">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="3"> </ion-col>
-            <ion-col size="6">
-              <ion-button color="warning" @click="${this._show}">
-                <ion-label>${this._localize.term('show_word')} </ion-label>
-              </ion-button>
-            </ion-col>
-            <ion-col size="1"> </ion-col>
-            <ion-col size="2" style="align-items: flex-end;justify-content: flex-end;display: flex;">
-              <ion-note>
-                ${this._localize.number(this._wordActive + 1)}/${this._localize.number(this._words.length)}
-              </ion-note>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    `;
-  }
-  protected _renderStartCover(): TemplateResult {
-    return html`
-      <ion-text color="dark">
-        <h1 class="ion-text-center">${this._localize.term('start')}</h1>
-      </ion-text>
-      <div class="game-next">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="3"> </ion-col>
-            <ion-col size="6">
-              <ion-button @click="${this._show}">
-                <ion-label>${this._localize.term('show_word')}</ion-label>
-              </ion-button>
-            </ion-col>
-            <ion-col size="1"> </ion-col>
-            <ion-col size="2" style="align-items: flex-end;justify-content: flex-end;display: flex;">
-              <ion-note>
-                ${this._localize.number(this._wordActive + 1)}/${this._localize.number(this._words.length)}
-              </ion-note>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    `;
-  }
-  protected _renderTimer(): TemplateResult {
-    return html`
-      <ion-text color="dark">
-        <h1 class="ion-text-center">
-          <spy-timer duration="${this._timeSeconds}"></spy-timer>
-        </h1>
-      </ion-text>
-      <div class="game-next">
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-button @click="${this._goToHomePage}">${this._localize.term('back')}</ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    `;
-  }
-  protected _render(): TemplateResult | typeof nothing {
-    if (this._showTime) return this._renderTimer();
-    if (!this._showTime && this._hideWord && this._wordActive === 0) return this._renderStartCover();
-    if (!this._showTime && this._hideWord) return this._renderHideCover();
-    if (!this._showTime && !this._hideWord) return this._renderWord();
+  private __renderActiveStage(): TemplateResult | typeof nothing {
+    const stage = this.__stages[this.__stage];
 
-    return nothing;
+    if (stage == null) return nothing;
+
+    return html`
+      <ion-card>
+        <ion-card-content> ${stage} </ion-card-content>
+      </ion-card>
+    `;
   }
 
-  protected _goToHomePage(): void {
-    router.signal.request({pathname: '/'});
+  private __renderTimeStage(duration: number): TemplateResult<1> {
+    return html`
+      <ion-text class="card__content">
+        <h2>
+          <t-imer .duration=${duration}></t-imer>
+        </h2>
+      </ion-text>
+
+      <ion-button expand="block" color="tertiary" @click=${this.__back}> بازگشت </ion-button>
+    `;
   }
-  protected _show(): void {
-    this._hideWord = !this._hideWord;
-    this.requestUpdate();
+
+  private __renderPrivateStage(word: string | null): TemplateResult | null {
+    if (word == null) return null;
+
+    const isSpy = word === this.__spyWord;
+
+    return html`
+      ${when(
+        isSpy,
+        () => {
+          return html`
+            <ion-text color="secondary" class="card__content word spy">
+              <h2>${this.__spyWord}</h2>
+            </ion-text>
+          `;
+        },
+        () => {
+          return html`
+            <ion-text class="card__content word active-word">
+              <h1>${word}</h1>
+            </ion-text>
+          `;
+        },
+      )}
+
+      <ion-button expand="block" color="success" @click=${this.__nextStage}> پنهان کردن </ion-button>
+    `;
   }
-  protected _hide(): void {
-    this._hideWord = !this._hideWord;
-    if (this._words.length - 1 > this._wordActive) {
-      this._wordActive++;
-    } else {
-      const _timeMinutes = this._settingsSignal.value?.time;
-      this._timeSeconds = _timeMinutes !== undefined ? _timeMinutes * 60 + 1 : 0;
-      this._showTime = true;
+
+  private __renderPublicStage(): TemplateResult<1> {
+    return html`
+      <ion-text class="card__content">
+        <h2>دستگاه را به نفر بعدی بدهید.</h2>
+      </ion-text>
+
+      <ion-button expand="block" color="danger" @click=${this.__nextStage}> نمایش دادن </ion-button>
+    `;
+  }
+
+  private __renderStartStage(): TemplateResult<1> {
+    return html`
+      <ion-text class="card__content">
+        <h2>برای شروع بازی ضربه بزنید.</h2>
+      </ion-text>
+
+      <ion-button expand="block" color="secondary" @click=${this.__nextStage}> نمایش دادن </ion-button>
+    `;
+  }
+
+  private async __responseToWord(response: Response): Promise<void> {
+    try {
+      const words = (await response.json()) as string[];
+
+      this._logger.logProperty('__words', words);
+      this.__words = words;
+    } catch {
+      toastController
+        .create({
+          duration: 3_000,
+          position: 'bottom',
+          message: 'دریافت کلمات با خطا رو به رو شد',
+        })
+        .then((toast) => {
+          return toast.present();
+        });
     }
-    this.requestUpdate();
+  }
+
+  private __nextStage(event: PointerEvent): number {
+    event.preventDefault();
+
+    this.__vibrate(2);
+
+    this.__stage += 1;
+
+    return this.__stage;
+  }
+
+  private __back(event: PointerEvent): void {
+    event.preventDefault();
+
+    this.__vibrate(4);
+
+    router.signal.request({
+      pathname: router.makeUrl({sectionList: ['game']}),
+    });
+  }
+
+  private __generateStages(): void {
+    const playerStage = Array.from(Array(this.__storage.players - this.__storage.spies).keys()).map(() => {
+      return this.__storage.word;
+    });
+    const spyStage = Array.from(Array(this.__storage.spies).keys()).map(() => {
+      return this.__spyWord;
+    });
+
+    const privateStages = random.shuffle([...playerStage, ...spyStage]);
+    const stagesTemplate = privateStages.map((word, __index, __privateStages) => {
+      if (__index === 0) {
+        return [this.__renderStartStage(), this.__renderPrivateStage(word)];
+      }
+      if (__index === __privateStages.length - 1) {
+        return [
+          this.__renderPublicStage(),
+          this.__renderPrivateStage(word),
+          this.__renderTimeStage(this.__storage.time * 60),
+        ];
+      }
+      return [this.__renderPublicStage(), this.__renderPrivateStage(word)];
+    });
+
+    this.__stages = stagesTemplate.flat();
+    this.__stage = 0;
+  }
+
+  private __generateNewWord(): string {
+    const newWord = this.__words[random.integer(0, this.__words.length)];
+
+    this._logger.logMethodArgs('__generateNewWord', {
+      new_word: newWord,
+      pervious_word: this.__storage.word,
+    });
+
+    if (newWord === this.__storage.word || !newWord) {
+      return this.__generateNewWord();
+    }
+
+    this.__storage.word = newWord;
+
+    return newWord;
+  }
+
+  private __vibrate(level = 1): void {
+    navigator.vibrate(level * 50);
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'page-game': PageGame;
   }
 }

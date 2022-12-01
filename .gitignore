@@ -14,6 +14,8 @@ Desktop.ini
 *.log*
 
 # Build
+dist
+dev-dist
 build
 android
 .tsbuildinfo
@@ -34,3 +36,5 @@ package-lock.json
 # dotenv environment variables file
 .env
 .env.test
+
+.turbo

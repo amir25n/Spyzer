@@ -1,6 +1,6 @@
 import {css} from 'lit';
 
-const reset = css`
+const ionicNormalize = css`
   .ion-page {
     left: 0;
     right: 0;
@@ -88,6 +88,42 @@ const reset = css`
   ion-input input::-webkit-date-and-time-value {
     text-align: start;
   }
+
+  ion-header {
+    --ion-toolbar-background: var(--ion-color-primary, #3880ff);
+    --ion-toolbar-color: var(--ion-color-primary-contrast, #fff);
+  }
+
+  alwatr-icon[slot='start'] {
+    margin-inline: 0em 0.75em;
+    font-size: 26px;
+  }
+  alwatr-icon[slot='end'] {
+    margin-inline-end: -0.4em;
+    margin-inline-start: 0.4em;
+  }
+
+  ion-content[fullscreen] {
+    --background: transparent;
+  }
+  ion-content[fullscreen]::part(scroll) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  ion-card {
+    margin: 1.2em;
+    box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12),
+      0 11px 15px -7px rgba(0, 0, 0, 0.2);
+  }
+
+  ion-card,
+  ion-button {
+    --border-radius: 26px;
+
+    border-radius: var(--border-radius);
+  }
 `;
 
-export default reset;
+export default ionicNormalize;
