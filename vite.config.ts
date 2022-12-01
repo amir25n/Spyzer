@@ -70,6 +70,10 @@ export default defineConfig({
           src: 'images',
           dest: '.',
         },
+        {
+          src: 'data',
+          dest: '.',
+        },
       ],
     }),
   ],
