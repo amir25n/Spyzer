@@ -8,6 +8,7 @@ import {html, css, nothing} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
+import config from '../config';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
@@ -100,7 +101,7 @@ export class PageGame extends AppElement {
             `;
           })}
 
-          <ion-title>شکارچیان جاسوس</ion-title>
+          <ion-title>${config.titleFormat('بازی')}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content fullscreen> ${this.__renderActiveStage()} </ion-content>

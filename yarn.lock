@@ -1046,7 +1046,7 @@
   resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-4.6.0.tgz#0731c086638296c02d666a1f902e6ca5e6e064a6"
   integrity sha512-damKRxtkAs7GHdPwQqKyUZjjsbIyOoJWoshG2I1/Lc8cDkfGKw2WntWx3hyUPho0BmM7wnbsjeZtYbMdGm0zIQ==
 
-"@capacitor/cli@^4.6.0":
+"@capacitor/cli@^4.0.0":
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/@capacitor/cli/-/cli-4.6.0.tgz#f0cb132c62a22681545ebd5e7554f6eaf8394fad"
   integrity sha512-/u+Hjt2+pnKfjQxNHpBJxbL1SPXOzgy/bYjKuDBErYYDwBtMd4zxmVTch/PeyjefjWRiOjNbbs9YGAqfwhgbJg==
@@ -1069,7 +1069,7 @@
     tslib "^2.4.0"
     xml2js "^0.4.23"
 
-"@capacitor/core@^4.6.0":
+"@capacitor/core@^4.0.0":
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-4.6.0.tgz#25e816d75160571e24233afe3bda350f33ce9aef"
   integrity sha512-P8PfJB5rFSBU2wDZ5wVHTVFZxKweFrxz554+Fl/ymhhAxlxFJuF5nFIZyQgVq+A1yp/nCLzWOyPMC5OPD/um0g==

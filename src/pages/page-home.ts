@@ -3,6 +3,7 @@ import {router} from '@alwatr/router';
 import {html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
+import config from '../config';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
@@ -30,7 +31,7 @@ export class PageHome extends AppElement {
     return html`
       <ion-header>
         <ion-toolbar>
-          <ion-title>شکارچیان جاسوس</ion-title>
+          <ion-title>${config.titleFormat('خانه')}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content fullscreen>

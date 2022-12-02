@@ -1,6 +1,6 @@
 import {defineConfig} from 'vite';
 import {VitePWA as vitePWA} from 'vite-plugin-pwa';
-import {viteStaticCopy} from 'vite-plugin-static-copy';
+// import {viteStaticCopy} from 'vite-plugin-static-copy';
 
 import type {ManifestOptions} from 'vite-plugin-pwa';
 import type {GenerateSWOptions} from 'workbox-build';
@@ -9,10 +9,11 @@ const DIST_PATH = 'build/';
 const serviceWorker: Partial<GenerateSWOptions> = {
   skipWaiting: true,
   clientsClaim: true,
+  cleanupOutdatedCaches: true,
   inlineWorkboxRuntime: true,
   swDest: `${DIST_PATH}sw.js`,
   globDirectory: DIST_PATH,
-  globPatterns: ['**/*.{html,js,css,woff,png,ico}'],
+  globPatterns: ['**/*.{html,js,css,woff,png,ico,svg}'],
 };
 const manifestJson: Partial<ManifestOptions> = {
   dir: 'rtl',
@@ -62,19 +63,20 @@ export default defineConfig({
       devOptions: {
         enabled: true,
       },
+      registerType: 'autoUpdate',
       manifest: manifestJson,
     }),
-    viteStaticCopy({
-      targets: [
-        {
-          src: 'images',
-          dest: '.',
-        },
-        {
-          src: 'data',
-          dest: '.',
-        },
-      ],
-    }),
+    // viteStaticCopy({
+    //   targets: [
+    //     {
+    //       src: 'images',
+    //       dest: '.',
+    //     },
+    //     {
+    //       src: 'data',
+    //       dest: '.',
+    //     },
+    //   ],
+    // }),
   ],
 });

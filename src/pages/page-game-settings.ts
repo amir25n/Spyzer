@@ -4,6 +4,7 @@ import {RangeCustomEvent} from '@ionic/core';
 import {html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
+import config from '../config';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
@@ -103,7 +104,7 @@ export class PageGameSettings extends AppElement {
     return html`
       <ion-header>
         <ion-toolbar>
-          <ion-title>تنظیمات بازی</ion-title>
+          <ion-title>${config.titleFormat('تنظیمات بازی')}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content fullscreen> ${this.__renderSettingsCard()} </ion-content>

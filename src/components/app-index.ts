@@ -5,6 +5,7 @@ import {SignalInterface} from '@alwatr/signal';
 import {css, html, nothing} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 
+import config from '../config';
 import routes from '../routes';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
@@ -14,6 +15,12 @@ import './ionic';
 
 import type {RoutesConfig} from '@alwatr/router';
 import type {TemplateResult, PropertyValues} from 'lit';
+
+Promise.all(
+  config.icons.map((icon) => {
+    return preloadIcon(icon);
+  }),
+);
 
 @customElement('app-index')
 export class AppIndex extends AppElement {
@@ -84,15 +91,6 @@ export class AppIndex extends AppElement {
     );
     AppIndex.__showAppBarSignal.addListener((show) => {
       this.__showAppBar = show;
-    });
-
-    Object.keys(routes).map((slug) => {
-      const {icon} = routes[slug];
-
-      if (icon != null) {
-        preloadIcon(icon);
-        preloadIcon(`${icon}-outline`);
-      }
     });
 
     AppIndex.__showAppBarSignal.dispatch(true);

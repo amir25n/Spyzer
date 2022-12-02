@@ -5,6 +5,7 @@ import {html, css, nothing} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
+import config from '../config';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
@@ -90,7 +91,7 @@ export class PageContributes extends AppElement {
             `;
           })}
 
-          <ion-title>توسعه دهندگان</ion-title>
+          <ion-title>${config.titleFormat('توسعه دهندگان')}</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content fullscreen> ${this.__renderContributes(this.__contributes)} </ion-content>
