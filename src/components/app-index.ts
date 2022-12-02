@@ -54,6 +54,28 @@ export class AppIndex extends AppElement {
         font-size: 26px;
       }
     `,
+    css`
+      ion-tab-button alwatr-icon {
+        font-size: 24px;
+
+        transform: scale(1.3);
+        transition: transform 300ms ease;
+        will-change: transform;
+      }
+      ion-tab-button ion-label {
+        height: 0;
+        opacity: 0;
+        transition: height 300ms 200ms ease, opacity 400ms 200ms ease;
+        will-change: height, opacity;
+      }
+      ion-tab-button[selected] alwatr-icon {
+        transform: scale(1);
+      }
+      ion-tab-button[selected] ion-label {
+        opacity: 1;
+        height: 1.6em;
+      }
+    `,
   ];
 
   constructor() {
@@ -116,7 +138,6 @@ export class AppIndex extends AppElement {
       if (route.icon != null && route.show_in_bar !== true) return nothing;
 
       const selected = this.__activePage === slug;
-      const iconName = selected ? route.icon : `${route.icon}-outline`;
 
       return html`
         <ion-tab-button
@@ -124,7 +145,7 @@ export class AppIndex extends AppElement {
           ?selected=${selected}
           ?hidden=${!route.show_in_bar}
         >
-          <alwatr-icon flip-rtl dir="rtl" .name=${iconName}></alwatr-icon>
+          <alwatr-icon flip-rtl dir="rtl" .name=${route.icon}></alwatr-icon>
           <ion-label>${route.title}</ion-label>
         </ion-tab-button>
       `;
