@@ -18,7 +18,7 @@ const config = {
   icons,
   appName: 'شکارچیان جاسوس',
   titleFormat: (title: string): string => {
-    return `${config.appName} | ${title}`;
+    return `${title} - ${config.appName}`;
   },
 };
 

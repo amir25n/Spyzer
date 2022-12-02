@@ -4,6 +4,7 @@ import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html, nothing} from 'lit';
 import {customElement, state} from 'lit/decorators.js';
+import {cache} from 'lit/directives/cache.js';
 
 import config from '../config';
 import routes from '../routes';
@@ -56,24 +57,26 @@ export class AppIndex extends AppElement {
     `,
     css`
       ion-tab-button alwatr-icon {
-        font-size: 24px;
+        font-size: 22px;
 
         transform: scale(1.3);
         transition: transform 300ms ease;
         will-change: transform;
       }
       ion-tab-button ion-label {
-        height: 0;
+        max-height: 0;
         opacity: 0;
-        transition: height 300ms 200ms ease, opacity 400ms 200ms ease;
-        will-change: height, opacity;
+        font-weight: 600;
+        font-size: 1.2em;
+        transition: max-height 200ms 100ms ease, opacity 400ms 200ms ease;
+        will-change: max-height, opacity;
       }
       ion-tab-button[selected] alwatr-icon {
         transform: scale(1);
       }
       ion-tab-button[selected] ion-label {
         opacity: 1;
-        height: 1.6em;
+        max-height: 1.5em;
       }
     `,
   ];
@@ -120,7 +123,7 @@ export class AppIndex extends AppElement {
 
   override render(): TemplateResult {
     return html`
-      <main class="page-container">${router.outlet(this._routes)}</main>
+      <main class="page-container">${cache(router.outlet(this._routes))}</main>
       ${this._renderTabBarTemplate()}
     `;
   }
