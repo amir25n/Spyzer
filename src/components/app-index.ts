@@ -1,20 +1,22 @@
 import {AlwatrElement as AppElement} from '@alwatr/element';
 import {preloadIcon} from '@alwatr/icon';
-import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
 import {css, html, nothing} from 'lit';
-import {customElement, state} from 'lit/decorators.js';
-import {cache} from 'lit/directives/cache.js';
+import {customElement, state, query} from 'lit/decorators.js';
 
 import config from '../config';
-import routes from '../routes';
+import router from '../router';
+import routes from '../router/routes';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
 
 import './ionic';
+import '../pages/page-home';
+import '../pages/page-game';
+import '../pages/page-game-settings';
+import '../pages/page-contributes';
 
-import type {RoutesConfig} from '@alwatr/router';
 import type {TemplateResult, PropertyValues} from 'lit';
 
 Promise.all(
@@ -57,63 +59,71 @@ export class AppIndex extends AppElement {
     `,
     css`
       ion-tab-button alwatr-icon {
-        font-size: 22px;
+        font-size: 23px;
 
         transform: scale(1.3);
-        transition: transform 300ms ease;
+        transition: transform 500ms ease;
         will-change: transform;
       }
       ion-tab-button ion-label {
         max-height: 0;
-        opacity: 0;
         font-weight: 600;
         font-size: 1.2em;
-        transition: max-height 200ms 100ms ease, opacity 400ms 200ms ease;
-        will-change: max-height, opacity;
+        transition: max-height 200ms 400ms ease;
+        will-change: max-height;
       }
       ion-tab-button[selected] alwatr-icon {
         transform: scale(1);
       }
       ion-tab-button[selected] ion-label {
-        opacity: 1;
         max-height: 1.5em;
+      }
+    `,
+    css`
+      main#outlet > .leaving {
+        animation: 500ms RouteLeavingAnimation ease;
+      }
+      main#outlet > .entering {
+        animation: 500ms RouteEnteringAnimation ease;
+      }
+
+      @keyframes RouteLeavingAnimation {
+        0% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-1vh);
+        }
+      }
+      @keyframes RouteEnteringAnimation {
+        0% {
+          opacity: 0;
+          transform: translateY(1vh);
+        }
+        80% {
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 1;
+        }
       }
     `,
   ];
 
-  constructor() {
-    super();
-    router.initial();
-  }
-
-  @state() private __activePage = 'home';
-
   @state() private __showAppBar = false;
 
+  @query('main#outlet') private __main?: Node;
+
   static __showAppBarSignal = new SignalInterface('show-app-bar');
-
-  protected _routes: RoutesConfig = {
-    map: (route) => {
-      this.__activePage = route.sectionList[0]?.toString().trim() || 'home';
-
-      return this.__activePage;
-    },
-    list: routes,
-  };
 
   override connectedCallback(): void {
     super.connectedCallback();
 
-    router.signal.addListener(
-      (route) => {
-        this._logger.logMethodArgs('routeChanged', {route});
-        this.__activePage = route.sectionList[0]?.toString().trim() || 'home';
-        this.requestUpdate();
-      },
-      {
-        receivePrevious: true,
-      },
-    );
+    window.addEventListener('vaadin-router-location-changed', () => {
+      this.requestUpdate();
+    });
     AppIndex.__showAppBarSignal.addListener((show) => {
       this.__showAppBar = show;
     });
@@ -123,7 +133,7 @@ export class AppIndex extends AppElement {
 
   override render(): TemplateResult {
     return html`
-      <main class="page-container">${cache(router.outlet(this._routes))}</main>
+      <main id="outlet" class="page-container"></main>
       ${this._renderTabBarTemplate()}
     `;
   }
@@ -131,23 +141,19 @@ export class AppIndex extends AppElement {
   override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
 
+    router.setOutlet(this.__main ?? null);
+
     document.querySelector('html')?.classList.add('hydrated');
   }
 
   protected _renderTabBarTemplate(): TemplateResult {
-    const navItemsTemplate = Object.keys(routes).map((slug) => {
-      const route = routes[slug];
-
+    const navItemsTemplate = routes.map((route) => {
       if (route.icon != null && route.show_in_bar !== true) return nothing;
 
-      const selected = this.__activePage === slug;
+      const selected = router.location.pathname === route.path;
 
       return html`
-        <ion-tab-button
-          href=${router.makeUrl({sectionList: [slug]})}
-          ?selected=${selected}
-          ?hidden=${!route.show_in_bar}
-        >
+        <ion-tab-button href=${route.path} ?selected=${selected} ?hidden=${!route.show_in_bar}>
           <alwatr-icon flip-rtl dir="rtl" .name=${route.icon}></alwatr-icon>
           <ion-label>${route.title}</ion-label>
         </ion-tab-button>

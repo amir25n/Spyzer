@@ -1,7 +1,8 @@
 import {css} from 'lit';
 
 const ionicNormalize = css`
-  .ion-page {
+  .ion-page,
+  main#outlet > * {
     left: 0;
     right: 0;
     top: 0;

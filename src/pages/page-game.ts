@@ -1,7 +1,6 @@
 import {AlwatrElement as AppElement} from '@alwatr/element';
 import {fetch} from '@alwatr/fetch';
 import {random} from '@alwatr/math';
-import {router} from '@alwatr/router';
 import {SignalInterface} from '@alwatr/signal';
 import {toastController} from '@ionic/core';
 import {html, css, nothing} from 'lit';
@@ -9,6 +8,7 @@ import {customElement, state} from 'lit/decorators.js';
 import {when} from 'lit/directives/when.js';
 
 import config from '../config';
+import router from '../router';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
@@ -214,9 +214,7 @@ export class PageGame extends AppElement {
 
     this.__vibrate(4);
 
-    router.signal.request({
-      pathname: router.makeUrl({sectionList: ['game']}),
-    });
+    router.render(router.urlForName('game-settings'));
   }
 
   private __generateStages(): void {

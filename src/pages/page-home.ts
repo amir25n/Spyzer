@@ -1,9 +1,9 @@
 import {AlwatrElement as AppElement} from '@alwatr/element';
-import {router} from '@alwatr/router';
 import {html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import config from '../config';
+import router from '../router';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
@@ -54,7 +54,7 @@ export class PageHome extends AppElement {
             <p class="readme__made-with">ساخته شده با ❤️</p>
 
             <ion-button
-              href=${router.makeUrl({sectionList: ['game']})}
+              href=${router.urlForName('game-settings')}
               color="secondary"
               class="readme__start-button"
               expand="block"

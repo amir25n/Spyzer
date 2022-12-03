@@ -1,10 +1,10 @@
 import {AlwatrElement as AppElement} from '@alwatr/element';
-import {router} from '@alwatr/router';
 import {RangeCustomEvent} from '@ionic/core';
 import {html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
 import config from '../config';
+import router from '../router';
 import ionicNormalize from '../styles/ionic.normalize';
 import ionicTheming from '../styles/ionic.theming';
 import normalize from '../styles/normalize';
@@ -153,20 +153,10 @@ export class PageGameSettings extends AppElement {
     const disabled = !(this.__storage.players / 2 >= this.__storage.spies);
 
     return html`
-      <ion-button expand="block" .color=${color} ?disabled=${disabled} @click=${this.__startGame}>
+      <ion-button href=${router.urlForName('game-stages')} expand="block" .color=${color} ?disabled=${disabled}>
         نمایش کلمات
       </ion-button>
     `;
-  }
-
-  private __startGame(event: PointerEvent): void {
-    event.preventDefault();
-
-    router.signal.request({
-      pathname: router.makeUrl({
-        sectionList: ['game', 'words'],
-      }),
-    });
   }
 
   private __settingsChange(name: 'players' | 'spies' | 'time', value: number): void {
