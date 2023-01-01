@@ -85,6 +85,9 @@
     ]
   },
 
-  "include": ["src/**/*.ts"] /* Specifies a list of glob patterns that match files to be included in compilation. */,
+  "include": [
+    "src/**/*.ts",
+    "src/global.d.ts"
+  ] /* Specifies a list of glob patterns that match files to be included in compilation. */,
   "exclude": [] /* Specifies a list of files to be excluded from compilation. */
 }
