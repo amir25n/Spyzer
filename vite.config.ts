@@ -16,20 +16,29 @@ const serviceWorker: Partial<GenerateSWOptions> = {
   globPatterns: ['**/*.{html,js,css,woff,png,ico,svg}'],
 };
 const manifestJson: Partial<ManifestOptions> = {
-  dir: 'rtl',
+  /* i18n */
+  dir: 'ltr',
+  lang: 'en-US',
+
+  /* url */
   scope: '/',
-  lang: 'fa-IR',
-  start_url: '/',
-  short_name: 'Spy',
-  name: 'Spy Hunters',
+  start_url: '/?pwa',
+
+  /* info */
+  name: 'Spyzer',
+  short_name: 'Spyzer',
+  description: 'Spy Hunter Game PWA',
+
+  /* screen */
   display: 'standalone',
-  theme_color: '#009688',
   orientation: 'portrait',
+
+  /* theming */
+  theme_color: '#009688',
   background_color: '#f4511e',
+
+  /* icons */
   icons: [
-    {src: 'images/favicon.ico', type: 'image/x-icon', sizes: '16x16 32x32'},
-    {src: 'images/icon-192.png', type: 'image/png', sizes: '192x192'},
-    {src: 'images/icon-512.png', type: 'image/png', sizes: '512x512'},
     {
       src: 'images/icon-192-maskable.png',
       type: 'image/png',
@@ -42,6 +51,8 @@ const manifestJson: Partial<ManifestOptions> = {
       sizes: '512x512',
       purpose: 'maskable',
     },
+    {src: 'images/icon-192.png', type: 'image/png', sizes: '192x192'},
+    {src: 'images/icon-512.png', type: 'image/png', sizes: '512x512'},
   ],
 };
 
@@ -61,22 +72,10 @@ export default defineConfig({
       strategies: 'generateSW',
       workbox: serviceWorker,
       devOptions: {
-        enabled: true,
+        enabled: false,
       },
       registerType: 'autoUpdate',
       manifest: manifestJson,
     }),
-    // viteStaticCopy({
-    //   targets: [
-    //     {
-    //       src: 'images',
-    //       dest: '.',
-    //     },
-    //     {
-    //       src: 'data',
-    //       dest: '.',
-    //     },
-    //   ],
-    // }),
   ],
 });
