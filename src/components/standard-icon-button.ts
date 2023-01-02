@@ -1,5 +1,5 @@
 import {AlwatrElement} from '@alwatr/element';
-import {css, html} from 'lit';
+import {css, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
 import '@alwatr/icon';
@@ -80,7 +80,7 @@ export class StandardIconButton extends AlwatrElement {
   @property({type: Boolean, attribute: 'flip-rtl', reflect: true})
   flipRtl = false;
 
-  override render(): unknown {
+  override render(): TemplateResult {
     return html`<alwatr-icon
       part="icon"
       ?flip-rtl=${this.flipRtl}
