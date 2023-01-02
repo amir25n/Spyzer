@@ -28,7 +28,7 @@ export class SpyApp extends AlwatrElement {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
-        padding: var(--alwatr-sys-spacing-halftrack-5);
+        padding: var(--alwatr-sys-spacing-track-1) var(--alwatr-sys-spacing-halftrack-5);
         overflow-y: auto;
       }
       elevated-card {
