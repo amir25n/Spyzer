@@ -79,6 +79,10 @@ export class TopAppBar extends AlwatrElement {
         letter-spacing: var(--alwatr-sys-typescale-headline-medium-letter-spacing);
         line-height: var(--alwatr-sys-typescale-headline-medium-line-height);
       }
+      ::slotted(standard-icon-button) {
+        width: var(--alwatr-sys-spacing-track-6);
+        height: var(--alwatr-sys-spacing-track-6);
+      }
     `,
   ];
 
