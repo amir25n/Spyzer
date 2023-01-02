@@ -1,6 +1,6 @@
+import atImport from 'postcss-import';
 import {defineConfig} from 'vite';
 import {VitePWA as vitePWA} from 'vite-plugin-pwa';
-// import {viteStaticCopy} from 'vite-plugin-static-copy';
 
 import type {ManifestOptions} from 'vite-plugin-pwa';
 import type {GenerateSWOptions} from 'workbox-build';
@@ -57,6 +57,16 @@ const manifestJson: Partial<ManifestOptions> = {
 };
 
 export default defineConfig({
+  css: {
+    postcss: {
+      plugins: [
+        atImport({
+          path: '*',
+          root: 'src/',
+        }),
+      ],
+    },
+  },
   server: {
     hmr: true,
     open: true,
