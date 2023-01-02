@@ -10,8 +10,9 @@ import './top-app-bar/top-app-bar';
 import './bottom-app-bar/bottom-app-bar';
 import './icon-button/standard-icon-button';
 import './fab/floating-action-button';
+import './card/elevated-card';
 
-import type {TemplateResult} from 'lit';
+import type {TemplateResult, PropertyValues} from 'lit';
 
 @customElement('spy-app')
 export class SpyApp extends AlwatrElement {
@@ -27,6 +28,11 @@ export class SpyApp extends AlwatrElement {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
+        padding: var(--alwatr-sys-spacing-halftrack-5);
+        overflow-y: auto;
+      }
+      elevated-card {
+        padding: var(--alwatr-sys-spacing-track-1);
       }
     `,
   ];
@@ -40,7 +46,30 @@ export class SpyApp extends AlwatrElement {
 
         <standard-icon-button icon="help-outline" slot="end"></standard-icon-button>
       </top-app-bar>
-      <main class="page-container"></main>
+      <main class="page-container">
+        <elevated-card>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex aliquid neque molestiae nam, voluptate mollitia
+            eaque eius. Iusto, amet? Magnam labore temporibus quaerat itaque vitae.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex aliquid neque molestiae nam, voluptate mollitia
+            eaque eius. Iusto, amet? Magnam labore temporibus quaerat itaque vitae.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex aliquid neque molestiae nam, voluptate mollitia
+            eaque eius. Iusto, amet? Magnam labore temporibus quaerat itaque vitae.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex aliquid neque molestiae nam, voluptate mollitia
+            eaque eius. Iusto, amet? Magnam labore temporibus quaerat itaque vitae.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex aliquid neque molestiae nam, voluptate mollitia
+            eaque eius. Iusto, amet? Magnam labore temporibus quaerat itaque vitae.
+          </p>
+        </elevated-card>
+      </main>
       <bottom-app-bar>
         <standard-icon-button icon="home-outline"></standard-icon-button>
         <standard-icon-button icon="help-outline"></standard-icon-button>
@@ -48,6 +77,19 @@ export class SpyApp extends AlwatrElement {
         <floating-action-button icon="game-controller-outline" slot="end"></floating-action-button>
       </bottom-app-bar>
     `;
+  }
+
+  override firstUpdated(changedProperties: PropertyValues<this>): void {
+    super.firstUpdated(changedProperties);
+
+    const main = this.renderRoot.querySelector('main');
+    const topAppBar = this.renderRoot.querySelector('top-app-bar');
+
+    if (main != null && topAppBar != null) {
+      main.addEventListener('scroll', () => {
+        topAppBar.scrolling = !(main.scrollTop < 5);
+      });
+    }
   }
 }
 
