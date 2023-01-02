@@ -5,8 +5,8 @@ import {customElement, property} from 'lit/decorators.js';
 import '@alwatr/icon';
 
 /**
- * Standard icon button element.
- *
+ * @attr {string} icon
+ * @attr {string} url-prefix
  * @attr {boolean} flip-rtl
  */
 @customElement('standard-icon-button')
@@ -74,11 +74,19 @@ export class StandardIconButton extends AlwatrElement {
   @property()
   icon?: string;
 
-  @property({type: Boolean, attribute: 'flip-rtl'})
+  @property({attribute: 'url-prefix'})
+  urlPrefix?: string;
+
+  @property({type: Boolean, attribute: 'flip-rtl', reflect: true})
   flipRtl = false;
 
   override render(): unknown {
-    return html`<alwatr-icon ?flip-rtl=${this.flipRtl} .name=${this.icon}></alwatr-icon>`;
+    return html`<alwatr-icon
+      part="icon"
+      ?flip-rtl=${this.flipRtl}
+      .name=${this.icon}
+      .urlPrefix=${this.urlPrefix}
+    ></alwatr-icon>`;
   }
 }
 
