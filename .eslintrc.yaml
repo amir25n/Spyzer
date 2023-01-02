@@ -67,6 +67,10 @@ rules:
     - error
     - capIsNewExceptionPattern: 'Mixin$'
   '@typescript-eslint/explicit-function-return-type': error
+  '@typescript-eslint/consistent-type-imports':
+    - error
+    - prefer: 'type-imports'
+      fixStyle: 'separate-type-imports'
   'import/order':
     - error
     - groups:

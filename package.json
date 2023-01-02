@@ -11,9 +11,9 @@
     "dev": "vite dev",
     "clean": "rm -rf build",
     "lint": "run-s lint:*",
-    "lint:ts": "eslint **/*.ts",
+    "lint:ts": "eslint '**/*.ts'",
     "format": "run-s format:prettier format:eslint",
-    "format:eslint": "eslint '**/*.ts' --fix",
+    "format:eslint": "eslint '**/*.{ts}' --fix",
     "format:prettier": "prettier \"**/*.{html,json,md,ts,css}\" --ignore-path ./.eslintignore --write"
   },
   "dependencies": {
