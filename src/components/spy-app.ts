@@ -6,9 +6,9 @@ import '@alwatr/icon';
 
 import config from '../config';
 
-import './top-app-bar';
-import './bottom-app-bar';
-import './standard-icon-button';
+import './top-app-bar/top-app-bar';
+import './bottom-app-bar/bottom-app-bar';
+import './icon-button/standard-icon-button';
 import './fab/floating-action-button';
 
 import type {TemplateResult} from 'lit';
