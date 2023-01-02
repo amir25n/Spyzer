@@ -1,6 +1,8 @@
 import {AlwatrElement} from '@alwatr/element';
-import {css, html, TemplateResult} from 'lit';
+import {css, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+
+import type {TemplateResult} from 'lit';
 
 import '@alwatr/icon';
 
