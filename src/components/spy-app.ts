@@ -7,7 +7,9 @@ import '@alwatr/icon';
 import config from '../config';
 
 import './top-app-bar';
+import './bottom-app-bar';
 import './standard-icon-button';
+import './fab/floating-action-button';
 
 import type {TemplateResult} from 'lit';
 
@@ -16,61 +18,35 @@ export class SpyApp extends AlwatrElement {
   static override styles = [
     config.styles,
     css`
-      :host,
-      .page-container {
+      :host {
         display: flex;
         flex-direction: column;
         height: 100%;
       }
-      standard-icon-button {
-        width: var(--alwatr-sys-spacing-track-6);
-        height: var(--alwatr-sys-spacing-track-6);
-      }
-      top-app-bar {
-        margin-bottom: var(--alwatr-sys-spacing-track-2);
+      .page-container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
       }
     `,
   ];
 
   override render(): TemplateResult {
     return html`
-      <main class="page-container">
-        <top-app-bar scrolling>
-          <standard-icon-button icon="menu-outline" slot="start"></standard-icon-button>
+      <top-app-bar>
+        <standard-icon-button icon="icon" url-prefix="/images/" slot="start"></standard-icon-button>
 
-          <h1 slot="center">Center Aligned</h1>
+        <h1 slot="center">Spyzer</h1>
 
-          <standard-icon-button icon="search-outline" slot="end"></standard-icon-button>
-          <standard-icon-button icon="settings-outline" slot="end"></standard-icon-button>
-        </top-app-bar>
+        <standard-icon-button icon="help-outline" slot="end"></standard-icon-button>
+      </top-app-bar>
+      <main class="page-container"></main>
+      <bottom-app-bar>
+        <standard-icon-button icon="home-outline"></standard-icon-button>
+        <standard-icon-button icon="help-outline"></standard-icon-button>
 
-        <top-app-bar>
-          <standard-icon-button icon="menu-outline" slot="start"></standard-icon-button>
-
-          <h1 slot="small">Small Title</h1>
-
-          <standard-icon-button icon="search-outline" slot="end"></standard-icon-button>
-          <standard-icon-button icon="settings-outline" slot="end"></standard-icon-button>
-        </top-app-bar>
-
-        <top-app-bar>
-          <standard-icon-button icon="menu-outline" slot="start"></standard-icon-button>
-
-          <h1 slot="medium">HeadLine Small</h1>
-
-          <standard-icon-button icon="search-outline" slot="end"></standard-icon-button>
-          <standard-icon-button icon="settings-outline" slot="end"></standard-icon-button>
-        </top-app-bar>
-
-        <top-app-bar>
-          <standard-icon-button icon="menu-outline" slot="start"></standard-icon-button>
-
-          <h1 slot="large">HeadLine Medium</h1>
-
-          <standard-icon-button icon="search-outline" slot="end"></standard-icon-button>
-          <standard-icon-button icon="settings-outline" slot="end"></standard-icon-button>
-        </top-app-bar>
-      </main>
+        <floating-action-button icon="game-controller-outline" slot="end"></floating-action-button>
+      </bottom-app-bar>
     `;
   }
 }
