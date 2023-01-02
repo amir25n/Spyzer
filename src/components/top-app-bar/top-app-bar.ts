@@ -25,7 +25,7 @@ export class TopAppBar extends AlwatrElement {
         background-color: var(--alwatr-sys-color-surface);
         z-index: var(--alwatr-sys-zindex-above);
 
-        --alwatr-elevation-level: 1;
+        --alwatr-elevation-level: 0;
         --alwatr-elevation-duration: var(--alwatr-sys-motion-duration-medium-out);
       }
       :host([scrolling]) {
