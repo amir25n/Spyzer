@@ -19,6 +19,7 @@ export class BottomAppBar extends AlwatrElement {
         width: 100%;
         height: var(--alwatr-sys-spacing-track-10);
         background-color: var(--alwatr-sys-color-surface);
+        z-index: var(--alwatr-sys-zindex-above);
 
         padding-top: var(--alwatr-sys-spacing-halftrack-3);
         padding-bottom: var(--alwatr-sys-spacing-halftrack-3);

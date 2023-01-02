@@ -1,6 +1,6 @@
 import {AlwatrElement} from '@alwatr/element';
 import {css, html, unsafeCSS} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 
 import config from '../../config';
 import elevationHostStyle from '../../styles/elevation-host.css';
@@ -23,8 +23,9 @@ export class TopAppBar extends AlwatrElement {
         padding: var(--alwatr-sys-spacing-track-1);
         min-height: var(--alwatr-sys-spacing-track-8);
         background-color: var(--alwatr-sys-color-surface);
+        z-index: var(--alwatr-sys-zindex-above);
 
-        --alwatr-elevation-level: 0;
+        --alwatr-elevation-level: 1;
         --alwatr-elevation-duration: var(--alwatr-sys-motion-duration-medium-out);
       }
       :host([scrolling]) {
@@ -85,6 +86,8 @@ export class TopAppBar extends AlwatrElement {
       }
     `,
   ];
+
+  @property({type: Boolean, reflect: true}) scrolling = false;
 
   override render(): TemplateResult {
     return html`
