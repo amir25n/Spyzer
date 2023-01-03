@@ -119,9 +119,9 @@
   --alwatr-sys-color-error-container-light: #ffdad6;
   --alwatr-sys-color-on-error-light: #ffffff;
   --alwatr-sys-color-on-error-container-light: #410002;
-  --alwatr-sys-color-background-light: #fffbff;
+  --alwatr-sys-color-background-light: var(--alwatr-ref-palette-neutral99);
   --alwatr-sys-color-on-background-light: #1e1b16;
-  --alwatr-sys-color-surface-light: #fffbff;
+  --alwatr-sys-color-surface-light: var(--alwatr-ref-palette-neutral98);
   --alwatr-sys-color-on-surface-light: #1e1b16;
   --alwatr-sys-color-surface-variant-light: #ece1cf;
   --alwatr-sys-color-on-surface-variant-light: #4c4639;
@@ -150,9 +150,9 @@
   --alwatr-sys-color-error-container-dark: #93000a;
   --alwatr-sys-color-on-error-dark: #690005;
   --alwatr-sys-color-on-error-container-dark: #ffdad6;
-  --alwatr-sys-color-background-dark: #1e1b16;
+  --alwatr-sys-color-background-dark: var(--alwatr-ref-palette-neutral0);
   --alwatr-sys-color-on-background-dark: #e8e1d9;
-  --alwatr-sys-color-surface-dark: #1e1b16;
+  --alwatr-sys-color-surface-dark: var(--alwatr-ref-palette-neutral10);
   --alwatr-sys-color-on-surface-dark: #e8e1d9;
   --alwatr-sys-color-surface-variant-dark: #4c4639;
   --alwatr-sys-color-on-surface-variant-dark: #cfc5b4;
