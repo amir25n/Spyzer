@@ -1,6 +1,6 @@
 import {unsafeCSS} from 'lit';
 
-import normalize from './styles/normalize.css';
+import normalize from './styles/normalize.css?inline';
 
 const icons: string[] = [
   'home',
