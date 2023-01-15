@@ -1,4 +1,4 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrDummyElement} from '@alwatr/element';
 import {css, html, unsafeCSS} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
@@ -11,7 +11,7 @@ import type {TemplateResult} from 'lit';
  * @attr {boolean} scrolling
  */
 @customElement('top-app-bar')
-export class TopAppBar extends AlwatrElement {
+export class TopAppBar extends AlwatrDummyElement {
   static override styles = [
     config.styles,
     unsafeCSS(elevationHostStyle),

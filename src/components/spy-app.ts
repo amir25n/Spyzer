@@ -1,21 +1,18 @@
-import {AlwatrElement} from '@alwatr/element';
-import {css, html} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {
+AlwatrRootElement, css, html, customElement,
+} from '@alwatr/element';
 
 import '@alwatr/icon';
 
+import './navigation-drawer/navigation-drawer';
+import './navigation-drawer/navigation-drawer-item';
+
 import config from '../config';
 
-import './top-app-bar/top-app-bar';
-import './bottom-app-bar/bottom-app-bar';
-import './icon-button/standard-icon-button';
-import './fab/floating-action-button';
-import './card/elevated-card';
-
-import type {TemplateResult, PropertyValues} from 'lit';
+import type {LitRenderCallbackType} from '../type';
 
 @customElement('spy-app')
-export class SpyApp extends AlwatrElement {
+export class SpyApp extends AlwatrRootElement {
   static override styles = [
     config.styles,
     css`
@@ -31,63 +28,62 @@ export class SpyApp extends AlwatrElement {
         padding: var(--alwatr-sys-spacing-track-1) var(--alwatr-sys-spacing-halftrack-5);
         overflow-y: auto;
       }
-      elevated-card {
-        padding: var(--alwatr-sys-spacing-track-1);
-      }
     `,
   ];
 
-  override render(): TemplateResult {
+  override render(): LitRenderCallbackType {
     return html`
-      <top-app-bar>
-        <standard-icon-button icon="icon" url-prefix="/images/" slot="start"></standard-icon-button>
+      <navigation-drawer>
+        <navigation-drawer-title label="Mail"></navigation-drawer-title>
 
-        <h1 slot="center">Spyzer</h1>
+        <navigation-drawer-item icon="albums" label="Inbox" badge-value="9"></navigation-drawer-item>
+        <navigation-drawer-item icon="send" label="Outbox"></navigation-drawer-item>
+        <navigation-drawer-item icon="heart" label="Favorites"></navigation-drawer-item>
+        <navigation-drawer-item icon="trash" label="Trash"></navigation-drawer-item>
 
-        <standard-icon-button icon="help-outline" slot="end"></standard-icon-button>
-      </top-app-bar>
-      <main class="page-container">
-        <elevated-card>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex aliquid neque molestiae nam, voluptate mollitia
-            eaque eius. Iusto, amet? Magnam labore temporibus quaerat itaque vitae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex aliquid neque molestiae nam, voluptate mollitia
-            eaque eius. Iusto, amet? Magnam labore temporibus quaerat itaque vitae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex aliquid neque molestiae nam, voluptate mollitia
-            eaque eius. Iusto, amet? Magnam labore temporibus quaerat itaque vitae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex aliquid neque molestiae nam, voluptate mollitia
-            eaque eius. Iusto, amet? Magnam labore temporibus quaerat itaque vitae.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex aliquid neque molestiae nam, voluptate mollitia
-            eaque eius. Iusto, amet? Magnam labore temporibus quaerat itaque vitae.
-          </p>
-        </elevated-card>
-      </main>
-      <bottom-app-bar>
-        <standard-icon-button icon="home-outline"></standard-icon-button>
-        <standard-icon-button icon="help-outline"></standard-icon-button>
+        <navigation-drawer-divider></navigation-drawer-divider>
 
-        <floating-action-button icon="game-controller-outline" slot="end"></floating-action-button>
-      </bottom-app-bar>
+        <navigation-drawer-title label="Ideology"></navigation-drawer-title>
+        <navigation-drawer-item
+          href="/"
+          icon="heart"
+          label="Thanks him"
+          badge-value="313"
+          active
+        ></navigation-drawer-item>
+        <navigation-drawer-item icon="skull" label="Fuck them"></navigation-drawer-item>
+
+        <navigation-drawer-divider></navigation-drawer-divider>
+
+        <navigation-drawer-title label="Labels"></navigation-drawer-title>
+
+        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
+        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
+        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
+        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
+        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
+        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
+
+      </navigation-drawer>
+      <main class="page-container"></main>
     `;
   }
 
-  override firstUpdated(changedProperties: PropertyValues<this>): void {
+  protected override firstUpdated(changedProperties: Map<PropertyKey, unknown>): void {
     super.firstUpdated(changedProperties);
 
-    const main = this.renderRoot.querySelector('main');
-    const topAppBar = this.renderRoot.querySelector('top-app-bar');
+    const items = this.renderRoot.querySelectorAll('navigation-drawer-item');
 
-    if (main != null && topAppBar != null) {
-      main.addEventListener('scroll', () => {
-        topAppBar.scrolling = !(main.scrollTop < 5);
+    for (const item of items) {
+      item.addEventListener('click', () => {
+        items.forEach((_item) => {
+          // eslint-disable-next-line no-param-reassign
+          _item.active = false;
+
+          return _item;
+        });
+
+        item.active = true;
       });
     }
   }

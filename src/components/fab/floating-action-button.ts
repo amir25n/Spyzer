@@ -1,4 +1,4 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrDummyElement} from '@alwatr/element';
 import {css, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
@@ -11,7 +11,7 @@ import '@alwatr/icon';
  * @attr {boolean} flip-rtl
  */
 @customElement('floating-action-button')
-export class FloatingActionButton extends AlwatrElement {
+export class FloatingActionButton extends AlwatrDummyElement {
   static override styles = css`
     :host {
       position: relative;

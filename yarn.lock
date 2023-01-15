@@ -2,6 +2,18 @@
 # yarn lockfile v1
 
 
+"@alwatr/element@0.27":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/element/-/element-0.27.0.tgz#146ab57fdf8be0f76091dc8ebcb103aadef8a26b"
+  integrity sha512-oo5WWtFAQrU5EtVxFJThglBt2s2W0RbvghvCxVILPKOWhLTK4ADYD9jKrekemBHhc3vppSh3QzLul4S20mjdlg==
+  dependencies:
+    "@alwatr/i18n" "^0.27.0"
+    "@alwatr/logger" "^0.27.0"
+    "@alwatr/router" "^0.27.0"
+    "@alwatr/signal" "^0.27.0"
+    lit "~2.5.0"
+    tslib "~2.4.1"
+
 "@alwatr/element@^0.26.1":
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/@alwatr/element/-/element-0.26.1.tgz#00c069c44de05de4b1edf3dfaa536fe95c976975"
@@ -20,10 +32,28 @@
     "@alwatr/logger" "^0.26.1"
     tslib "~2.4.1"
 
+"@alwatr/fetch@^0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/fetch/-/fetch-0.27.0.tgz#0662b222469181bbd3bd82b6fc36e0a73423278f"
+  integrity sha512-KeWPzE4ff32nB1/hrDdQNvKA8zu8qYhc/1gHJqixh5P+8F1ZBEdG7MpnAOpu0/i9OYeJPYllLhScpLY8LGqtKA==
+  dependencies:
+    "@alwatr/logger" "^0.27.0"
+    tslib "~2.4.1"
+
 "@alwatr/font@^0.26.1":
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/@alwatr/font/-/font-0.26.1.tgz#bcec4dca0f71c3930267c82318d586b1dda63b8a"
   integrity sha512-KLPA9AE4SKCqhjE9EttTvYqPtmd/AE4eQFF/aWp0fdgzwaL+XznBCcE2+XieD0mbIVeITebTMuE9ULIlh7OdMg==
+
+"@alwatr/i18n@^0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/i18n/-/i18n-0.27.0.tgz#f93c2f407a5242b85f924f2ef4b43fd977e370c4"
+  integrity sha512-nPhDScwkao2kiMwZOijkKD+lFWRaNK8nbmL1vdGu0urdslHEpfIa+gwmwO60RhNofg6N/jvaxqypIR/SwUgxMQ==
+  dependencies:
+    "@alwatr/fetch" "^0.27.0"
+    "@alwatr/logger" "^0.27.0"
+    "@alwatr/signal" "^0.27.0"
+    tslib "~2.4.1"
 
 "@alwatr/icon@^0.26.1":
   version "0.26.1"
@@ -42,11 +72,27 @@
   dependencies:
     tslib "~2.4.1"
 
+"@alwatr/logger@^0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/logger/-/logger-0.27.0.tgz#0ad15b76f345cd856cbeb1573976fc495d39259c"
+  integrity sha512-3rI6nvH7JwfP5jMJOEqOGQFxYrogKYCKLI+Tcs7ZoU0ipczGj9zPobvkF4H4AAMA9mSZ1jlBc3AawtmRdrBQ0A==
+  dependencies:
+    tslib "~2.4.1"
+
 "@alwatr/math@^0.26.1":
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/@alwatr/math/-/math-0.26.1.tgz#9165b9212fdf5a7c0576d8fa6aa2b58dc9a3d750"
   integrity sha512-BPxV+Kl6Z3ErQVEH2JqLMEdhRNr70u0vXma/dPx81J+YbXiM5RP6ftxZto2wSuTvIcB++Wajg3KhIUke/wmJ7g==
   dependencies:
+    tslib "~2.4.1"
+
+"@alwatr/router@^0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/router/-/router-0.27.0.tgz#b6037abbbadf0dee45ee93ca52875e050c3135b4"
+  integrity sha512-OlivMB352curLzcaNSWVUCqkFWEsyJ6B3hagom/iA54KgqoO5pSvIaJfgKeyYUXwntypnkCKsmsFwSVgQt/ViA==
+  dependencies:
+    "@alwatr/logger" "^0.27.0"
+    "@alwatr/signal" "^0.27.0"
     tslib "~2.4.1"
 
 "@alwatr/signal@^0.26.1":
@@ -55,6 +101,14 @@
   integrity sha512-yn6V+lwMrxqc4my+DZY3CFlPmcLnwGkZxWVT5w1rHRTK7vb4NU9jzsCp1I/yFxjA0ZHpKUfslCo1mp+2uO2o2w==
   dependencies:
     "@alwatr/logger" "^0.26.1"
+    tslib "~2.4.1"
+
+"@alwatr/signal@^0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@alwatr/signal/-/signal-0.27.0.tgz#384c4ba4180b17f05ec032aeedeb729daf129aea"
+  integrity sha512-QCDPXzxtULxpQMsdg1ojAaQXPJcHpmsV5Cv+8gHytIQZXLWxl2eKQB/QT5txtefrWvDThdLMQrZpBH3BJfNlYQ==
+  dependencies:
+    "@alwatr/logger" "^0.27.0"
     tslib "~2.4.1"
 
 "@ampproject/remapping@^2.1.0":

@@ -18,8 +18,10 @@
     "Mihandoost",
     "noncallable",
     "tsbuildinfo",
+    "typescale",
     "webcomponents",
-    "webcomponentsjs"
+    "webcomponentsjs",
+    "zindex"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }

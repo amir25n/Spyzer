@@ -17,7 +17,7 @@
     "format:prettier": "prettier \"**/*.{html,json,md,ts,css}\" --ignore-path ./.eslintignore --write"
   },
   "dependencies": {
-    "@alwatr/element": "^0.26.1",
+    "@alwatr/element": "0.27",
     "@alwatr/fetch": "^0.26.1",
     "@alwatr/font": "^0.26.1",
     "@alwatr/icon": "^0.26.1",

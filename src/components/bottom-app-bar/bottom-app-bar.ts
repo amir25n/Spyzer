@@ -1,4 +1,4 @@
-import {AlwatrElement} from '@alwatr/element';
+import {AlwatrDummyElement} from '@alwatr/element';
 import {css, html, unsafeCSS} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
@@ -8,7 +8,7 @@ import elevationHostStyle from '../../styles/elevation-host.css';
 import type {TemplateResult} from 'lit';
 
 @customElement('bottom-app-bar')
-export class BottomAppBar extends AlwatrElement {
+export class BottomAppBar extends AlwatrDummyElement {
   static override styles = [
     config.styles,
     unsafeCSS(elevationHostStyle),
