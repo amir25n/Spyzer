@@ -3,10 +3,7 @@
   --sys-scrollbar-color: rgb(0 0 0 / var(--sys-surface-state-opacity-hover));
   --sys-scrollbar-color-hover:
     rgb(
-      0
-      0
-      0 /
-      var(--sys-surface-state-opacity-pressed)
+      0 0 0 / var(--sys-surface-state-opacity-pressed)
     );
   --sys-scrollbar-size: 3px;
   --sys-scrollbar-radius: calc(var(--sys-scrollbar-size) / 2);
@@ -16,17 +13,11 @@
   :root {
     --sys-scrollbar-color:
       rgb(
-        255
-        255
-        255 /
-        var(--sys-surface-state-opacity-hover)
+        255 255 255 / var(--sys-surface-state-opacity-hover)
       );
     --sys-scrollbar-color-hover:
       rgb(
-        255
-        255
-        255 /
-        var(--sys-surface-state-opacity-pressed)
+        255 255 255 / var(--sys-surface-state-opacity-pressed)
       );
   }
 }
