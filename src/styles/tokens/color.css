@@ -79,7 +79,8 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* theme dark */
-    --sys-color-primary-hsl: var(--ref-palette-primary80);
+
+    /* --sys-color-primary-hsl: var(--ref-palette-primary80);
     --sys-color-on-primary-hsl: var(--ref-palette-primary20);
     --sys-color-primary-container-hsl: var(--ref-palette-primary30);
     --sys-color-on-primary-container-hsl: var(--ref-palette-primary90);
@@ -105,6 +106,6 @@
     --sys-color-on-error-container-hsl: var(--ref-palette-error90);
     --sys-color-inverse-primary-hsl: var(--ref-palette-primary40);
     --sys-color-inverse-surface-hsl: var(--ref-palette-neutral90);
-    --sys-color-inverse-on-surface-hsl: var(--ref-palette-neutral20);
+    --sys-color-inverse-on-surface-hsl: var(--ref-palette-neutral20); */
   }
 }
