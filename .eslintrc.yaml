@@ -36,3 +36,18 @@ rules:
   import/no-unresolved: off
   require-jsdoc: off
   valid-jsdoc: off
+  '@typescript-eslint/member-ordering':
+    - 'error'
+    - default:
+        - signature
+        - constructor
+        - static-field
+        - public-field
+        - protected-field
+        - private-field
+        - field
+        - public-method
+        - static-method
+        - protected-method
+        - private-method
+        - method
