@@ -1,8 +1,18 @@
-import {AlwatrDummyElement, css, html, customElement} from '@alwatr/element';
+import {
+  AlwatrDummyElement,
+  css,
+  html,
+  customElement,
+  property,
+  map,
+} from '@alwatr/element';
 
 import config from '../../config';
 
+import './navigation-tab';
+
 import type {LitRenderType} from '../../types/lit-render';
+import type {Routes} from '../../types/route';
 
 @customElement('navigation-bar')
 export class NavigationBar extends AlwatrDummyElement {
@@ -11,12 +21,49 @@ export class NavigationBar extends AlwatrDummyElement {
     css`
       :host {
         display: flex;
+        justify-content: center;
+        align-items: stretch;
+        width: 100%;
+        height: calc(8 * var(--sys-spacing-track));
+        background-color: var(--sys-color-surface);
+        border-top-right-radius: var(--sys-radius-medium);
+        border-top-left-radius: var(--sys-radius-medium);
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
       }
     `,
   ];
 
+  @property({type: Object, attribute: false})
+    tabs: Routes = {};
+
+  @property({type: String, reflect: true})
+    activeSlug = '';
+
   override render(): LitRenderType {
-    return html``;
+    const tabsTemplate = map(Object.keys(this.tabs), (tabKey) => {
+      const tab = this.tabs[tabKey];
+      const selected = this.activeSlug === tabKey;
+
+      return NavigationBar.renderNavigationTab(
+          tab.icon ?? 'warning-2',
+          tabKey,
+          selected,
+      );
+    });
+
+    return html`${tabsTemplate}`;
+  }
+
+  static renderNavigationTab(
+      icon: string,
+      href: string,
+      active: boolean,
+  ): LitRenderType {
+    return html`<navigation-tab
+      .icon=${icon}
+      .href=${href}
+      ?active=${active}
+    ></navigation-tab>`;
   }
 }
 
