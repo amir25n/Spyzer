@@ -15,7 +15,7 @@
   --sys-color-background-hsl: var(--ref-palette-neutral99);
   --sys-color-on-background-hsl: var(--ref-palette-neutral10);
   --sys-color-surface-hsl: var(--ref-palette-neutral99);
-  --sys-color-on-surface-hsl: var(--ref-palette-neutral10);
+  --sys-color-on-surface-hsl: var(--ref-palette-neutral30);
   --sys-color-surface-variant-hsl: var(--ref-palette-neutral-variant90);
   --sys-color-on-surface-variant-hsl: var(--ref-palette-neutral-variant30);
   --sys-color-outline-hsl: var(--ref-palette-neutral-variant50);

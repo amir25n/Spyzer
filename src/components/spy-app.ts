@@ -48,7 +48,7 @@ export class SpyApp extends AlwatrSmartElement {
         display: flex;
         flex-direction: column;
         height: 100%;
-        background-color: hsl(var(--sys-color-primary-container-hsl) 75%);
+        background-color: hsl(var(--sys-color-primary-container-hsl) / 75%);
       }
 
       .page-container {

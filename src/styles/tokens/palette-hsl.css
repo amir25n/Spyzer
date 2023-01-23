@@ -14,397 +14,301 @@
 
   /* primary */
   --ref-palette-primary0:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    0%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 0%;
   --ref-palette-primary10:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    10%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 10%;
   --ref-palette-primary20:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    20%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 20%;
   --ref-palette-primary25:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    25%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 25%;
   --ref-palette-primary30:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    30%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 30%;
   --ref-palette-primary35:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    35%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 35%;
   --ref-palette-primary40:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    40%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 40%;
   --ref-palette-primary50:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    50%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 50%;
   --ref-palette-primary60:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    60%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 60%;
   --ref-palette-primary70:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    70%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 70%;
   --ref-palette-primary80:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    80%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 80%;
   --ref-palette-primary90:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    90%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 90%;
   --ref-palette-primary95:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    95%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 95%;
   --ref-palette-primary98:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    98%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 98%;
   --ref-palette-primary99:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    99%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 99%;
   --ref-palette-primary100:
-    var(--ref-palette-primary-hue),
-    var(--ref-palette-primary-saturation),
-    100%;
+    var(--ref-palette-primary-hue)
+    var(--ref-palette-primary-saturation) 100%;
 
   /* secondary */
   --ref-palette-secondary0:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    0%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 0%;
   --ref-palette-secondary10:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    10%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 10%;
   --ref-palette-secondary20:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    20%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 20%;
   --ref-palette-secondary25:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    25%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 25%;
   --ref-palette-secondary30:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    30%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 30%;
   --ref-palette-secondary35:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    35%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 35%;
   --ref-palette-secondary40:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    40%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 40%;
   --ref-palette-secondary50:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    50%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 50%;
   --ref-palette-secondary60:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    60%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 60%;
   --ref-palette-secondary70:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    70%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 70%;
   --ref-palette-secondary80:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    80%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 80%;
   --ref-palette-secondary90:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    90%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 90%;
   --ref-palette-secondary95:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    95%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 95%;
   --ref-palette-secondary98:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    98%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 98%;
   --ref-palette-secondary99:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    99%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 99%;
   --ref-palette-secondary100:
-    var(--ref-palette-secondary-hue),
-    var(--ref-palette-secondary-saturation),
-    100%;
+    var(--ref-palette-secondary-hue)
+    var(--ref-palette-secondary-saturation) 100%;
 
   /* tertiary */
   --ref-palette-tertiary0:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    0%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 0%;
   --ref-palette-tertiary10:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    10%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 10%;
   --ref-palette-tertiary20:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    20%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 20%;
   --ref-palette-tertiary25:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    25%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 25%;
   --ref-palette-tertiary30:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    30%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 30%;
   --ref-palette-tertiary35:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    35%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 35%;
   --ref-palette-tertiary40:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    40%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 40%;
   --ref-palette-tertiary50:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    50%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 50%;
   --ref-palette-tertiary60:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    60%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 60%;
   --ref-palette-tertiary70:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    70%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 70%;
   --ref-palette-tertiary80:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    80%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 80%;
   --ref-palette-tertiary90:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    90%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 90%;
   --ref-palette-tertiary95:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    95%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 95%;
   --ref-palette-tertiary98:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    98%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 98%;
   --ref-palette-tertiary99:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    99%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 99%;
   --ref-palette-tertiary100:
-    var(--ref-palette-tertiary-hue),
-    var(--ref-palette-tertiary-saturation),
-    100%;
+    var(--ref-palette-tertiary-hue)
+    var(--ref-palette-tertiary-saturation) 100%;
 
   /* neutral */
   --ref-palette-neutral0:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    0%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 0%;
   --ref-palette-neutral10:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    10%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 10%;
   --ref-palette-neutral20:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    20%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 20%;
   --ref-palette-neutral25:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    25%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 25%;
   --ref-palette-neutral30:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    30%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 30%;
   --ref-palette-neutral35:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    35%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 35%;
   --ref-palette-neutral40:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    40%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 40%;
   --ref-palette-neutral50:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    50%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 50%;
   --ref-palette-neutral60:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    60%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 60%;
   --ref-palette-neutral70:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    70%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 70%;
   --ref-palette-neutral80:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    80%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 80%;
   --ref-palette-neutral90:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    90%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 90%;
   --ref-palette-neutral95:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    95%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 95%;
   --ref-palette-neutral98:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    98%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 98%;
   --ref-palette-neutral99:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    99%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 99%;
   --ref-palette-neutral100:
-    var(--ref-palette-neutral-hue),
-    var(--ref-palette-neutral-saturation),
-    100%;
+    var(--ref-palette-neutral-hue)
+    var(--ref-palette-neutral-saturation) 100%;
 
   /* neutral-variant */
   --ref-palette-neutral-variant0:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    0%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 0%;
   --ref-palette-neutral-variant10:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    10%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 10%;
   --ref-palette-neutral-variant20:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    20%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 20%;
   --ref-palette-neutral-variant25:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    25%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 25%;
   --ref-palette-neutral-variant30:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    30%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 30%;
   --ref-palette-neutral-variant35:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    35%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 35%;
   --ref-palette-neutral-variant40:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    40%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 40%;
   --ref-palette-neutral-variant50:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    50%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 50%;
   --ref-palette-neutral-variant60:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    60%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 60%;
   --ref-palette-neutral-variant70:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    70%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 70%;
   --ref-palette-neutral-variant80:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    80%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 80%;
   --ref-palette-neutral-variant90:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    90%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 90%;
   --ref-palette-neutral-variant95:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    95%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 95%;
   --ref-palette-neutral-variant98:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    98%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 98%;
   --ref-palette-neutral-variant99:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    99%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 99%;
   --ref-palette-neutral-variant100:
-    var(--ref-palette-neutral-variant-hue),
-    var(--ref-palette-neutral-variant-saturation),
-    100%;
+    var(--ref-palette-neutral-variant-hue)
+    var(--ref-palette-neutral-variant-saturation) 100%;
 
   /* error */
   --ref-palette-error0:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    0%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 0%;
   --ref-palette-error10:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    10%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 10%;
   --ref-palette-error20:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    20%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 20%;
   --ref-palette-error25:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    25%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 25%;
   --ref-palette-error30:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    30%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 30%;
   --ref-palette-error35:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    35%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 35%;
   --ref-palette-error40:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    40%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 40%;
   --ref-palette-error50:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    50%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 50%;
   --ref-palette-error60:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    60%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 60%;
   --ref-palette-error70:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    70%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 70%;
   --ref-palette-error80:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    80%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 80%;
   --ref-palette-error90:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    90%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 90%;
   --ref-palette-error95:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    95%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 95%;
   --ref-palette-error98:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    98%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 98%;
   --ref-palette-error99:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    99%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 99%;
   --ref-palette-error100:
-    var(--ref-palette-error-hue),
-    var(--ref-palette-error-saturation),
-    100%;
+    var(--ref-palette-error-hue)
+    var(--ref-palette-error-saturation) 100%;
 }
