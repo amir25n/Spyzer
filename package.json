@@ -6,6 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "pre-commit": "run-s clean format lint build",
     "build": "run-s clean build:*",
     "build:es": "vite build",
     "dev": "vite dev",
