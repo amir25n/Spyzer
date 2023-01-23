@@ -37,15 +37,13 @@ export class CardBox extends AlwatrDummyElement {
       :host {
         display: flex;
         flex-direction: column;
-        box-shadow: 0px 4px 12px hsla(var(--sys-color-on-surface-hsl) / 25%);
+        box-shadow: 0 4px 12px hsla(var(--sys-color-on-surface-hsl) / 25%);
         background-color: var(--sys-color-surface);
         color: var(--sys-color-on-surface);
         outline: 0;
         border-radius: var(--sys-radius-medium);
         overflow: hidden;
         overflow: clip;
-
-        margin: 24px;
       }
 
       .header {
@@ -56,10 +54,12 @@ export class CardBox extends AlwatrDummyElement {
         padding: calc(1.75 * var(--sys-spacing-track));
         gap: calc(0.5 * var(--sys-spacing-track));
       }
+
       .header .header-icon {
         flex: 0 0 calc(3.5 * var(--sys-spacing-track));
         font-size: calc(3.5 * var(--sys-spacing-track));
       }
+
       .header .header-text {
         margin: 0;
         overflow: hidden;
@@ -71,6 +71,7 @@ export class CardBox extends AlwatrDummyElement {
         letter-spacing: var(--sys-typescale-title-medium-letter-spacing);
         line-height: var(--sys-typescale-title-medium-line-height);
       }
+
       .header .header-note {
         font-family: var(--sys-typescale-label-small-font-family-name);
         font-weight: var(--sys-typescale-label-small-font-weight);
@@ -78,6 +79,7 @@ export class CardBox extends AlwatrDummyElement {
         letter-spacing: var(--sys-typescale-label-small-letter-spacing);
         line-height: var(--sys-typescale-label-small-line-height);
       }
+
       .header .header-note:empty {
         display: none;
       }
