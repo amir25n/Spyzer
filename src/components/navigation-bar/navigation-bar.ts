@@ -28,7 +28,7 @@ export class NavigationBar extends AlwatrDummyElement {
         background-color: var(--sys-color-surface);
         border-top-right-radius: var(--sys-radius-medium);
         border-top-left-radius: var(--sys-radius-medium);
-        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
       }
     `,
   ];

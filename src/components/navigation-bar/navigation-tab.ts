@@ -18,21 +18,10 @@ export class NavigationBar extends AlwatrDummyElement {
     config.styles,
     css`
       :host {
-        --_color-bg: var(--sys-color-on-surface);
+        --comp-color-bg: var(--sys-color-on-surface);
 
         display: flex;
         flex-direction: column;
-      }
-
-      :host([active]) {
-        --_color-bg: var(--sys-color-primary);
-      }
-
-      :host([active]) a::after {
-        opacity: 1;
-        width: calc(4 * var(--sys-spacing-track));
-        margin-top: var(--sys-spacing-track);
-        margin-bottom: 0;
       }
 
       a {
@@ -45,8 +34,7 @@ export class NavigationBar extends AlwatrDummyElement {
       }
 
       a::after {
-        content: '';
-
+        content: "";
         border-radius: calc(0.2 * var(--sys-spacing-track));
         background-color: var(--sys-color-primary);
         width: 0;
@@ -54,14 +42,13 @@ export class NavigationBar extends AlwatrDummyElement {
         margin-top: calc(20% - 0.4 * var(--sys-spacing-track));
         margin-bottom: -20%;
         opacity: 0.25;
-
         will-change: opacity, margin-top, margin-bottom, width;
         transition-property: opacity, margin-top, margin-bottom, width;
       }
 
       alwatr-icon {
         transition-property: color;
-        color: var(--_color-bg);
+        color: var(--comp-color-bg);
         font-size: calc(3.3 * var(--sys-spacing-track));
       }
 
@@ -70,12 +57,24 @@ export class NavigationBar extends AlwatrDummyElement {
         transition-duration: var(--sys-motion-duration-small-out);
         transition-timing-function: var(--sys-motion-easing-exiting);
       }
-
+    `,
+    css`
       :host([active]) a::after,
       :host([active]) alwatr-icon {
         transition-delay: var(--sys-motion-duration-small);
         transition-duration: var(--sys-motion-duration-small);
         transition-timing-function: var(--sys-motion-easing-incoming);
+      }
+
+      :host([active]) {
+        --comp-color-bg: var(--sys-color-primary);
+      }
+
+      :host([active]) a::after {
+        opacity: 1;
+        width: calc(4 * var(--sys-spacing-track));
+        margin-top: var(--sys-spacing-track);
+        margin-bottom: 0;
       }
     `,
   ];
