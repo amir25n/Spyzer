@@ -33,6 +33,7 @@ settings:
       alwaysTryTypes: true
 
 rules:
+  wc/guard-super-call: off
   import/no-unresolved: off
   require-jsdoc: off
   valid-jsdoc: off
