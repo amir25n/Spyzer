@@ -25,8 +25,8 @@ export class IconButton extends Surface {
     config.styles,
     css`
       :host {
-        --_surface-color-on: var(--sys-color-primary-hsl);
-        --_surface-color-bg: var(--sys-color-primary-container-hsl);
+        --surface-color-on: var(--sys-color-primary-hsl);
+        --surface-color-bg: var(--sys-color-primary-container-hsl);
 
         display: inline-flex;
         user-select: none;
