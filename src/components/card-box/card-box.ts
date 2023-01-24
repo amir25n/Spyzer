@@ -52,7 +52,7 @@ export class CardBox extends AlwatrDummyElement {
         align-items: center;
         justify-content: space-between;
         padding: calc(1.75 * var(--sys-spacing-track));
-        gap: calc(0.5 * var(--sys-spacing-track));
+        gap: calc(1.5 * var(--sys-spacing-track));
       }
 
       .header .header-icon {
@@ -62,6 +62,7 @@ export class CardBox extends AlwatrDummyElement {
 
       .header .header-text {
         margin: 0;
+        flex-grow: 1;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -106,7 +107,7 @@ export class CardBox extends AlwatrDummyElement {
   @property({type: String, attribute: 'header-note'})
     headerNote = '';
 
-  @property({type: Boolean, reflect: true, attribute: 'have-line'})
+  @property({type: Boolean, attribute: 'have-line'})
     haveLine = true;
 
   override render(): LitRenderType {
