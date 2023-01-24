@@ -8,8 +8,6 @@ const DIST_PATH = 'build/';
 const serviceWorker: Partial<GenerateSWOptions> = {
   skipWaiting: true,
   clientsClaim: true,
-  cleanupOutdatedCaches: true,
-  inlineWorkboxRuntime: true,
   swDest: `${DIST_PATH}sw.js`,
   globDirectory: DIST_PATH,
   globPatterns: ['**/*.{html,js,css,woff,png,ico,svg}'],
@@ -33,8 +31,8 @@ const manifestJson: Partial<ManifestOptions> = {
   orientation: 'portrait',
 
   /* theming */
-  theme_color: '#009688',
-  background_color: '#f4511e',
+  theme_color: '#ffe9d9',
+  background_color: '#ffe9d9',
 
   /* icons */
   icons: [
@@ -70,9 +68,12 @@ export default defineConfig({
     vitePWA({
       strategies: 'generateSW',
       workbox: serviceWorker,
+      mode: 'production',
       devOptions: {
         enabled: false,
       },
+      selfDestroying: true,
+      useCredentials: true,
       registerType: 'autoUpdate',
       manifest: manifestJson,
     }),
