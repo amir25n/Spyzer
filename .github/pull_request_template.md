@@ -1,17 +1,9 @@
-## Description
+# Types of changes
 
-Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context.
-
-Fixes #(issue)
-
-## PR Checklist
-
-Please check if your PR fulfills the following requirements:
-
-- [ ] Open an issue for bug report or feature request and mention it to this PR.
-- [ ] The commit message follows our guidelines: <https://github.com/AliMD/alwatr/blob/main/CONTRIBUTING.md#commit-message-format>
-- [ ] All methods have proper description in `jsdocs` format with `@example` section.
-- [ ] Docs have been added / updated (for bug fixes / features).
-- [ ] I have performed a self-review of my own code.
-
-## Other information
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to change)
+- [x] I have read the **CONTRIBUTING** document.
+- [x] My code follows the code style of this project.
+- [x] My change requires a change to the documentation.
+- [x] All new and existing tests passed.
