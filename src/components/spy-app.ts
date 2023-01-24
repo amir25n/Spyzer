@@ -1,18 +1,46 @@
 import {
-AlwatrRootElement, css, html, customElement,
+  AlwatrSmartElement,
+  customElement,
+  html,
+  css,
+  PropertyValues,
 } from '@alwatr/element';
+import {l10n} from '@alwatr/i18n';
 
 import '@alwatr/icon';
 
-import './navigation-drawer/navigation-drawer';
-import './navigation-drawer/navigation-drawer-item';
-
 import config from '../config';
+import routes from '../routes';
 
-import type {LitRenderCallbackType} from '../type';
+import './navigation-bar/navigation-bar';
+
+import {router} from '@alwatr/router';
+import type {RoutesConfig} from '@alwatr/router';
+import type {LitRenderType} from '../types/lit-render';
 
 @customElement('spy-app')
-export class SpyApp extends AlwatrRootElement {
+export class SpyApp extends AlwatrSmartElement {
+  constructor() {
+    super();
+
+    l10n.config.defaultLocale = {
+      code: 'fa-IR',
+      direction: 'rtl',
+      language: 'fa',
+    };
+    l10n.setLocal();
+    l10n.resourceChangeSignal.addListener(() => this.requestUpdate());
+
+    router.signal.addListener((route) => {
+      const oldPage = this.activePage;
+      this.activePage = route.sectionList[0]?.toString() ?? this.activePage;
+      this.requestUpdate('activePage', oldPage);
+
+      this._logger.logMethodArgs('routeChanged', {route});
+    });
+    router.initial();
+  }
+
   static override styles = [
     config.styles,
     css`
@@ -20,72 +48,40 @@ export class SpyApp extends AlwatrRootElement {
         display: flex;
         flex-direction: column;
         height: 100%;
+        background-color: hsl(var(--sys-color-primary-container-hsl) / 75%);
       }
+
       .page-container {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
-        padding: var(--alwatr-sys-spacing-track-1) var(--alwatr-sys-spacing-halftrack-5);
-        overflow-y: auto;
       }
     `,
   ];
 
-  override render(): LitRenderCallbackType {
+  private activePage = 'home';
+
+  private routes: RoutesConfig = {
+    map: (route) => route.sectionList[0]?.toString() ?? this.activePage,
+    list: routes,
+  };
+
+  override render(): LitRenderType {
     return html`
-      <navigation-drawer>
-        <navigation-drawer-title label="Mail"></navigation-drawer-title>
-
-        <navigation-drawer-item icon="albums" label="Inbox" badge-value="9"></navigation-drawer-item>
-        <navigation-drawer-item icon="send" label="Outbox"></navigation-drawer-item>
-        <navigation-drawer-item icon="heart" label="Favorites"></navigation-drawer-item>
-        <navigation-drawer-item icon="trash" label="Trash"></navigation-drawer-item>
-
-        <navigation-drawer-divider></navigation-drawer-divider>
-
-        <navigation-drawer-title label="Ideology"></navigation-drawer-title>
-        <navigation-drawer-item
-          href="/"
-          icon="heart"
-          label="Thanks him"
-          badge-value="313"
-          active
-        ></navigation-drawer-item>
-        <navigation-drawer-item icon="skull" label="Fuck them"></navigation-drawer-item>
-
-        <navigation-drawer-divider></navigation-drawer-divider>
-
-        <navigation-drawer-title label="Labels"></navigation-drawer-title>
-
-        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
-        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
-        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
-        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
-        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
-        <navigation-drawer-item icon="folder-open" label="Label"></navigation-drawer-item>
-
-      </navigation-drawer>
-      <main class="page-container"></main>
+      <div class="page-container">${router.outlet(this.routes)}</div>
+      <navigation-bar
+        .tabs=${this.routes.list}
+        .activeSlug=${this.activePage}
+      ></navigation-bar>
     `;
   }
 
-  protected override firstUpdated(changedProperties: Map<PropertyKey, unknown>): void {
+  protected override firstUpdated(
+      changedProperties: PropertyValues<this>,
+  ): void {
     super.firstUpdated(changedProperties);
 
-    const items = this.renderRoot.querySelectorAll('navigation-drawer-item');
-
-    for (const item of items) {
-      item.addEventListener('click', () => {
-        items.forEach((_item) => {
-          // eslint-disable-next-line no-param-reassign
-          _item.active = false;
-
-          return _item;
-        });
-
-        item.active = true;
-      });
-    }
+    document.body.removeAttribute('unresolved');
   }
 }
 

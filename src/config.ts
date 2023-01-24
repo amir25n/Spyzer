@@ -1,6 +1,6 @@
 import {unsafeCSS} from 'lit';
 
-import normalize from './styles/normalize.css';
+import normalize from './styles/normalize.css?inline';
 
 const icons: string[] = [
   'home',
@@ -22,7 +22,6 @@ const styles = [unsafeCSS(normalize)];
 const config = {
   icons,
   styles,
-  appName: 'Spyzer',
 };
 
 export default config;
