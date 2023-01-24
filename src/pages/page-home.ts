@@ -1,69 +1,89 @@
-import {AlwatrElement as AppElement} from '@alwatr/element';
-import {html, css} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {
+  AlwatrDummyElement,
+  css,
+  html,
+  customElement,
+  LocalizeMixin as localizeMixin,
+} from '@alwatr/element';
 
 import config from '../config';
-import router from '../router';
-import ionicNormalize from '../styles/ionic.normalize';
-import ionicTheming from '../styles/ionic.theming';
-import normalize from '../styles/normalize';
+import {router} from '@alwatr/router';
 
-import type {TemplateResult} from 'lit';
+import '../components/card-box/card-box';
+import '../components/icon-button/icon-button';
+import '../components/button/filled-link-button';
+
+import type {LitRenderType} from '../types/lit-render';
 
 @customElement('page-home')
-export class PageHome extends AppElement {
+export class PageHome extends localizeMixin(AlwatrDummyElement) {
   static override styles = [
-    normalize,
-    ionicNormalize,
-    ionicTheming,
+    config.styles,
     css`
-      ion-card.readme ion-card-content h1,
-      ion-card.readme ion-card-content p {
-        margin-bottom: 0.8em;
+      :host {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        height: 100%;
+
+        padding: calc(2 * var(--sys-spacing-track));
       }
-      ion-card.readme ion-card-content .readme__made-with {
+
+      card-box {
+        width: 100%;
+      }
+
+      card-box p {
         text-align: center;
+        padding: 0 calc(2 * var(--sys-spacing-track));
+      }
+
+      card-box .buttons-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: calc(2 * var(--sys-spacing-track));
+        margin: calc(2 * var(--sys-spacing-track));
       }
     `,
   ];
 
-  override render(): TemplateResult {
+  override render(): LitRenderType {
     return html`
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>${config.titleFormat('خانه')}</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content fullscreen>
-        <ion-card class="readme">
-          <ion-card-content>
-            <h1>سلام رفیق 👋</h1>
+      <card-box
+        header-text=${this.l10n.localize('$APP-NAME')}
+        header-icon="icon"
+        header-icon-url-prefix="/images/"
+        have-line
+      >
+        <p>
+          پیر مردی هر روز تو محله می دید پسر کی با کفش های پاره و پای برهنه با
+          توپ پلاستیکی فوتبال بازی می کند،
+        </p>
+        <p>
+          روزی رفت ی کتانی نو خرید و اومد و به پسرک گفت بیا این کفشا رو بپوش…
+        </p>
+        <p>
+          پسرک کفشا رو پوشید و خوشحال رو به پیر مرد کرد و گفت: شما خدایید؟! پیر
+          مرد لبش را گزید و گفت نه!
+        </p>
+        <p>پسرک گفت پس دوست خدایی، چون من دیشب فقط به خدا گفتم كه کفش ندارم…</p>
 
-            <p>
-              وقتی ثروت‌ های بزرگ به دست برخی مردم می‌افتد در پرتو آن نیرومند می‌شوند و در سایهٔ نیرومندی و ثروت خیال
-              می‌ کنند که می‌توانند در خارج از وطن خود زندگی نمایند و خوشبخت و سرافراز باشند ولی به زودی می‌ فهمند که
-              اشتباه کرده‌ اند و عظمت هر ملتی بر روی خرابه‌ های وطن خودش می‌باشد و بس!
-            </p>
-            <p>
-              هر نفسی که فرو می‌ بریم، مرگی را که مدام به ما دست‌ اندازی می‌کند پس می‌زند... در نهایت این مرگ است که
-              باید پیروز شود، زیرا از هنگام تولد بخشی از سرنوشت ما شده و فقط مدت کوتاهی پیش از بلعیدن طعمه اش، با آن
-              بازی می کند. با این همه، ما تا آنجا که ممکن است، با علاقه فراوان و دلواپسی زیاد به زندگی ادامه می دهیم،
-              همان‌ طور که تا آنجا که ممکن است طولانی‌ تر در یک حباب صابون می‌ دمیم تا بزرگتر شود، گر چه با قطعیتی تمام
-              می‌ دانیم که خواهد ترکید.
-            </p>
-            <p class="readme__made-with">ساخته شده با ❤️</p>
-
-            <ion-button
-              href=${router.urlForName('game-settings')}
-              color="secondary"
-              class="readme__start-button"
-              expand="block"
-            >
-              <ion-label>شروع بازی</ion-label>
-            </ion-button>
-          </ion-card-content>
-        </ion-card>
-      </ion-content>
+        <div class="buttons-row">
+          <filled-link-button
+            href=${router.makeUrl({sectionList: ['game']})}
+            label=${this.l10n.localize('start')}
+            icon="arrow-right-3"
+            url-prefix="/iconsax/"
+          ></filled-link-button>
+          <icon-button
+            icon="message-question"
+            url-prefix="/iconsax/"
+          ></icon-button>
+        </div>
+      </card-box>
     `;
   }
 }

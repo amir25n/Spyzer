@@ -4,12 +4,10 @@ on:
   pull_request:
   push:
     branches:
-      - next
-      - main
-      - release/*
+      - "*"
 
 env:
-  NODE_VERSION: '16.x'
+  NODE_VERSION: '19.x'
 
 jobs:
   build-ts:
@@ -24,4 +22,4 @@ jobs:
           cache: 'yarn'
 
       - run: yarn install --frozen-lockfile
-      - run: yarn build:ts
+      - run: yarn build

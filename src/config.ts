@@ -1,3 +1,7 @@
+import {unsafeCSS} from 'lit';
+
+import normalize from './styles/normalize.css?inline';
+
 const icons: string[] = [
   'home',
   'game-controller',
@@ -13,13 +17,11 @@ const icons: string[] = [
   'time-outline',
   'arrow-back-outline',
 ];
+const styles = [unsafeCSS(normalize)];
 
 const config = {
   icons,
-  appName: 'شکارچیان جاسوس',
-  titleFormat: (title: string): string => {
-    return `${title} - ${config.appName}`;
-  },
+  styles,
 };
 
 export default config;

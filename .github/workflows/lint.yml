@@ -4,12 +4,10 @@ on:
   pull_request:
   push:
     branches:
-      - next
-      - main
-      - release/*
+      - "*"
 
 env:
-  NODE_VERSION: '16.x'
+  NODE_VERSION: '19.x'
 
 jobs:
   lint:

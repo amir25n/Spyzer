@@ -1,0 +1,9 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  outline: 0;
+}
+
+alwatr-icon {
+  font-size: calc(3 * var(--sys-spacing-track, 0.8rem));
+}

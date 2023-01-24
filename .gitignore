@@ -21,7 +21,6 @@ android
 .tsbuildinfo
 src/**/*.js
 src/**/*.map
-src/**/*.d.ts
 
 # Dependencies
 node_modules

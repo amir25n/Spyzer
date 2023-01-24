@@ -1,9 +1,15 @@
 version: 2
 updates:
-  - package-ecosystem: "yarn"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    rebase-strategy: auto
+    target-branch: 'next'
+    open-pull-requests-limit: 8
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'daily'
     reviewers:
-      - "MM25Zamanian"
+      - 'MM25Zamanian'
+    assignees:
+      - 'MM25Zamanian'
+    labels:
+      - 'enhancement'

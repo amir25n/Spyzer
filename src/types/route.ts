@@ -1,7 +1,8 @@
-import type {Route as VaadinRouter} from '@vaadin/router';
+import type {Route as alwatrRoute} from '@alwatr/router';
+import type {LitRenderType} from './lit-render';
 
 export type Route = {
-  title: string;
-  icon?: string;
-  show_in_bar: boolean;
-} & VaadinRouter;
+  icon: string | null;
+  render: (route: alwatrRoute) => LitRenderType;
+};
+export type Routes = Record<string, Readonly<Route>>;

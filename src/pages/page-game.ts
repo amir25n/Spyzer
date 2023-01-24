@@ -1,268 +1,75 @@
-import {AlwatrElement as AppElement} from '@alwatr/element';
-import {fetch} from '@alwatr/fetch';
-import {random} from '@alwatr/math';
-import {SignalInterface} from '@alwatr/signal';
-import {toastController} from '@ionic/core';
-import {html, css, nothing} from 'lit';
-import {customElement, state} from 'lit/decorators.js';
-import {when} from 'lit/directives/when.js';
+import {
+  AlwatrDummyElement,
+  css,
+  html,
+  customElement,
+  LocalizeMixin as localizeMixin,
+} from '@alwatr/element';
 
 import config from '../config';
-import router from '../router';
-import ionicNormalize from '../styles/ionic.normalize';
-import ionicTheming from '../styles/ionic.theming';
-import normalize from '../styles/normalize';
-import GameSettingsStorage from '../utilities/game-settings-storage';
 
-import '../components/t-imer';
+import '../components/card-box/card-box';
 
-import type {TemplateResult} from 'lit';
+import type {LitRenderType} from '../types/lit-render';
 
 @customElement('page-game')
-export class PageGame extends AppElement {
+export class PageGame extends localizeMixin(AlwatrDummyElement) {
   static override styles = [
-    normalize,
-    ionicNormalize,
-    ionicTheming,
+    config.styles,
     css`
-      ion-text.card__content {
-        text-align: center;
+      :host {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        height: 100%;
+
+        padding: calc(2 * var(--sys-spacing-track));
       }
-      ion-text.card__content * {
-        margin-bottom: 1.9em !important;
+
+      card-box {
+        width: 100%;
       }
-      ion-text.card__content.active-word * {
-        margin-bottom: 1em !important;
+
+      card-box div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--sys-spacing-track);
+        padding: calc(2 * var(--sys-spacing-track));
+        color: var(--sys-color-primary);
       }
-      t-imer {
-        font-size: 24px;
+
+      card-box div alwatr-icon {
+        font-size: calc(12 * var(--sys-spacing-track));
+      }
+
+      card-box div span {
+        font-family: var(--sys-typescale-title-medium-font-family-name);
+        font-weight: var(--sys-typescale-title-medium-font-weight);
+        font-size: var(--sys-typescale-title-medium-font-size);
+        letter-spacing: var(--sys-typescale-title-medium-letter-spacing);
+        line-height: var(--sys-typescale-title-medium-line-height);
       }
     `,
   ];
 
-  @state() private __stages: (TemplateResult | null)[] = [];
-
-  @state() private __stage = 0;
-
-  @state() private __loading = true;
-
-  static __showAppBarSignal = new SignalInterface('show-app-bar');
-
-  private __storage = new GameSettingsStorage();
-
-  private __words: string[] = [];
-
-  private __spyWord = 'شما جاسوس هستید';
-
-  override connectedCallback(): void {
-    super.connectedCallback();
-
-    fetch({
-      url: '/data/words.json',
-      retry: 5,
-      retryDelay: 1_000,
-      revalidateCallback: async (response) => {
-        await this.__responseToWord(response);
-        this.__loading = false;
-      },
-      cacheStorageName: 'spy_game_storage',
-      cacheStrategy: 'stale_while_revalidate',
-    }).then(async (response) => {
-      await this.__responseToWord(response);
-
-      this.__generateNewWord();
-      this.__generateStages();
-      PageGame.__showAppBarSignal.dispatch(false);
-    });
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    PageGame.__showAppBarSignal.dispatch(true);
-  }
-
-  override render(): TemplateResult {
+  override render(): LitRenderType {
     return html`
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button @click=${this.__back}>
-              <alwatr-icon dir="rtl" slot="icon-only" name="arrow-back-outline" flip-rtl></alwatr-icon>
-            </ion-button>
-          </ion-buttons>
-          ${when(this.__loading, () => {
-            return html`
-              <ion-buttons slot="end">
-                <ion-button>
-                  <ion-spinner></ion-spinner>
-                </ion-button>
-              </ion-buttons>
-            `;
-          })}
-
-          <ion-title>${config.titleFormat('بازی')}</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content fullscreen> ${this.__renderActiveStage()} </ion-content>
+      <card-box
+        header-text="صفحه بازی"
+        header-icon="game"
+        header-icon-url-prefix="/iconsax/"
+        have-line
+      >
+        <div>
+          <alwatr-icon name="danger" url-prefix="/iconsax/"></alwatr-icon>
+          <span>به زودی تکمیل خواهد شد</span>
+        </div>
+      </card-box>
     `;
-  }
-
-  private __renderActiveStage(): TemplateResult | typeof nothing {
-    const stage = this.__stages[this.__stage];
-
-    if (stage == null) return nothing;
-
-    return html`
-      <ion-card>
-        <ion-card-content> ${stage} </ion-card-content>
-      </ion-card>
-    `;
-  }
-
-  private __renderTimeStage(duration: number): TemplateResult<1> {
-    return html`
-      <ion-text class="card__content">
-        <h2>
-          <t-imer .duration=${duration}></t-imer>
-        </h2>
-      </ion-text>
-
-      <ion-button expand="block" color="tertiary" @click=${this.__back}> بازگشت </ion-button>
-    `;
-  }
-
-  private __renderPrivateStage(word: string | null): TemplateResult | null {
-    if (word == null) return null;
-
-    const isSpy = word === this.__spyWord;
-
-    return html`
-      ${when(
-        isSpy,
-        () => {
-          return html`
-            <ion-text color="secondary" class="card__content word spy">
-              <h2>${this.__spyWord}</h2>
-            </ion-text>
-          `;
-        },
-        () => {
-          return html`
-            <ion-text class="card__content word active-word">
-              <h1>${word}</h1>
-            </ion-text>
-          `;
-        },
-      )}
-
-      <ion-button expand="block" color="success" @click=${this.__nextStage}> پنهان کردن </ion-button>
-    `;
-  }
-
-  private __renderPublicStage(): TemplateResult<1> {
-    return html`
-      <ion-text class="card__content">
-        <h2>دستگاه را به نفر بعدی بدهید.</h2>
-      </ion-text>
-
-      <ion-button expand="block" color="danger" @click=${this.__nextStage}> نمایش دادن </ion-button>
-    `;
-  }
-
-  private __renderStartStage(): TemplateResult<1> {
-    return html`
-      <ion-text class="card__content">
-        <h2>برای شروع بازی ضربه بزنید.</h2>
-      </ion-text>
-
-      <ion-button expand="block" color="secondary" @click=${this.__nextStage}> نمایش دادن </ion-button>
-    `;
-  }
-
-  private async __responseToWord(response: Response): Promise<void> {
-    try {
-      const words = (await response.json()) as string[];
-
-      this._logger.logProperty('__words', words);
-      this.__words = words;
-    } catch {
-      toastController
-        .create({
-          duration: 3_000,
-          position: 'bottom',
-          message: 'دریافت کلمات با خطا رو به رو شد',
-        })
-        .then((toast) => {
-          return toast.present();
-        });
-    }
-  }
-
-  private __nextStage(event: PointerEvent): number {
-    event.preventDefault();
-
-    this.__vibrate(2);
-
-    this.__stage += 1;
-
-    return this.__stage;
-  }
-
-  private __back(event: PointerEvent): void {
-    event.preventDefault();
-
-    this.__vibrate(4);
-
-    router.render(router.urlForName('game-settings'));
-  }
-
-  private __generateStages(): void {
-    const playerStage = Array.from(Array(this.__storage.players - this.__storage.spies).keys()).map(() => {
-      return this.__storage.word;
-    });
-    const spyStage = Array.from(Array(this.__storage.spies).keys()).map(() => {
-      return this.__spyWord;
-    });
-
-    const privateStages = random.shuffle([...playerStage, ...spyStage]);
-    const stagesTemplate = privateStages.map((word, __index, __privateStages) => {
-      if (__index === 0) {
-        return [this.__renderStartStage(), this.__renderPrivateStage(word)];
-      }
-      if (__index === __privateStages.length - 1) {
-        return [
-          this.__renderPublicStage(),
-          this.__renderPrivateStage(word),
-          this.__renderTimeStage(this.__storage.time * 60),
-        ];
-      }
-      return [this.__renderPublicStage(), this.__renderPrivateStage(word)];
-    });
-
-    this.__stages = stagesTemplate.flat();
-    this.__stage = 0;
-  }
-
-  private __generateNewWord(): string {
-    const newWord = this.__words[random.integer(0, this.__words.length)];
-
-    this._logger.logMethodArgs('__generateNewWord', {
-      new_word: newWord,
-      pervious_word: this.__storage.word,
-    });
-
-    if (newWord === this.__storage.word || !newWord) {
-      return this.__generateNewWord();
-    }
-
-    this.__storage.word = newWord;
-
-    return newWord;
-  }
-
-  private __vibrate(level = 1): void {
-    navigator.vibrate(level * 50);
   }
 }
 
