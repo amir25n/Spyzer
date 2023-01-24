@@ -32,7 +32,6 @@ export class Surface extends AlwatrDummyElement {
       --surface-state-opacity: 0;
 
       display: block;
-      padding: calc(2 * var(--sys-spacing-track));
       color: hsl(var(--surface-color-on));
       background-color: hsl(var(--surface-color-bg));
       box-shadow: var(--surface-elevation);
