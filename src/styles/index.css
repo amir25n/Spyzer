@@ -1,5 +1,3 @@
-/* TODO: Refactor pwa build to esbuild and move the styles to ui-kit */
-
 @import url('tokens/palette-hsl.css');
 @import url('tokens/color.css');
 @import url('tokens/typography.css');
