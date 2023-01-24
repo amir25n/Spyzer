@@ -13,10 +13,8 @@
     "clean": "rm -rf build",
     "lint": "run-s lint:*",
     "lint:ts": "eslint '**/*.ts'",
-    "lint:style": "stylelint '**/*.html' '**/*.css' '**/*.ts'",
-    "format": "run-s format:prettier format:eslint format:stylelint",
+    "format": "run-s format:prettier format:eslint",
     "format:eslint": "eslint '**/*.ts' --fix",
-    "format:stylelint": "stylelint '**/*.html' '**/*.css' '**/*.ts' --fix",
     "format:prettier": "prettier \"**/*.{html,json,md,ts,css}\" --ignore-path ./.eslintignore --write"
   },
   "devDependencies": {
@@ -43,8 +41,6 @@
     "postcss-html": "^1.5.0",
     "postcss-lit": "^1.0.1",
     "prettier": "^2.8.3",
-    "stylelint": "^14.16.1",
-    "stylelint-config-standard": "^29.0.0",
     "ts-lit-plugin": "^1.2.1",
     "tslib": "^2.4.1",
     "typescript": "^4.9.4",

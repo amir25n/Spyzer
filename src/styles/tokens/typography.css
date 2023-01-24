@@ -3,22 +3,10 @@
   --ref-font-weight-regular: 400;
   --ref-font-weight-medium: 500;
   --ref-font-weight-bold: 700;
-  --ref-font-family-system:
-    system-ui,
-    -apple-system,
-    blinkmacsystemfont,
-    "Segoe UI",
-    "Roboto",
-    "Oxygen",
-    "Ubuntu",
-    "Cantarell",
-    "Open Sans",
-    "Helvetica Neue",
-    "Arial",
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol";
+  --ref-font-family-system: system-ui, -apple-system, blinkmacsystemfont,
+    'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Open Sans',
+    'Helvetica Neue', 'Arial', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol';
   --sys-font-family-plain: var(--font-vazirmatn), var(--ref-font-family-system);
   --sys-font-family-brand: var(--font-vazirmatn), var(--ref-font-family-system);
 
@@ -51,10 +39,9 @@
   --sys-typescale-headline-large-letter-spacing: 0;
 
   /* headline - medium */
-  --sys-typescale-headline-medium-font-family-name:
-    var(
-      --sys-font-family-brand
-    );
+  --sys-typescale-headline-medium-font-family-name: var(
+    --sys-font-family-brand
+  );
   --sys-typescale-headline-medium-font-weight: var(--ref-font-weight-regular);
   --sys-typescale-headline-medium-font-size: 2.8rem;
   --sys-typescale-headline-medium-line-height: 3.6rem;
