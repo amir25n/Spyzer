@@ -14,6 +14,12 @@ body {
 html {
   font-size: 62.5%; /* 10px */
   text-size-adjust: 100%;
+  background-image: url('/images/pattern.jpg');
+  background-size: calc(60 * var(--sys-spacing-track));
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: calc(50 * var(--ref-motion-duration-frame));
+  transition-timing-function: var(--sys-motion-easing-in-out);
 }
 
 body {
@@ -31,6 +37,9 @@ body {
   overflow: clip;
   overscroll-behavior-y: none;
 
+  --sys-color-on-background: var(--sys-color-on-primary-container);
+  --sys-color-background: hsla(var(--sys-color-primary-container-hsl) / 75%);
+
   /* Theme */
   color: var(--sys-color-on-background);
   background-color: var(--sys-color-background);
@@ -39,12 +48,10 @@ body {
   font-size: var(--sys-typescale-body-medium-font-size);
   letter-spacing: var(--sys-typescale-body-medium-letter-spacing);
   line-height: var(--sys-typescale-body-medium-line-height);
-  background-image: url('/images/pattern.jpg');
-  background-size: calc(60 * var(--sys-spacing-track));
 }
 
-body[unresolved] {
-  visibility: hidden;
+html[unresolved] {
+  opacity: 0;
 }
 
 .noscript {

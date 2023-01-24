@@ -48,7 +48,8 @@ export class SpyApp extends AlwatrSmartElement {
         display: flex;
         flex-direction: column;
         height: 100%;
-        background-color: hsl(var(--sys-color-primary-container-hsl) / 75%);
+        max-width: calc(70 * var(--sys-spacing-track));
+        margin: auto;
       }
 
       .page-container {
@@ -81,7 +82,7 @@ export class SpyApp extends AlwatrSmartElement {
   ): void {
     super.firstUpdated(changedProperties);
 
-    document.body.removeAttribute('unresolved');
+    document.documentElement.removeAttribute('unresolved');
   }
 }
 
