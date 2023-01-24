@@ -22,7 +22,6 @@ const styles = [unsafeCSS(normalize)];
 const config = {
   icons,
   styles,
-  appName: 'Spyzer',
 };
 
 export default config;
