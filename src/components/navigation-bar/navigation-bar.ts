@@ -22,13 +22,24 @@ export class NavigationBar extends AlwatrDummyElement {
       :host {
         display: flex;
         justify-content: center;
-        align-items: stretch;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
         width: 100%;
         height: calc(8 * var(--sys-spacing-track));
         background-color: var(--sys-color-surface);
         border-top-right-radius: var(--sys-radius-medium);
         border-top-left-radius: var(--sys-radius-medium);
         box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
+        transition-property: opacity, bottom;
+        transition-duration: var(--sys-motion-duration-large);
+        transition-timing-function: var(--sys-motion-easing-linear);
+        opacity: 1;
+      }
+      :host([hidden]) {
+        opacity: .5;
+        bottom: calc(-1 * 8 * var(--sys-spacing-track));
       }
     `,
   ];
@@ -36,7 +47,7 @@ export class NavigationBar extends AlwatrDummyElement {
   @property({type: Object, attribute: false})
     tabs: Routes = {};
 
-  @property({type: String, reflect: true})
+  @property({type: String})
     activeSlug = '';
 
   override render(): LitRenderType {
