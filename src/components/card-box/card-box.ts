@@ -119,6 +119,7 @@ export class CardBox extends AlwatrDummyElement {
           .urlPrefix=${this.headerIconUrlPrefix}
         ></alwatr-icon>
         <h3 class="header-text">${this.headerText}</h3>
+        <slot name="header-end"></slot>
         <span class="header-note">${this.headerNote}</span>
       </div>
       <hr ?hidden=${!this.haveLine} />
