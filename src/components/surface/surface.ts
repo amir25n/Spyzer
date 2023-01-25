@@ -53,7 +53,7 @@ export class Surface extends AlwatrDummyElement {
     }
 
     :host([outlined]) {
-      border: 1px solid var(--sys-color-outline);
+      border: 1px solid hsla(var(--sys-color-outline-hsl) / 40%);
     }
 
     :host([filled]) {
@@ -96,8 +96,8 @@ export class Surface extends AlwatrDummyElement {
     :host([active-outline]:active),
     :host([active-outline]:focus),
     :host([active-outline]:focus-within) {
-      border-color: var(--sys-color-primary);
-      box-shadow: 0 0 0.4px 0.8px var(--sys-color-primary);
+      border-color: hsla(var(--sys-color-primary-hsl), 70%);
+      box-shadow: 0 0 0.4px 0.8px hsla(var(--sys-color-primary-hsl), 70%);
     }
 
     :host([stated]:hover:not(:active)),
