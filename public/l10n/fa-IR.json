@@ -1,5 +1,16 @@
 {
   "_code": "fa-IR",
+
   "$APP-NAME": "وب اپلیکیشن بازی اسپایزر",
-  "start": "شروع"
+  "$PLAYER-UNIT": "نفر",
+  "$SPIES-UNIT": "نفر",
+  "$DURATION-UNIT": "دقیقه",
+
+  "start": "شروع",
+  "message-to-me": "پیام به من",
+  "add-word": "افزودن کلمه",
+  "start-game": "شروع بازی",
+  "number-of-players": "تعداد بازیکنان",
+  "number-of-spies": "تعداد جاسوس ها",
+  "duration": "مدت زمان"
 }
