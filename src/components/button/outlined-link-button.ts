@@ -1,18 +1,18 @@
 import {customElement, property, html, css} from '@alwatr/element';
 
-import {FilledButton} from './filled-button';
+import {OutlinedButton} from './outlined-button';
 
 import '@alwatr/icon';
 
 import type {LitRenderType} from '../../types/lit-render';
 
 /**
- * @element filled-link-button
+ * @element outlined-link-button
  *
  * @extends FilledButton
  */
-@customElement('filled-link-button')
-export class FilledLinkButton extends FilledButton {
+@customElement('outlined-link-button')
+export class FilledLinkButton extends OutlinedButton {
   @property({type: String})
     href = '';
 
@@ -23,6 +23,6 @@ export class FilledLinkButton extends FilledButton {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'filled-link-button': FilledLinkButton;
+    'outlined-link-button': FilledLinkButton;
   }
 }
