@@ -43,9 +43,11 @@ export class IconButton extends Surface {
         overflow: hidden;
         overflow: clip;
         z-index: var(--sys-zindex-default);
+        opacity: 1;
+        transition-property: box-shadow, border-color;
+        transition-duration: var(--sys-motion-duration-small);
+        transition-timing-function: var(--sys-motion-easing-linear);
         -webkit-tap-highlight-color: transparent;
-        box-shadow: none;
-        border: 1px solid hsla(var(--sys-color-primary-hsl) / 30%);
       }
 
       alwatr-icon {
@@ -68,6 +70,8 @@ export class IconButton extends Surface {
   override connectedCallback(): void {
     super.connectedCallback();
     this.setAttribute('stated', '');
+    this.setAttribute('outlined', '');
+    this.setAttribute('active-outline', '');
   }
 
   override render(): LitRenderType {
