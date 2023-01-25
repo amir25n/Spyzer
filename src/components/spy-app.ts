@@ -4,6 +4,7 @@ import {
   html,
   css,
   PropertyValues,
+  cache,
 } from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 
@@ -69,7 +70,7 @@ export class SpyApp extends AlwatrSmartElement {
 
   override render(): LitRenderType {
     return html`
-      <div class="page-container">${router.outlet(this.routes)}</div>
+      <div class="page-container">${cache(router.outlet(this.routes))}</div>
       <navigation-bar
         .tabs=${this.routes.list}
         .activeSlug=${this.activePage}
