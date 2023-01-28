@@ -67,14 +67,11 @@ export default defineConfig({
   },
   plugins: [
     vitePWA({
-      strategies: 'generateSW',
       workbox: serviceWorker,
-      mode: 'production',
-      devOptions: {
-        enabled: false,
-      },
-      registerType: 'autoUpdate',
       manifest: manifestJson,
+      mode: 'production',
+      outDir: DIST_PATH,
+      useCredentials: true,
     }),
   ],
 });
