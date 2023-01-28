@@ -12,6 +12,7 @@ import {router} from '@alwatr/router';
 import '../components/card-box/card-box';
 import '../components/icon-button/icon-button';
 import '../components/button/filled-link-button';
+import '../components/coming-soon/coming-soon';
 
 import type {LitRenderType} from '../types/lit-render';
 
@@ -28,7 +29,7 @@ export class PageHome extends localizeMixin(AlwatrDummyElement) {
 
         height: 100%;
 
-        padding: calc(2 * var(--sys-spacing-track));
+        padding: calc(3 * var(--sys-spacing-track));
       }
 
       card-box {
@@ -58,18 +59,7 @@ export class PageHome extends localizeMixin(AlwatrDummyElement) {
         header-icon-url-prefix="/images/"
         have-line
       >
-        <p>
-          پیر مردی هر روز تو محله می دید پسر کی با کفش های پاره و پای برهنه با
-          توپ پلاستیکی فوتبال بازی می کند،
-        </p>
-        <p>
-          روزی رفت ی کتانی نو خرید و اومد و به پسرک گفت بیا این کفشا رو بپوش…
-        </p>
-        <p>
-          پسرک کفشا رو پوشید و خوشحال رو به پیر مرد کرد و گفت: شما خدایید؟! پیر
-          مرد لبش را گزید و گفت نه!
-        </p>
-        <p>پسرک گفت پس دوست خدایی، چون من دیشب فقط به خدا گفتم كه کفش ندارم…</p>
+        <coming-soon></coming-soon>
 
         <div class="buttons-row">
           <filled-link-button

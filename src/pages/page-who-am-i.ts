@@ -10,6 +10,7 @@ import config from '../config';
 
 import '../components/card-box/card-box';
 import '../components/button/outlined-button';
+import '../components/coming-soon/coming-soon';
 
 import type {LitRenderType} from '../types/lit-render';
 
@@ -26,7 +27,7 @@ export class PageWhoAmI extends localizeMixin(AlwatrDummyElement) {
 
         height: 100%;
 
-        padding: calc(2 * var(--sys-spacing-track));
+        padding: calc(3 * var(--sys-spacing-track));
       }
 
       card-box {
@@ -55,7 +56,7 @@ export class PageWhoAmI extends localizeMixin(AlwatrDummyElement) {
         header-icon-url-prefix="/iconsax/"
         have-line
       >
-        <p></p>
+        <coming-soon></coming-soon>
         <div class="buttons-row">
           <outlined-button
             label=${this.l10n.localize('message-to-me')}

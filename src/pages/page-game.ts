@@ -41,7 +41,7 @@ export class PageGame extends localizeMixin(AlwatrDummyElement) {
 
         height: 100%;
 
-        padding: calc(2 * var(--sys-spacing-track));
+        padding: calc(3 * var(--sys-spacing-track));
       }
 
       card-box {
