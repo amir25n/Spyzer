@@ -8,14 +8,16 @@ const DIST_PATH = 'build/';
 const serviceWorker: Partial<GenerateSWOptions> = {
   skipWaiting: true,
   clientsClaim: true,
+  cleanupOutdatedCaches: true,
+  inlineWorkboxRuntime: true,
   swDest: `${DIST_PATH}sw.js`,
   globDirectory: DIST_PATH,
   globPatterns: ['**/*.{html,js,css,woff,png,ico,svg}'],
 };
 const manifestJson: Partial<ManifestOptions> = {
   /* i18n */
-  dir: 'ltr',
-  lang: 'en-US',
+  dir: 'rtl',
+  lang: 'fa-IR',
 
   /* url */
   scope: '/',
@@ -72,8 +74,6 @@ export default defineConfig({
       devOptions: {
         enabled: false,
       },
-      selfDestroying: true,
-      useCredentials: true,
       registerType: 'autoUpdate',
       manifest: manifestJson,
     }),
