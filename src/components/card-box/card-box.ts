@@ -28,6 +28,7 @@ import type {LitRenderType} from '../../types/lit-render';
  * @prop {Boolean} haveLine
  *
  * @slot
+ * @slot header-end
  */
 @customElement('card-box')
 export class CardBox extends AlwatrDummyElement {
@@ -88,7 +89,7 @@ export class CardBox extends AlwatrDummyElement {
       .line {
         display: flex;
         align-items: center;
-        justify-content: center;
+        direction: ltr;
         margin: 0 calc(1.75 * var(--sys-spacing-track));
         border-radius: calc(0.4 * var(--sys-spacing-track));
         height: calc(0.4 * var(--sys-spacing-track));
@@ -102,9 +103,13 @@ export class CardBox extends AlwatrDummyElement {
         height: 100%;
         border-radius: calc(0.4 * var(--sys-spacing-track));
         background: var(--sys-color-primary);
+        will-change: width, opacity;
         transition-property: width, opacity;
-        transition-duration: var(--sys-motion-duration-large);
-        transition-timing-function: var(--sys-motion-easing-linear);
+        transition-duration: var(
+          --comp-progress-transition-duration,
+          var(--sys-motion-duration-large)
+        );
+        transition-timing-function: var(--sys-motion-easing-in-out);
       }
     `,
   ];
@@ -130,7 +135,7 @@ export class CardBox extends AlwatrDummyElement {
   override render(): LitRenderType {
     this.lineProgress = Math.max(this.lineProgress, 0);
     this.lineProgress = Math.min(this.lineProgress, 100);
-    const lineProgressOpacity = Math.max(this.lineProgress, 20);
+    const lineProgressOpacity = Math.max(this.lineProgress, 30);
 
     return html`
       <div class="header">
