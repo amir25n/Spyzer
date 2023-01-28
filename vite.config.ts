@@ -9,7 +9,6 @@ const serviceWorker: Partial<GenerateSWOptions> = {
   skipWaiting: true,
   clientsClaim: true,
   cleanupOutdatedCaches: true,
-  inlineWorkboxRuntime: true,
   swDest: `${DIST_PATH}sw.js`,
   globDirectory: DIST_PATH,
   globPatterns: ['**/*.{html,js,css,woff,png,ico,svg}'],
