@@ -1,9 +1,9 @@
 export default class GameSettingsStorage {
-  public get players(): number {
+  static get players(): number {
     return +(localStorage.getItem('settings.players') ?? 3);
   }
 
-  public set players(number: number) {
+  static set players(number: number) {
     if (number < this.spies * 2) {
       this.spies = Math.floor(number / 2);
     }
@@ -15,12 +15,12 @@ export default class GameSettingsStorage {
     localStorage.setItem('settings.players', Math.max(number, 3).toString());
   }
 
-  public get spies(): number {
+  static get spies(): number {
     return +(localStorage.getItem('settings.spies') ?? 1);
   }
 
-  public set spies(number: number) {
-    if (Math.ceil(this.players / 2) < number) {
+  static set spies(number: number) {
+    if (Math.floor(this.players / 2) < number) {
       this.players = number * 2;
     }
 
@@ -31,11 +31,11 @@ export default class GameSettingsStorage {
     localStorage.setItem('settings.spies', number.toString());
   }
 
-  public get time(): number {
+  static get time(): number {
     return +(localStorage.getItem('settings.time') ?? 1);
   }
 
-  public set time(number: number) {
+  static set time(number: number) {
     // Round to the next multiple of 5
     number = Math.round(number / 5) * 5;
 
@@ -46,13 +46,23 @@ export default class GameSettingsStorage {
     localStorage.setItem('settings.time', number.toString());
   }
 
-  public get word(): string | null {
+  static get word(): string | null {
     return localStorage.getItem('settings.word');
   }
 
-  public set word(_word: string | null) {
+  static set word(_word: string | null) {
     if (_word != null) {
       localStorage.setItem('settings.word', _word);
+    }
+  }
+
+  static get plan(): string | null {
+    return localStorage.getItem('settings.plan');
+  }
+
+  static set plan(_plan: string | null) {
+    if (_plan != null) {
+      localStorage.setItem('settings.plan', _plan);
     }
   }
 }
