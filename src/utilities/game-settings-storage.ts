@@ -1,38 +1,68 @@
 export default class GameSettingsStorage {
-  public get players(): number {
-    return +(localStorage.getItem('sh_settings_players') ?? 3);
+  static get players(): number {
+    return +(localStorage.getItem('settings.players') ?? 3);
   }
 
-  public set players(number: number) {
-    if (number < this.spies) {
-      this.spies = number;
+  static set players(number: number) {
+    if (number < this.spies * 2) {
+      this.spies = Math.floor(number / 2);
     }
-    localStorage.setItem('sh_settings_players', number.toString());
+
+    // limited to a minimum of 3 and a maximum of 30
+    number = Math.max(number, 1);
+    number = Math.min(number, 30);
+
+    localStorage.setItem('settings.players', Math.max(number, 3).toString());
   }
 
-  public get spies(): number {
-    return +(localStorage.getItem('sh_settings_spies') ?? 1);
+  static get spies(): number {
+    return +(localStorage.getItem('settings.spies') ?? 1);
   }
 
-  public set spies(number: number) {
-    localStorage.setItem('sh_settings_spies', number.toString());
+  static set spies(number: number) {
+    if (Math.floor(this.players / 2) < number) {
+      this.players = number * 2;
+    }
+
+    // limited to a minimum of 1 and a maximum of 15
+    number = Math.max(number, 1);
+    number = Math.min(number, 15);
+
+    localStorage.setItem('settings.spies', number.toString());
   }
 
-  public get time(): number {
-    return +(localStorage.getItem('sh_settings_time') ?? 1);
+  static get time(): number {
+    return +(localStorage.getItem('settings.time') ?? 1);
   }
 
-  public set time(number: number) {
-    localStorage.setItem('sh_settings_time', number.toString());
+  static set time(number: number) {
+    // Round to the next multiple of 5
+    number = Math.round(number / 5) * 5;
+
+    // limited to a minimum of 1 and a maximum of 60
+    number = Math.max(number, 1);
+    number = Math.min(number, 60);
+
+    localStorage.setItem('settings.time', number.toString());
   }
 
-  public get word(): string | null {
-    return localStorage.getItem('sh_settings_word');
+  static get word(): string | null {
+    return localStorage.getItem('settings.word');
   }
 
-  public set word(_word: string | null) {
+  static set word(_word: string | null) {
     if (_word != null) {
-      localStorage.setItem('sh_settings_word', _word);
+      localStorage.setItem('settings.word', _word);
+    }
+  }
+
+  static get plan(): string | null {
+    return localStorage.getItem('settings.plan');
+  }
+
+  static set plan(_plan: string | null) {
+    if (_plan != null) {
+      localStorage.setItem('settings.plan', _plan);
     }
   }
 }

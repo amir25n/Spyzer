@@ -4,6 +4,8 @@ import {
   html,
   css,
   PropertyValues,
+  cache,
+  state,
 } from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 
@@ -32,11 +34,8 @@ export class SpyApp extends AlwatrSmartElement {
     l10n.resourceChangeSignal.addListener(() => this.requestUpdate());
 
     router.signal.addListener((route) => {
-      const oldPage = this.activePage;
-      this.activePage = route.sectionList[0]?.toString() ?? this.activePage;
-      this.requestUpdate('activePage', oldPage);
-
       this._logger.logMethodArgs('routeChanged', {route});
+      this.activePage = route.sectionList[0]?.toString() ?? this.activePage;
     });
     router.initial();
   }
@@ -45,6 +44,7 @@ export class SpyApp extends AlwatrSmartElement {
     config.styles,
     css`
       :host {
+        position:relative;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -60,6 +60,10 @@ export class SpyApp extends AlwatrSmartElement {
     `,
   ];
 
+  @state()
+  private hideNavigationBar = false;
+
+  @state()
   private activePage = 'home';
 
   private routes: RoutesConfig = {
@@ -69,10 +73,11 @@ export class SpyApp extends AlwatrSmartElement {
 
   override render(): LitRenderType {
     return html`
-      <div class="page-container">${router.outlet(this.routes)}</div>
+      <div class="page-container">${cache(router.outlet(this.routes))}</div>
       <navigation-bar
         .tabs=${this.routes.list}
         .activeSlug=${this.activePage}
+        ?hidden=${this.hideNavigationBar}
       ></navigation-bar>
     `;
   }

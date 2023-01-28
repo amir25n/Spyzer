@@ -28,6 +28,7 @@ import type {LitRenderType} from '../../types/lit-render';
  * @prop {Boolean} haveLine
  *
  * @slot
+ * @slot header-end
  */
 @customElement('card-box')
 export class CardBox extends AlwatrDummyElement {
@@ -85,12 +86,30 @@ export class CardBox extends AlwatrDummyElement {
         display: none;
       }
 
-      hr {
+      .line {
+        display: flex;
+        align-items: center;
+        direction: ltr;
         margin: 0 calc(1.75 * var(--sys-spacing-track));
         border-radius: calc(0.4 * var(--sys-spacing-track));
         height: calc(0.4 * var(--sys-spacing-track));
         border: none;
         background: var(--sys-color-surface-variant);
+        overflow: hidden;
+        overflow: clip;
+      }
+
+      .line .progress {
+        height: 100%;
+        border-radius: calc(0.4 * var(--sys-spacing-track));
+        background: var(--sys-color-primary);
+        will-change: width, opacity;
+        transition-property: width, opacity;
+        transition-duration: var(
+          --comp-progress-transition-duration,
+          var(--sys-motion-duration-large)
+        );
+        transition-timing-function: var(--sys-motion-easing-in-out);
       }
     `,
   ];
@@ -107,10 +126,17 @@ export class CardBox extends AlwatrDummyElement {
   @property({type: String, attribute: 'header-note'})
     headerNote = '';
 
+  @property({type: Number, attribute: 'line-progress'})
+    lineProgress = 0;
+
   @property({type: Boolean, attribute: 'have-line'})
     haveLine = true;
 
   override render(): LitRenderType {
+    this.lineProgress = Math.max(this.lineProgress, 0);
+    this.lineProgress = Math.min(this.lineProgress, 100);
+    const lineProgressOpacity = Math.max(this.lineProgress, 30);
+
     return html`
       <div class="header">
         <alwatr-icon
@@ -119,9 +145,15 @@ export class CardBox extends AlwatrDummyElement {
           .urlPrefix=${this.headerIconUrlPrefix}
         ></alwatr-icon>
         <h3 class="header-text">${this.headerText}</h3>
+        <slot name="header-end"></slot>
         <span class="header-note">${this.headerNote}</span>
       </div>
-      <hr ?hidden=${!this.haveLine} />
+      <div class="line" ?hidden=${!this.haveLine}>
+        <div
+          class="progress"
+          style="width:${this.lineProgress}%;opacity:${lineProgressOpacity}%;"
+        ></div>
+      </div>
       <div class="content"><slot></slot></div>
     `;
   }
