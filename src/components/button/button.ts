@@ -31,7 +31,7 @@ export class Button extends Surface {
         flex-grow: 0;
         flex-shrink: 0;
         cursor: pointer;
-        min-width: calc(15 * var(--sys-spacing-track));
+        min-width: calc(12 * var(--sys-spacing-track));
         height: calc(5 * var(--sys-spacing-track));
         border-radius: calc(2.5 * var(--sys-spacing-track));
         padding-inline-start: var(--sys-spacing-track);
