@@ -6,6 +6,7 @@ import {
   PropertyValues,
   cache,
   state,
+  property,
 } from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
 
@@ -44,7 +45,7 @@ export class SpyApp extends AlwatrSmartElement {
     config.styles,
     css`
       :host {
-        position:relative;
+        position: relative;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -60,8 +61,8 @@ export class SpyApp extends AlwatrSmartElement {
     `,
   ];
 
-  @state()
-  private hideNavigationBar = false;
+  @property({type: Boolean, attribute: false})
+    showNavigationBar = true;
 
   @state()
   private activePage = 'home';
@@ -77,7 +78,7 @@ export class SpyApp extends AlwatrSmartElement {
       <navigation-bar
         .tabs=${this.routes.list}
         .activeSlug=${this.activePage}
-        ?hidden=${this.hideNavigationBar}
+        ?hidden=${!this.showNavigationBar}
       ></navigation-bar>
     `;
   }

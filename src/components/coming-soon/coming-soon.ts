@@ -1,5 +1,4 @@
 import {
-  AlwatrDummyElement,
   html,
   css,
   LocalizeMixin as localizeMixin,

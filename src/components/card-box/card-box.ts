@@ -103,7 +103,6 @@ export class CardBox extends AlwatrDummyElement {
         height: 100%;
         border-radius: calc(0.4 * var(--sys-spacing-track));
         background: var(--sys-color-primary);
-        will-change: width, opacity;
         transition-property: width, opacity;
         transition-duration: var(
           --comp-progress-transition-duration,

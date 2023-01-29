@@ -1,4 +1,4 @@
-import {customElement, property, html, css} from '@alwatr/element';
+import {customElement, property, html} from '@alwatr/element';
 
 import {FilledButton} from './filled-button';
 

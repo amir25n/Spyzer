@@ -5,6 +5,7 @@ import {
   customElement,
   property,
   map,
+  PropertyValues,
 } from '@alwatr/element';
 
 import config from '../../config';
@@ -13,6 +14,7 @@ import './navigation-tab';
 
 import type {LitRenderType} from '../../types/lit-render';
 import type {Routes} from '../../types/route';
+import type {NavigationTab} from './navigation-tab';
 
 @customElement('navigation-bar')
 export class NavigationBar extends AlwatrDummyElement {
@@ -32,14 +34,35 @@ export class NavigationBar extends AlwatrDummyElement {
         border-top-right-radius: var(--sys-radius-medium);
         border-top-left-radius: var(--sys-radius-medium);
         box-shadow: 0 4px 12px rgb(0 0 0 / 30%);
-        transition-property: opacity, bottom;
+        transform: scale(1);
+        transform-origin: center bottom;
+        transition-property: opacity, transform;
+        transition-delay: var(--sys-motion-duration-small);
         transition-duration: var(--sys-motion-duration-large);
-        transition-timing-function: var(--sys-motion-easing-linear);
+        transition-timing-function: var(--sys-motion-easing-in-out);
         opacity: 1;
       }
+
       :host([hidden]) {
-        opacity: .5;
-        bottom: calc(-1 * 8 * var(--sys-spacing-track));
+        opacity: 0;
+        transform: scale(0);
+        will-change: opacity, transform;
+      }
+
+      .active-indicator {
+        position: absolute;
+        bottom: calc(1.5 * var(--sys-spacing-track));
+        width: calc(1.5 * var(--sys-spacing-track));
+        height: calc(0.3 * var(--sys-spacing-track));
+        border-radius: calc(0.15 * var(--sys-spacing-track));
+        box-shadow: 0 0 calc(0.4 * var(--sys-spacing-track)) 1px
+          var(--sys-color-primary);
+
+        transition-property: left;
+        transition-duration: var(--sys-motion-duration-large);
+        transition-timing-function: var(--sys-motion-easing-in-out);
+
+        background-color: var(--sys-color-primary);
       }
     `,
   ];
@@ -62,7 +85,24 @@ export class NavigationBar extends AlwatrDummyElement {
       );
     });
 
-    return html`${tabsTemplate}`;
+    return html`${tabsTemplate}
+      <div class="active-indicator"></div>`;
+  }
+
+  override update(changedProperties: PropertyValues<this>): void {
+    super.update(changedProperties);
+
+    if (changedProperties.has('activeSlug')) {
+      this.calibrateActiveIndicator();
+    }
+  }
+
+  override updated(changedProperties: PropertyValues<this>): void {
+    super.updated(changedProperties);
+
+    if (changedProperties.has('activeSlug')) {
+      this.calibrateActiveIndicator();
+    }
   }
 
   static renderNavigationTab(
@@ -75,6 +115,36 @@ export class NavigationBar extends AlwatrDummyElement {
       .href=${href}
       ?active=${active}
     ></navigation-tab>`;
+  }
+
+  private calibrateActiveIndicator(): void {
+    requestAnimationFrame(() => {
+      const navigationBar = this.getBoundingClientRect();
+      const activeTab = this.activeTab?.getBoundingClientRect();
+      const activeIndicator = this.activeIndicator?.getBoundingClientRect();
+
+      if (
+        navigationBar != null &&
+        activeTab != null &&
+        activeIndicator != null &&
+        this.activeIndicator != null
+      ) {
+        this.activeIndicator.style.left =
+          Math.floor(
+              activeTab.x +
+              activeTab.width / 2 -
+              (activeIndicator.width / 2 + navigationBar.x),
+          ) + 'px';
+      }
+    });
+  }
+
+  private get activeIndicator(): HTMLDivElement | null {
+    return this.renderRoot.querySelector('.active-indicator');
+  }
+
+  private get activeTab(): NavigationTab | null {
+    return this.renderRoot.querySelector('navigation-tab[active]');
   }
 }
 

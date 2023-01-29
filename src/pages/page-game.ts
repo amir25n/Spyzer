@@ -87,13 +87,27 @@ export class PageGame extends localizeMixin(AlwatrDummyElement) {
   @state()
   private scenesInx = -1;
 
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.resetScenes();
+  }
+
   override render(): LitRenderType {
     if (this.scenes.length > 0 && this.scenesInx >= 0) {
       const activeScene = this.scenes[this.scenesInx];
 
       if (activeScene != null) {
+        if (config.navigationBar.isShow()) {
+          config.navigationBar.hide();
+        }
+
         return this.renderScene(activeScene);
       }
+    }
+
+    if (!config.navigationBar.isShow()) {
+      config.navigationBar.show();
     }
 
     const settingsTemplate = [
@@ -242,6 +256,11 @@ export class PageGame extends localizeMixin(AlwatrDummyElement) {
     ></game-scene>`;
   }
 
+  private resetScenes(): void {
+    this.scenes = [];
+    this.scenesInx = -1;
+  }
+
   private start(): void {
     const word = PageGame.generateRandomWord();
 
@@ -258,8 +277,7 @@ export class PageGame extends localizeMixin(AlwatrDummyElement) {
     if (this.scenesInx < this.scenes.length - 1) {
       this.scenesInx++;
     } else {
-      this.scenesInx = -1;
-      this.scenes = [];
+      this.resetScenes();
     }
   }
 

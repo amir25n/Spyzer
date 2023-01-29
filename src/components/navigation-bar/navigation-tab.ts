@@ -13,7 +13,7 @@ import config from '../../config';
 import type {LitRenderType} from '../../types/lit-render';
 
 @customElement('navigation-tab')
-export class NavigationBar extends AlwatrDummyElement {
+export class NavigationTab extends AlwatrDummyElement {
   static override styles = [
     config.styles,
     css`
@@ -22,6 +22,7 @@ export class NavigationBar extends AlwatrDummyElement {
 
         display: flex;
         flex-direction: column;
+        transition-property: padding-bottom;
       }
 
       a {
@@ -33,48 +34,23 @@ export class NavigationBar extends AlwatrDummyElement {
         width: calc(10 * var(--sys-spacing-track));
       }
 
-      a::after {
-        content: "";
-        border-radius: calc(0.2 * var(--sys-spacing-track));
-        background-color: var(--sys-color-primary);
-        width: 0;
-        height: calc(0.4 * var(--sys-spacing-track));
-        margin-top: calc(20% - 0.4 * var(--sys-spacing-track));
-        margin-bottom: -20%;
-        opacity: 0.25;
-        will-change: opacity, margin-top, margin-bottom, width;
-        transition-property: opacity, margin-top, margin-bottom, width;
-      }
-
       alwatr-icon {
         transition-property: color;
         color: var(--comp-color-bg);
         font-size: calc(3.3 * var(--sys-spacing-track));
       }
 
-      :host a::after,
+      :host,
       :host alwatr-icon {
-        transition-duration: var(--sys-motion-duration-small-out);
-        transition-timing-function: var(--sys-motion-easing-exiting);
+        transition-duration: var(--sys-motion-duration-large);
+        transition-timing-function: var(--sys-motion-easing-in-out);
       }
     `,
     css`
-      :host([active]) a::after,
-      :host([active]) alwatr-icon {
-        transition-delay: var(--sys-motion-duration-small);
-        transition-duration: var(--sys-motion-duration-small);
-        transition-timing-function: var(--sys-motion-easing-incoming);
-      }
-
       :host([active]) {
         --comp-color-bg: var(--sys-color-primary);
-      }
 
-      :host([active]) a::after {
-        opacity: 1;
-        width: calc(4 * var(--sys-spacing-track));
-        margin-top: var(--sys-spacing-track);
-        margin-bottom: 0;
+        padding-bottom: calc(1.5 * var(--sys-spacing-track));
       }
     `,
   ];
@@ -97,6 +73,6 @@ export class NavigationBar extends AlwatrDummyElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'navigation-tab': NavigationBar;
+    'navigation-tab': NavigationTab;
   }
 }

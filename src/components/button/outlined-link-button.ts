@@ -1,4 +1,4 @@
-import {customElement, property, html, css} from '@alwatr/element';
+import {customElement, property, html} from '@alwatr/element';
 
 import {OutlinedButton} from './outlined-button';
 

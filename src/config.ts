@@ -30,9 +30,24 @@ const words = [
   'clinic',
 ] as const;
 
+const navigationBar = (show?: boolean) => {
+  const element = document.querySelector('spy-app');
+
+  if (element !== null && show != null) {
+    element.showNavigationBar = show;
+  }
+
+  return element?.showNavigationBar ?? false;
+};
+
 const config = {
   styles,
   words,
+  navigationBar: {
+    isShow: () => navigationBar(),
+    show: () => navigationBar(true),
+    hide: () => navigationBar(false),
+  },
 };
 
 export default config;
