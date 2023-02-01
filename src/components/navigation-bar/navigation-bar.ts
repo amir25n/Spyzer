@@ -89,20 +89,10 @@ export class NavigationBar extends AlwatrDummyElement {
       <div class="active-indicator"></div>`;
   }
 
-  override update(changedProperties: PropertyValues<this>): void {
-    super.update(changedProperties);
-
-    if (changedProperties.has('activeSlug')) {
-      this.calibrateActiveIndicator();
-    }
-  }
-
   override updated(changedProperties: PropertyValues<this>): void {
     super.updated(changedProperties);
 
-    if (changedProperties.has('activeSlug')) {
-      this.calibrateActiveIndicator();
-    }
+    this.calibrateActiveIndicator();
   }
 
   static renderNavigationTab(
