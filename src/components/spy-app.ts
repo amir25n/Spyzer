@@ -9,6 +9,7 @@ import {
   property,
 } from '@alwatr/element';
 import {l10n} from '@alwatr/i18n';
+import {registerSW} from 'virtual:pwa-register';
 
 import '@alwatr/icon';
 
@@ -83,12 +84,16 @@ export class SpyApp extends AlwatrSmartElement {
     `;
   }
 
-  protected override firstUpdated(
-      changedProperties: PropertyValues<this>,
-  ): void {
+  override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
 
-    document.documentElement.removeAttribute('unresolved');
+    registerSW({
+      immediate: true,
+    });
+
+    requestAnimationFrame(() => {
+      document.documentElement.removeAttribute('unresolved');
+    });
   }
 }
 
