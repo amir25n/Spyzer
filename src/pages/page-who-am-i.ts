@@ -49,6 +49,19 @@ export class PageWhoAmI extends localizeMixin(AlwatrDummyElement) {
   ];
 
   override render(): LitRenderType {
+    /* <div class="buttons-row">
+      <outlined-button
+        label=${this.l10n.localize('message-to-me')}
+        icon="sms-tracking"
+        url-prefix="/iconsax/"
+      ></outlined-button>
+      <outlined-button
+        label=${this.l10n.localize('add-word')}
+        icon="add"
+        url-prefix="/iconsax/"
+      ></outlined-button>
+    </div> */
+
     return html`
       <card-box
         header-text="من کی ام ؟"
@@ -57,18 +70,6 @@ export class PageWhoAmI extends localizeMixin(AlwatrDummyElement) {
         have-line
       >
         <coming-soon></coming-soon>
-        <div class="buttons-row">
-          <outlined-button
-            label=${this.l10n.localize('message-to-me')}
-            icon="sms-tracking"
-            url-prefix="/iconsax/"
-          ></outlined-button>
-          <outlined-button
-            label=${this.l10n.localize('add-word')}
-            icon="add"
-            url-prefix="/iconsax/"
-          ></outlined-button>
-        </div>
       </card-box>
     `;
   }
